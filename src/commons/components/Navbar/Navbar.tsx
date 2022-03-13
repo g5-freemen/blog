@@ -1,7 +1,27 @@
 import React from "react";
+import styled from "styled-components";
 import styles from "./Navbar.module.css";
 
+const path = window.location.pathname;
+
+interface LinkProps {
+  active: boolean;
+}
+
+const Link = styled.a<LinkProps>`
+  font-family: "Source Sans Pro", sans-serif;
+  line-height: 1.5;
+  text-decoration: none;
+  color: ${({ active }) => (active ? "#373a3c" : "rgba(0, 0, 0, 0.3)")};
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
 export const Navbar: React.FC = () => {
+  // const isActive = (val: string) => path.includes(val);
+
   return (
     <div className={styles.navbar}>
       <div className={styles.container}>
@@ -11,21 +31,21 @@ export const Navbar: React.FC = () => {
 
         <ul className={styles.nav}>
           <li className={styles.navitem}>
-            <a className={styles.link} href="#/">
+            <Link active={path === "/"} href="#/">
               Home
-            </a>
+            </Link>
           </li>
 
           <li className={styles.navitem}>
-            <a className={styles.link} href="#/login">
+            <Link active={path.includes("login")} href="#/login">
               Sign in
-            </a>
+            </Link>
           </li>
 
           <li className={styles.navitem}>
-            <a className={styles.link} href="#/register">
+            <Link active={path.includes("register")} href="#/register">
               Sign up
-            </a>
+            </Link>
           </li>
         </ul>
 
