@@ -1,0 +1,56 @@
+.banner {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #fff;
+  background: #333;
+  background: #5cb85c;
+  box-shadow: inset 0 8px 8px -8px rgb(0 0 0 / 30%),
+    inset 0 -8px 8px -8px rgb(0 0 0 / 30%);
+}
+
+@media (min-width: 544px) {
+  .container {
+    max-width: 576px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 940px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  text-align: center;
+}
+
+.title {
+  padding-bottom: 0.5rem;
+  font-family: "Titillium Web";
+  font-weight: 700;
+  font-size: 3.5rem;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.content {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
