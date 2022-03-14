@@ -47,14 +47,16 @@
 }
 
 .brand {
-  padding: 0.25rem 0;
+  margin-right: 2rem !important;
+  padding: 0 0 .25rem 0;
   font-family: "Titillium Web", sans-serif;
   font-size: 1.5rem !important;
-  margin-right: 2rem !important;
+  font-weight: 700;
   /* float: left; */
   background-color: transparent;
   color: #5cb85c;
   text-decoration: none;
+  
 }
 
 .nav {
@@ -62,7 +64,7 @@
 }
 
 .navitem {
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .navitem:last-child {
