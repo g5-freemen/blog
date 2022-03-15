@@ -1,20 +1,4 @@
 @media (min-width: 544px) {
-  .navbar {
-    border-radius: 0.25rem;
-  }
-}
-
-.navbar {
-  position: relative;
-  padding: 0.5rem 1rem;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #373a3c;
-  background-color: #fff;
-}
-
-@media (min-width: 544px) {
   .container {
     max-width: 576px;
   }
@@ -39,24 +23,22 @@
 }
 
 .container {
+  margin: 0 auto;
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
-  padding: 0 15px;
 }
 
 .brand {
   margin-right: 2rem !important;
-  padding: 0 0 .25rem 0;
-  font-family: "Titillium Web", sans-serif;
+  padding: 0 0 0.25rem 0;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 1.5rem !important;
   font-weight: 700;
-  /* float: left; */
   background-color: transparent;
   color: #5cb85c;
   text-decoration: none;
-  
 }
 
 .nav {
@@ -69,15 +51,4 @@
 
 .navitem:last-child {
   margin: 0;
-}
-
-.link {
-  font-family: "Source Sans Pro", sans-serif;
-  line-height: 1.5;
-  color: rgba(0, 0, 0, 0.3);
-  text-decoration: none;
-}
-
-.active {
-  color: #373a3c;
 }

@@ -1,8 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import styles from './Navbar.module.css';
-
-const path = window.location.pathname;
+import styled from 'styled-components';
 
 interface LinkProps {
   active: boolean;
@@ -19,11 +17,25 @@ const Link = styled.a<LinkProps>`
   }
 `;
 
+const Nav = styled.div`
+  position: relative;
+  padding: 0.5rem 1rem;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #373a3c;
+  background-color: #fff;
+`;
+
+const path = window.location.pathname;
+
 export default function Navbar() {
+  // const location = useLocation();
+
   // const isActive = (val: string) => path.includes(val);
 
   return (
-    <div className={styles.navbar}>
+    <Nav>
       <div className={styles.container}>
         <a className={styles.brand} href="#/">
           conduit
@@ -78,6 +90,6 @@ export default function Navbar() {
 
     </ul> */}
       </div>
-    </div>
+    </Nav>
   );
 }
