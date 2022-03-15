@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import styles from "./Navbar.module.css";
+import React from 'react';
+import styled from 'styled-components';
+import styles from './Navbar.module.css';
 
 const path = window.location.pathname;
 
@@ -9,17 +9,17 @@ interface LinkProps {
 }
 
 const Link = styled.a<LinkProps>`
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
   text-decoration: none;
-  color: ${({ active }) => (active ? "#373a3c" : "rgba(0, 0, 0, 0.3)")};
+  color: ${({ active }) => (active ? '#373a3c' : 'rgba(0, 0, 0, 0.3)')};
 
   &:hover {
     text-decoration: underline;
   }
 `;
 
-export const Navbar: React.FC = () => {
+export default function Navbar() {
   // const isActive = (val: string) => path.includes(val);
 
   return (
@@ -31,19 +31,19 @@ export const Navbar: React.FC = () => {
 
         <ul className={styles.nav}>
           <li className={styles.navitem}>
-            <Link active={path === "/"} href="#/">
+            <Link active={path === '/'} href="#/">
               Home
             </Link>
           </li>
 
           <li className={styles.navitem}>
-            <Link active={path.includes("login")} href="#/login">
+            <Link active={path.includes('login')} href="#/login">
               Sign in
             </Link>
           </li>
 
           <li className={styles.navitem}>
-            <Link active={path.includes("register")} href="#/register">
+            <Link active={path.includes('register')} href="#/register">
               Sign up
             </Link>
           </li>
@@ -70,9 +70,9 @@ export const Navbar: React.FC = () => {
       </li>
 
       <li class="nav-item">
-        <a class="nav-link ng-binding" ui-sref-active="active" ui-sref="app.profile.main({ username: $ctrl.currentUser.username })" href="#/@">
+        <a class="nav-link ng-binding" ui-sref-active="active"
+         ui-sref="app.profile.main({ username: $ctrl.currentUser.username })" href="#/@">
           <img class="user-pic"/>
-          
         </a>
       </li>
 
@@ -80,4 +80,4 @@ export const Navbar: React.FC = () => {
       </div>
     </div>
   );
-};
+}

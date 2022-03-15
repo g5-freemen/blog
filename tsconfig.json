@@ -16,5 +16,17 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src", "./typings/*.ts"]
+  "include": ["src", "./typings/*.ts"],
+  "trailing-comma": [
+    true,
+    {
+      "singleline": "never",
+      "multiline": {
+        "objects": "always", // <==================
+        "arrays": "always",
+        "functions": "never",
+        "typeLiterals": "ignore"
+      }
+    }
+  ]
 }
