@@ -1,0 +1,12 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.sidebar {
+  padding: 5px 10px 10px;
+  background: #f3f3f3;
+  border-radius: 4px;
+  color: #373a3c;
+}
