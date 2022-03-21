@@ -1,12 +1,13 @@
 import React from 'react';
-import Banner from './commons/components/Banner/Banner';
-import Navbar from './commons/components/Navbar/Navbar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Homepage from './commons/modules/Homepage/Homepage';
 
 export default function App() {
   return (
-    <div>
-      <Navbar />
-      <Banner />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
