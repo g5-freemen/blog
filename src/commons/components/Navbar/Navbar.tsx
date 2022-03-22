@@ -1,10 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
-import styles from './Navbar.module.css';
 
 interface LinkProps {
   active: boolean;
 }
+
+const Nav = styled.nav`
+  width: 75%;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #373a3c;
+`;
+
+const Brand = styled.a`
+  margin-right: 2rem;
+  padding: 0 0 0.25rem 0;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background-color: transparent;
+  color: #5cb85c;
+  text-decoration: none;
+`;
+
+const Ul = styled.ul`
+  display: flex;
+`;
+
+const Li = styled.li`
+  margin-right: 1rem;
+
+  &:last-child {
+    margin: 0;
+  }
+`;
 
 const Link = styled.a<LinkProps>`
   font-family: 'Source Sans Pro', sans-serif;
@@ -17,16 +50,6 @@ const Link = styled.a<LinkProps>`
   }
 `;
 
-const Nav = styled.div`
-  position: relative;
-  padding: 0.5rem 1rem;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #373a3c;
-  background-color: #fff;
-`;
-
 const path = window.location.pathname;
 
 export default function Navbar() {
@@ -36,32 +59,26 @@ export default function Navbar() {
 
   return (
     <Nav>
-      <div className={styles.container}>
-        <a className={styles.brand} href="#/">
-          conduit
-        </a>
+      <Brand href="#/">conduit</Brand>
+      <Ul>
+        <Li>
+          <Link active={path === '/'} href="#/">
+            Home
+          </Link>
+        </Li>
+        <Li>
+          <Link active={path.includes('login')} href="#/login">
+            Sign in
+          </Link>
+        </Li>
+        <Li>
+          <Link active={path.includes('register')} href="#/register">
+            Sign up
+          </Link>
+        </Li>
+      </Ul>
 
-        <ul className={styles.nav}>
-          <li className={styles.navitem}>
-            <Link active={path === '/'} href="#/">
-              Home
-            </Link>
-          </li>
-
-          <li className={styles.navitem}>
-            <Link active={path.includes('login')} href="#/login">
-              Sign in
-            </Link>
-          </li>
-
-          <li className={styles.navitem}>
-            <Link active={path.includes('register')} href="#/register">
-              Sign up
-            </Link>
-          </li>
-        </ul>
-
-        {/* <ul show-authed="true" class="nav navbar-nav pull-xs-right" style="display: none;">
+      {/* <ul show-authed="true" class="nav navbar-nav pull-xs-right" style="display: none;">
 
       <li class="nav-item">
         <a class="nav-link active" ui-sref-active="active" ui-sref="app.home" href="#/">
@@ -89,7 +106,6 @@ export default function Navbar() {
       </li>
 
     </ul> */}
-      </div>
     </Nav>
   );
 }

@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  width: 75%;
+  display: flex;
+  flex: 12;
+}
+
+.main,
+.aside {
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 9;
+  background-color: yellowgreen;
+}
+
+.aside {
+  flex: 3;
+  background-color: orange;
+}
