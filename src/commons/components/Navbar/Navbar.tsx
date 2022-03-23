@@ -4,10 +4,6 @@ import styled from 'styled-components';
 import NavItem from '../NavItem/NavItem';
 import { v4 as uuid } from 'uuid';
 
-interface LinkProps {
-  active: boolean;
-}
-
 const Nav = styled.nav`
   width: 75%;
   padding: 0.5rem 1rem;
@@ -32,25 +28,6 @@ const Brand = styled.a`
 
 const Ul = styled.ul`
   display: flex;
-`;
-
-const Li = styled.li`
-  margin-right: 1rem;
-
-  &:last-child {
-    margin: 0;
-  }
-`;
-
-const Link = styled.a<LinkProps>`
-  font-family: 'Source Sans Pro', sans-serif;
-  line-height: 1.5;
-  text-decoration: none;
-  color: ${({ active }) => (active ? '#373a3c' : 'rgba(0, 0, 0, 0.3)')};
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const items = [
