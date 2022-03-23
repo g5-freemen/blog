@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import NavItem from '../NavItem/NavItem';
+import { v4 as uuid } from 'uuid';
 
 interface LinkProps {
   active: boolean;
@@ -50,32 +53,31 @@ const Link = styled.a<LinkProps>`
   }
 `;
 
-const path = window.location.pathname;
+const items = [
+  { url: '#/', text: 'Home' },
+  { url: '#/login', text: 'Sign in' },
+  { url: '#/register', text: 'Sign up' },
+];
 
 export default function Navbar() {
-  // const location = useLocation();
-
-  // const isActive = (val: string) => path.includes(val);
+  const location = useLocation();
+  const isActive = useCallback(
+    (val: string) => location.hash === val,
+    [location.hash],
+  );
 
   return (
     <Nav>
       <Brand href="#/">conduit</Brand>
       <Ul>
-        <Li>
-          <Link active={path === '/'} href="#/">
-            Home
-          </Link>
-        </Li>
-        <Li>
-          <Link active={path.includes('login')} href="#/login">
-            Sign in
-          </Link>
-        </Li>
-        <Li>
-          <Link active={path.includes('register')} href="#/register">
-            Sign up
-          </Link>
-        </Li>
+        {items.map((el) => (
+          <NavItem
+            key={uuid()}
+            active={isActive(el.url)}
+            url={el.url}
+            text={el.text}
+          />
+        ))}
       </Ul>
 
       {/* <ul show-authed="true" class="nav navbar-nav pull-xs-right" style="display: none;">
