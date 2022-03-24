@@ -2,19 +2,17 @@ import React from 'react';
 import Tag from '../Tag/Tag';
 import styles from './Tags.module.css';
 
-import { testTags } from './mocks';
-
 interface TagsProps {
-  tagsList?: string[];
+  tagsList: string[];
 }
 
-export default function Tags({ tagsList = testTags }: TagsProps) {
+export default function Tags({ tagsList }: TagsProps) {
   return (
     <aside className={styles.column}>
       <ul className={styles.sidebar}>
-        <p>Popular Tags</p>
+        <p className={styles.p}>Popular Tags</p>
         {tagsList.map((el) => (
-          <Tag name={el} />
+          <Tag key={`tag-${el}`} name={el} />
         ))}
       </ul>
     </aside>
