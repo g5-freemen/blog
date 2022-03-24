@@ -4,4 +4,6 @@ body * {
   -ms-user-select: none;
   user-select: none;
   outline: none;
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1.5;
 }
