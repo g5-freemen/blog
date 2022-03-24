@@ -6,7 +6,7 @@ import { fetchTags } from '../../components/Tags/fetchTags';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
