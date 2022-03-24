@@ -4,7 +4,7 @@ import Tag from '../Tag/Tag';
 import styles from './Article.module.css';
 
 export type ArticleType = {
-  author: { bio: null; following: boolean; image: string; username: 'Gerome' };
+  author: { bio: null; following: boolean; image: string; username: string };
   body: string;
   createdAt: string;
   description: string;
