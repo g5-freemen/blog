@@ -6,11 +6,11 @@ import { fetchTags } from '../../components/Tags/fetchTags';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[] | null>([]);
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
-    if (tagsList) setTags(tagsList);
+    setTags(tagsList);
   }, []);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Homepage() {
       <div className={styles.row}>
         <main className={styles.main}>0</main>
         <aside className={styles.aside}>
-          <Tags tagsList={tags} />
+          {tags ? <Tags tagsList={tags} /> : 'Error'}
         </aside>
       </div>
     </div>
