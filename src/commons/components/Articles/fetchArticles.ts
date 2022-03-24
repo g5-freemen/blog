@@ -1,10 +1,10 @@
-export const apiUrl = 'https://api.realworld.io';
+import { apiUrl } from '../../utils/constants';
+import { ArticleType } from '../Article/Article';
 
-export async function fetchArticles(): Promise<string[] | null> {
+export async function fetchArticles(): Promise<ArticleType[] | null> {
   try {
     const response = await fetch(`${apiUrl}/api/articles`);
     const data = await response.json();
-    console.log(data);
     return data ? data.articles : [];
   } catch (e) {
     console.log(e);
