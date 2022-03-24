@@ -1,4 +1,4 @@
-export const apiUrl = 'https://api.realworld.io';
+import { apiUrl } from '../../utils/constants';
 
 export async function fetchTags(): Promise<string[] | null> {
   try {

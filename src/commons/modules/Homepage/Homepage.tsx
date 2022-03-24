@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Banner from '../../components/Banner/Banner';
 import Navbar from '../../components/Navbar/Navbar';
+import Articles from '../../components/Articles/Articles';
 import Tags from '../../components/Tags/Tags';
+import { ArticleType } from '../../components/Article/Article';
 import { fetchArticles } from '../../components/Articles/fetchArticles';
 import { fetchTags } from '../../components/Tags/fetchTags';
 import styles from './Homepage.module.css';
-import Articles from '../../components/Articles/Articles';
 
 export default function Homepage() {
   const [tags, setTags] = useState<string[] | null>([]);
-  const [articles, setArticles] = useState<string[] | null>([]);
+  const [articles, setArticles] = useState<ArticleType[] | null>([]);
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
@@ -17,7 +18,7 @@ export default function Homepage() {
   }, []);
 
   const getArticles = useCallback(async () => {
-    const articlesList = await fetchArticles();
+    const articlesList: ArticleType[] | null = await fetchArticles();
     setArticles(articlesList);
   }, []);
 
