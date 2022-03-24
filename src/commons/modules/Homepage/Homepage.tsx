@@ -10,7 +10,7 @@ export default function Homepage() {
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
-    if (tagsList) setTags(tagsList.tags);
+    if (tagsList) setTags(tagsList);
   }, []);
 
   useEffect(() => {
