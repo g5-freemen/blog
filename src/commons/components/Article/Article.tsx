@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { v4 as uuid } from 'uuid';
 import Tag from '../Tag/Tag';
 import styles from './Article.module.css';
 
@@ -65,7 +66,7 @@ export default function Article({ article }: ArticleProps) {
         <span className={styles.span}>Read more...</span>
         <span>
           {article.tagList.map((name) => (
-            <Tag name={name} outlined={true} />
+            <Tag key={uuid()} name={name} outlined={true} />
           ))}
         </span>
       </div>
