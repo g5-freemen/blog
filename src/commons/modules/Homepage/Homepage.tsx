@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Banner from '../../components/Banner/Banner';
 import Navbar from '../../components/Navbar/Navbar';
 import Articles from '../../components/Articles/Articles';
@@ -6,20 +6,23 @@ import Tags from '../../components/Tags/Tags';
 import { ArticleType } from '../../components/Article/Article';
 import { fetchArticles } from '../../components/Articles/fetchArticles';
 import { fetchTags } from '../../components/Tags/fetchTags';
+import * as slice from '../../redux/rootReducer';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {
-  const [tags, setTags] = useState<string[] | null>([]);
-  const [articles, setArticles] = useState<ArticleType[] | null>([]);
+  const dispatch = useDispatch();
+  const tags = useSelector(slice.selectTags);
+  const articles = useSelector(slice.selectArticles);
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
-    setTags(tagsList);
+    dispatch(slice.setTags(tagsList));
   }, []);
 
   const getArticles = useCallback(async () => {
     const articlesList: ArticleType[] | null = await fetchArticles();
-    setArticles(articlesList);
+    dispatch(slice.setArticles(articlesList));
   }, []);
 
   useEffect(() => {
