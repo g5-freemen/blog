@@ -3,17 +3,17 @@ import { RootState } from './store';
 
 const SET_TAGS = 'SET_TAGS';
 const SET_ARTICLES = 'SET_ARTICLES';
+const SET_LOADING = 'SET_LOADING';
 
 type ActionType = {
   type?: string;
   payload?: any;
 };
 
-// ArticleType[] | null
-
 const initialState = {
   tags: [],
   articles: [],
+  loading: false,
 };
 
 export default function rootReducer(
@@ -25,6 +25,8 @@ export default function rootReducer(
       return { ...state, tags: action.payload };
     case SET_ARTICLES:
       return { ...state, articles: action.payload };
+    case SET_LOADING:
+      return { ...state, loading: action.payload };
     default:
       return state;
   }
@@ -40,5 +42,11 @@ export const setArticles = (value: ArticleType[] | null) => ({
   payload: value,
 });
 
+export const setLoading = (value: boolean) => ({
+  type: SET_LOADING,
+  payload: value,
+});
+
 export const selectTags = (store: RootState) => store.tags;
 export const selectArticles = (store: RootState) => store.articles;
+export const selectLoading = (store: RootState) => store.loading;
