@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect } from 'react';
-import Banner from '../../components/Banner/Banner';
-import Navbar from '../../components/Navbar/Navbar';
-import Articles from '../../components/Articles/Articles';
-import Tags from '../../components/Tags/Tags';
+import { useDispatch, useSelector } from 'react-redux';
 import { ArticleType } from '../../components/Article/Article';
 import { fetchArticles } from '../../components/Articles/fetchArticles';
 import { fetchTags } from '../../components/Tags/fetchTags';
 import * as slice from '../../redux/rootReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import styles from './Homepage.module.css';
+import Banner from '../../components/Banner/Banner';
+import Navbar from '../../components/Navbar/Navbar';
+import Articles from '../../components/Articles/Articles';
+import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
+import styles from './Homepage.module.css';
 
 export default function Homepage() {
   const dispatch = useDispatch();
