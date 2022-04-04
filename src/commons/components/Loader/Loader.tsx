@@ -1,19 +1,16 @@
 import React from 'react';
-import { LoaderSmall } from './LoaderSmall';
-import styles from './Loader.module.css';
+import styled from 'styled-components';
 
 interface ILoader {
-  type?: 'text' | 'small';
+  content?: string;
 }
 
-export default function Loader({ type = 'text' }: ILoader) {
-  if (type === 'text') {
-    return <div className={styles.text}>Loading...</div>;
-  }
+const LoaderContainer = styled.span`
+  font-size: 18px;
+  font-style: italic;
+  color: gray;
+`;
 
-  if (type === 'small') {
-    return <LoaderSmall />;
-  }
-
-  return null;
+export default function Loader({ content = 'Loading...' }: ILoader) {
+  return <LoaderContainer>{content}</LoaderContainer>;
 }
