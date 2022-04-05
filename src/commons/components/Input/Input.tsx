@@ -1,50 +1,27 @@
-import React, { ChangeEvent } from 'react';
-import styles from './Input.module.css';
+import styled from 'styled-components';
 
-export type InputProps = {
-  // eslint-disable-next-line no-unused-vars
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  // eslint-disable-next-line no-unused-vars
-  onKeyPress?: (e: React.KeyboardEvent) => void;
-  disabled?: boolean;
-  type?: string;
-  placeholder?: string;
-  value?: number | string;
-  id?: string;
-  readOnly?: boolean;
-  name?: string;
-};
+export const Input = styled.input`
+  padding: 0.75rem 1.5rem;
+  width: 100%;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  color: #55595c;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.3rem;
 
-export function Input(props: InputProps) {
-  const {
-    onChange,
-    onKeyPress,
-    disabled,
-    type,
-    placeholder,
-    value,
-    id,
-    readOnly,
-    name,
-  } = props;
+  &:focus {
+    border-color: #66afe9;
+    outline: none;
+  }
 
-  return (
-    <input
-      className={styles.input}
-      readOnly={readOnly}
-      onKeyPress={onKeyPress}
-      onChange={onChange}
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      disabled={disabled}
-      id={id}
-    />
-  );
-}
+  &:placeholder {
+    color: #99a3b0;
+  }
 
-Input.defaultProps = {
-  disabled: false,
-  readOnly: false,
-};
+  &:disabled {
+    background-color: #eee;
+  }
+`;
