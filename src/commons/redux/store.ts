@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import saga from './saga';
 import rootReducer from './rootReducer';
 
-let sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
 
 const store = configureStore({

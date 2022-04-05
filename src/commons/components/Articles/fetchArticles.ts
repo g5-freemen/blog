@@ -7,7 +7,6 @@ export async function fetchArticles(): Promise<ArticleType[] | null> {
     const data = await response.json();
     return data ? data.articles : [];
   } catch (e) {
-    console.log(e);
     return null; // fix in future (throw Error)
   }
 }

@@ -10,10 +10,15 @@ export type ButtonProps = {
   onKeyPress?: (e: React.KeyboardEvent) => void;
 };
 
-export const Button = (props: ButtonProps) => {
-  const { children, disabled, type, onClick, onKeyPress, id, className } =
-    props;
-
+export function Button({
+  children,
+  disabled,
+  type,
+  onClick,
+  onKeyPress,
+  id,
+  className,
+}: ButtonProps) {
   return (
     <button
       id={id}
@@ -26,8 +31,9 @@ export const Button = (props: ButtonProps) => {
       {children}
     </button>
   );
-};
+}
 
 Button.defaultProps = {
   type: 'button',
+  disabled: false,
 };

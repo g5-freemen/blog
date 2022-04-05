@@ -56,8 +56,10 @@ export default function Article({ article }: ArticleProps) {
             </div>
           </div>
         </div>
-        <button className={styles.favoriteBtn}>
-          ❤ {article.favoritesCount}
+        <button type="button" className={styles.favoriteBtn}>
+          ❤
+          {' '}
+          {article.favoritesCount}
         </button>
       </div>
       <h2 className={styles.title}>{article.title}</h2>
@@ -66,7 +68,7 @@ export default function Article({ article }: ArticleProps) {
         <span className={styles.span}>Read more...</span>
         <span>
           {article.tagList.map((name) => (
-            <Tag key={uuid()} name={name} outlined={true} />
+            <Tag key={uuid()} name={name} outlined />
           ))}
         </span>
       </div>

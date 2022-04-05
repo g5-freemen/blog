@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import NavItem from '../NavItem/NavItem';
 import { v4 as uuid } from 'uuid';
+import NavItem from '../NavItem/NavItem';
 
 const Nav = styled.nav`
   width: 75%;
