@@ -4,7 +4,6 @@ import { ArticleType } from '../../components/Article/Article';
 import { fetchArticles } from '../../components/Articles/fetchArticles';
 import { fetchTags } from '../../components/Tags/fetchTags';
 import Banner from '../../components/Banner/Banner';
-import Navbar from '../../components/Navbar/Navbar';
 import Articles from '../../components/Articles/Articles';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
@@ -43,7 +42,6 @@ export default function Homepage() {
 
   return (
     <div className={styles.container}>
-      <Navbar />
       <Banner />
       <div className={styles.row}>
         <main className={styles.main}>

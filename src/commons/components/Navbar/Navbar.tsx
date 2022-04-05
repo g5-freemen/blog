@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 
 const Nav = styled.nav`
   width: 75%;
+  margin: 0 auto;
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -30,17 +31,17 @@ const Ul = styled.ul`
   display: flex;
 `;
 
-const items = [
-  { url: '#/', text: 'Home' },
-  { url: '#/login', text: 'Sign in' },
-  { url: '#/register', text: 'Sign up' },
+export const items = [
+  { url: '/', text: 'Home' },
+  { url: '/login', text: 'Sign in' },
+  { url: '/register', text: 'Sign up' },
 ];
 
 export default function Navbar() {
   const location = useLocation();
   const isActive = useCallback(
-    (val: string) => location.hash === val,
-    [location.hash],
+    (val: string) => location.pathname === val,
+    [location.pathname],
   );
 
   return (
