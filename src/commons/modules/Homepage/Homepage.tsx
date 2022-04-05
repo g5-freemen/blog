@@ -40,28 +40,28 @@ export default function Homepage() {
       .then(() => dispatch(setLoading(false)));
   }, []);
 
+  const show = (value: string) => {
+    if (loading) {
+      return <Loader content={`Loading ${value}...`} />;
+    }
+
+    if (value === 'articles' && articles) {
+      return <Articles articlesList={articles} />;
+    }
+
+    if (value === 'tags' && tags) {
+      return <Tags tagsList={tags} />;
+    }
+
+    return 'Error';
+  };
+
   return (
     <div className={styles.container}>
       <Banner />
       <div className={styles.row}>
-        <main className={styles.main}>
-          {loading ? (
-            <Loader content="Loading articles..." />
-          ) : articles ? (
-            <Articles articlesList={articles} />
-          ) : (
-            'Error'
-          )}
-        </main>
-        <aside className={styles.aside}>
-          {loading ? (
-            <Loader content="Loading tags..." />
-          ) : tags ? (
-            <Tags tagsList={tags} />
-          ) : (
-            'Error'
-          )}
-        </aside>
+        <main className={styles.main}>{show('articles')}</main>
+        <aside className={styles.aside}>{show('tags')}</aside>
       </div>
     </div>
   );

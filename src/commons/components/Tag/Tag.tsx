@@ -13,9 +13,8 @@ const TagContainer = styled.div<TagStyledProps>`
   color: #fff;
   border-radius: 10rem;
   background-color: rgb(129, 138, 145);
-  ${({ outlined }) =>
-    outlined &&
-    `border: 1px solid #ddd;
+  ${({ outlined }) => outlined
+    && `border: 1px solid #ddd;
     color: #aaa;
     background: none;
   `}
@@ -24,7 +23,7 @@ const TagContainer = styled.div<TagStyledProps>`
   cursor: pointer;
 
   &:hover {
-    ${({ outlined }) => !outlined && `background-color: #666;`}
+    ${({ outlined }) => !outlined && 'background-color: #666;'}
   }
 `;
 
@@ -33,6 +32,10 @@ interface TagProps {
   outlined?: boolean;
 }
 
-export default function Tag({ name, outlined = false }: TagProps) {
+export default function Tag({ name, outlined }: TagProps) {
   return <TagContainer outlined={outlined}>{name}</TagContainer>;
 }
+
+Tag.defaultProps = {
+  outlined: false,
+};
