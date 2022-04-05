@@ -1,41 +1,22 @@
-import React, { MouseEvent } from 'react';
+import styled from 'styled-components';
 
-export interface ButtonProps {
-  children?: React.ReactNode;
-  id?: string;
-  type: 'button' | 'reset' | 'submit';
-  disabled?: boolean;
-  className?: string;
-  // eslint-disable-next-line no-unused-vars
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-  // eslint-disable-next-line no-unused-vars
-  onKeyPress?: (e: React.KeyboardEvent) => void;
-}
+export const Button = styled.button`
+  padding: 0.75rem 1.5rem;
+  line-height: 1.25;
+  font-size: 1.25rem;
+  color: #fff;
+  background-color: #5cb85c;
+  border: 1px solid transparent;
+  border-color: #5cb85c;
+  border-radius: 0.3rem;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
 
-export function Button({
-  children,
-  disabled,
-  type,
-  onClick,
-  onKeyPress,
-  id,
-  className,
-}: ButtonProps) {
-  return (
-    <button
-      id={id}
-      // eslint-disable-next-line react/button-has-type
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      onKeyPress={onKeyPress}
-      className={className}
-    >
-      {children}
-    </button>
-  );
-}
-
-Button.defaultProps = {
-  disabled: false,
-};
+  &:hover {
+    background-color: #449d44;
+    border-color: #419641;
+  }
+`;
