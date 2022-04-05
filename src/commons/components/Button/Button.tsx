@@ -1,14 +1,16 @@
 import React, { MouseEvent } from 'react';
 
-export type ButtonProps = {
+export interface ButtonProps {
   children?: React.ReactNode;
   id?: string;
-  type?: 'button' | 'reset' | 'submit';
+  type: 'button' | 'reset' | 'submit';
   disabled?: boolean;
   className?: string;
-  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  // eslint-disable-next-line no-unused-vars
+  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  // eslint-disable-next-line no-unused-vars
   onKeyPress?: (e: React.KeyboardEvent) => void;
-};
+}
 
 export function Button({
   children,
@@ -22,6 +24,7 @@ export function Button({
   return (
     <button
       id={id}
+      // eslint-disable-next-line react/button-has-type
       type={type}
       disabled={disabled}
       onClick={onClick}
@@ -34,6 +37,5 @@ export function Button({
 }
 
 Button.defaultProps = {
-  type: 'button',
   disabled: false,
 };
