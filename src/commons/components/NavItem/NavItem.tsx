@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface LinkProps {
@@ -13,7 +14,7 @@ const Li = styled.li`
   }
 `;
 
-const Link = styled.a<LinkProps>`
+const TextWrapper = styled.span<LinkProps>`
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
   text-decoration: none;
@@ -33,8 +34,8 @@ interface NavItemProps {
 export default function NavItem({ active, url, text }: NavItemProps) {
   return (
     <Li>
-      <Link active={active} href={url}>
-        {text}
+      <Link to={{ pathname: url }} style={{ textDecoration: 0 }}>
+        <TextWrapper active={active}>{text}</TextWrapper>
       </Link>
     </Li>
   );
