@@ -29,7 +29,7 @@ export default function Homepage() {
   const getArticles = useCallback(async () => {
     const articlesList: ArticleType[] | null = await fetchArticles(limit);
     dispatch(setArticles(articlesList));
-  }, []);
+  }, [limit]);
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
@@ -42,6 +42,10 @@ export default function Homepage() {
       .then(() => getTags())
       .then(() => dispatch(setLoading(false)));
   }, []);
+
+  useEffect(() => {
+    getArticles();
+  }, [limit]);
 
   const show = (value: string) => {
     if (loading) {
