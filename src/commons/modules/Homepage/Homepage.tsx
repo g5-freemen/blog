@@ -5,10 +5,12 @@ import { fetchArticles } from '../../components/Articles/fetchArticles';
 import { fetchTags } from '../../components/Tags/fetchTags';
 import Banner from '../../components/Banner/Banner';
 import Articles from '../../components/Articles/Articles';
+import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
 import {
   selectArticles,
+  selectLimit,
   selectLoading,
   selectTags,
   setArticles,
@@ -21,10 +23,11 @@ export default function Homepage() {
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectArticles);
+  const limit = useSelector(selectLimit);
   const loading = useSelector(selectLoading);
 
   const getArticles = useCallback(async () => {
-    const articlesList: ArticleType[] | null = await fetchArticles();
+    const articlesList: ArticleType[] | null = await fetchArticles(limit);
     dispatch(setArticles(articlesList));
   }, []);
 
@@ -60,7 +63,10 @@ export default function Homepage() {
     <div className={styles.container}>
       <Banner />
       <div className={styles.row}>
-        <main className={styles.main}>{show('articles')}</main>
+        <main className={styles.main}>
+          <ArticlesLimiter limits={[5, 10, 20, 50, 100]} />
+          {show('articles')}
+        </main>
         <aside className={styles.aside}>{show('tags')}</aside>
       </div>
     </div>
