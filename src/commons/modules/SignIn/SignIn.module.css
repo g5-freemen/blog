@@ -31,14 +31,6 @@
   flex-direction: column;
 }
 
-.form * {
-  margin-bottom: 1rem;
-}
-
-.form *:last-child {
-  margin-bottom: 0;
-}
-
 .right {
   margin-left: auto;
 }
