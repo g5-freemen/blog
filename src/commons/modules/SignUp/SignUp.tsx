@@ -7,8 +7,9 @@ import * as yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
-import styles from '../SignIn/SignIn.module.css';
+import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { apiUrl } from '../../utils/constants';
+import styles from '../SignIn/SignIn.module.css';
 
 interface ISignUp {
   username: string;
@@ -37,7 +38,7 @@ export default function SignUp() {
     reset,
     register,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = methods;
 
   const onSubmit = async (data: ISignUp) => {
@@ -81,13 +82,16 @@ export default function SignUp() {
       <FormProvider {...methods}>
         <form noValidate className={styles.form} onSubmit={submit}>
           <Input placeholder="Username" {...register('username')} />
+          <ErrorMsg>{errors.username?.message}</ErrorMsg>
           <Input type="email" placeholder="Email" {...register('email')} />
+          <ErrorMsg>{errors.email?.message}</ErrorMsg>
           <Input
             type="password"
             autoComplete="current-password"
             placeholder="Password"
             {...register('password')}
           />
+          <ErrorMsg>{errors.password?.message}</ErrorMsg>
           <div className={styles.right}>
             <Button type="submit" disabled={!isValid}>
               Sign Up
