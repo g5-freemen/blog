@@ -14,9 +14,17 @@ export const Button = styled.button`
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
+  transition: all 0.4s;
 
   &:hover {
     background-color: #449d44;
     border-color: #419641;
+  }
+
+  &:disabled {
+    background-color: #999;
+    border-color: #999;
+    color: #ddd;
+    cursor: auto;
   }
 `;
