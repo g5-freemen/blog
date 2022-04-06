@@ -6,7 +6,9 @@ interface ArticlesProps {
   articlesList: ArticleType[];
 }
 
-export default function Articles({ articlesList }: ArticlesProps) {
+export default function Articles(props: ArticlesProps) {
+  const { articlesList } = props;
+
   return (
     <div>
       {articlesList.map((article) => (

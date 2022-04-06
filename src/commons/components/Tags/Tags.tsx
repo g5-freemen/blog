@@ -6,7 +6,9 @@ interface TagsProps {
   tagsList: string[];
 }
 
-export default function Tags({ tagsList }: TagsProps) {
+export default function Tags(props: TagsProps) {
+  const { tagsList } = props;
+
   return (
     <aside className={styles.column}>
       <ul className={styles.sidebar}>

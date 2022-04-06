@@ -39,7 +39,9 @@ const Avatar = styled.div<AvatarProps>`
   border-radius: 50%;
 `;
 
-export default function Article({ article }: ArticleProps) {
+export default function Article(props: ArticleProps) {
+  const { article } = props;
+
   return (
     <article className={styles.article}>
       <div className={styles.meta}>
@@ -57,9 +59,7 @@ export default function Article({ article }: ArticleProps) {
           </div>
         </div>
         <button type="button" className={styles.favoriteBtn}>
-          ❤
-          {' '}
-          {article.favoritesCount}
+          {`❤ ${article.favoritesCount}`}
         </button>
       </div>
       <h2 className={styles.title}>{article.title}</h2>

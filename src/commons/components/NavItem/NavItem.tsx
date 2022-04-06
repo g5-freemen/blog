@@ -31,7 +31,9 @@ interface NavItemProps {
   text: React.ReactNode;
 }
 
-export default function NavItem({ active, url, text }: NavItemProps) {
+export default function NavItem(props: NavItemProps) {
+  const { active, url, text } = props;
+
   return (
     <Li>
       <Link to={{ pathname: url }} style={{ textDecoration: 0 }}>
