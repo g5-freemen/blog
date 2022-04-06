@@ -32,7 +32,9 @@ interface TagProps {
   outlined?: boolean;
 }
 
-export default function Tag({ name, outlined }: TagProps) {
+export default function Tag(props: TagProps) {
+  const { name, outlined } = props;
+
   return <TagContainer outlined={outlined}>{name}</TagContainer>;
 }
 

@@ -11,7 +11,9 @@ const LoaderContainer = styled.span`
   color: gray;
 `;
 
-export default function Loader({ content }: ILoader) {
+export default function Loader(props: ILoader) {
+  const { content } = props;
+
   return <LoaderContainer>{content}</LoaderContainer>;
 }
 
