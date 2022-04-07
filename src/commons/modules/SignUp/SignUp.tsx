@@ -45,9 +45,8 @@ export default function SignUp() {
       return false;
     }
 
-    toast(`${data.user.username} Registered Successfully!`, {
-      type: 'success',
-    });
+    const successMsg = `${data.user.username} Registered Successfully!`;
+    toast(successMsg, { type: 'success' });
     return navigate('/');
   };
 
