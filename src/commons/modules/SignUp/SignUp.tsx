@@ -1,13 +1,16 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button/Button';
-import { Input } from '../../components/Input/Input';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
+import { Input } from '../../components/Input/Input';
+import {
+  isAllFilled,
+  isAnyError,
+  isValidEmail,
+  isValidPassword,
+  required,
+} from '../../utils/validations';
 import { apiUrl } from '../../utils/constants';
 import styles from '../SignIn/SignIn.module.css';
 
@@ -17,35 +20,23 @@ interface ISignUp {
   password: string;
 }
 
-const schema = yup
-  .object()
-  .shape({
-    username: yup.string().required(),
-    email: yup.string().email().required(),
-    password: yup.string().required().min(6),
-  })
-  .required();
+const defaultFormValues: ISignUp = {
+  username: '',
+  email: '',
+  password: '',
+};
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState(defaultFormValues);
+  const [errors, setErrors] = useState(defaultFormValues);
 
-  const methods = useForm<ISignUp>({
-    mode: 'onChange',
-    resolver: yupResolver(schema),
-  });
-
-  const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { isValid, errors },
-  } = methods;
-
-  const onSubmit = async (data: ISignUp) => {
+  const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
+    ev.preventDefault();
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: { ...data } }),
+      body: JSON.stringify({ user: { ...formData } }),
     };
     const response = await fetch(`${apiUrl}/api/users`, requestOptions);
     const userdata = await response.json();
@@ -66,12 +57,20 @@ export default function SignUp() {
     return navigate('/');
   };
 
-  const submit = handleSubmit(onSubmit);
+  const handleInput = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = ev.target;
+    setFormData({ ...formData, [name]: value });
 
-  useEffect(() => {
-    reset();
-    return () => reset();
-  }, []);
+    let msg: string;
+    if (name === 'username') {
+      msg = required(value).msg;
+    } else if (name === 'email') {
+      msg = isValidEmail(value).msg;
+    } else if (name === 'password') {
+      msg = isValidPassword(value).msg;
+    }
+    setErrors((prev) => ({ ...prev, [name]: msg }));
+  };
 
   return (
     <div className={styles.container}>
@@ -79,26 +78,43 @@ export default function SignUp() {
       <Link to={{ pathname: '/login' }} className={styles.link}>
         Have an account?
       </Link>
-      <FormProvider {...methods}>
-        <form noValidate className={styles.form} onSubmit={submit}>
-          <Input placeholder="Username" {...register('username')} />
-          <ErrorMsg>{errors.username?.message}</ErrorMsg>
-          <Input type="email" placeholder="Email" {...register('email')} />
-          <ErrorMsg>{errors.email?.message}</ErrorMsg>
-          <Input
-            type="password"
-            autoComplete="current-password"
-            placeholder="Password"
-            {...register('password')}
-          />
-          <ErrorMsg>{errors.password?.message}</ErrorMsg>
-          <div className={styles.right}>
-            <Button type="submit" disabled={!isValid}>
-              Sign Up
-            </Button>
-          </div>
-        </form>
-      </FormProvider>
+      <form noValidate className={styles.form} onSubmit={onSubmit}>
+        <Input
+          placeholder="Username"
+          name="username"
+          autoComplete="username"
+          onChange={handleInput}
+          value={formData.username}
+        />
+        <ErrorMsg>{errors.username}</ErrorMsg>
+        <Input
+          type="email"
+          placeholder="Email"
+          name="email"
+          onChange={handleInput}
+          value={formData.email}
+        />
+        <ErrorMsg>{errors.email}</ErrorMsg>
+        <Input
+          type="password"
+          autoComplete="current-password"
+          placeholder="Password"
+          name="password"
+          onChange={handleInput}
+          value={formData.password}
+        />
+        <ErrorMsg>{errors.password}</ErrorMsg>
+        <div className={styles.right}>
+          <Button
+            type="submit"
+            disabled={
+              isAnyError(Object.values(errors)) || !isAllFilled(formData)
+            }
+          >
+            Sign Up
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }
