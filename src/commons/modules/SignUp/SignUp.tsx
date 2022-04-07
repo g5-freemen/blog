@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
+import { registerUser } from '../../utils/httpService';
 import {
   isAllFilled,
   isAnyError,
@@ -11,10 +12,9 @@ import {
   isValidPassword,
   required,
 } from '../../utils/validations';
-import { apiUrl } from '../../utils/constants';
 import styles from '../SignIn/SignIn.module.css';
 
-interface ISignUp {
+export interface ISignUp {
   username: string;
   email: string;
   password: string;
@@ -33,17 +33,11 @@ export default function SignUp() {
 
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: { ...formData } }),
-    };
-    const response = await fetch(`${apiUrl}/api/users`, requestOptions);
-    const userdata = await response.json();
+    const { response, data } = await registerUser(formData);
 
     if (!response.ok) {
-      const errorsKeys = Object.keys(userdata.errors);
-      const errorsValues = Object.values(userdata.errors);
+      const errorsKeys = Object.keys(data.errors);
+      const errorsValues = Object.values(data.errors);
       errorsKeys.forEach((key, i) => {
         const keyCap = key[0].toUpperCase() + key.slice(1);
         toast(`${keyCap} ${errorsValues[i]}`, { type: 'error' });
@@ -51,7 +45,7 @@ export default function SignUp() {
       return false;
     }
 
-    toast(`${userdata.user.username} Registered Successfully!`, {
+    toast(`${data.user.username} Registered Successfully!`, {
       type: 'success',
     });
     return navigate('/');
