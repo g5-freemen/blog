@@ -15,9 +15,7 @@ export default function SignIn() {
         <Input placeholder="Email" />
         <Input placeholder="Password" />
         <div className={styles.right}>
-          <Button type="submit">
-            Sign In
-          </Button>
+          <Button type="submit">Sign In</Button>
         </div>
       </form>
     </div>
