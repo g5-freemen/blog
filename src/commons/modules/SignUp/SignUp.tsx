@@ -33,7 +33,13 @@ export default function SignUp() {
 
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const { response, data } = await registerUser(formData);
+    const fetchData = await registerUser(formData);
+    if (!fetchData) {
+      toast('Something went wrong!', { type: 'error' });
+      return false;
+    }
+
+    const { response, data } = fetchData;
 
     if (!response.ok) {
       const errorsKeys = Object.keys(data.errors);
