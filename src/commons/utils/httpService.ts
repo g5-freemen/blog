@@ -12,8 +12,7 @@ export async function registerUser(formData: ISignUp) {
     const data = await response.json();
 
     return { response, data };
-  } catch (e) {
-    console.error(e);
-    return null;
+  } catch (e: any) {
+    return typeof e === 'string' ? e : e.message;
   }
 }
