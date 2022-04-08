@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { Cookies } from 'react-cookie';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
+import { setUser } from '../../redux/rootReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpService';
-import { isValidEmail, isValidPassword } from '../../utils/validations';
+import { validate } from '../../utils/validations';
 import styles from './SignIn.module.css';
 
 export interface ISignIn {
@@ -20,18 +23,30 @@ const defaultFormValues: ISignIn = {
 };
 
 export default function SignIn() {
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultFormValues);
 
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const { response, data } = await loginUser(formData);
+
+    const fetchData = await loginUser(formData);
+    if (typeof fetchData === 'string') {
+      toast(fetchData, { type: 'error' });
+      return false;
+    }
+
+    const { response, data } = fetchData;
     if (!response.ok) {
       errorsToasts(data);
       return false;
     }
 
+    const { token, ...user } = data.user;
+    dispatch(setUser(user));
+    cookies.set('token', token);
     const successMsg = `${data.user.username} Logged in`;
     toast(successMsg, { type: 'success' });
     return navigate('/');
@@ -41,12 +56,7 @@ export default function SignIn() {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
 
-    let msg: string;
-    if (name === 'email') {
-      msg = isValidEmail(value).msg;
-    } else if (name === 'password') {
-      msg = isValidPassword(value).msg;
-    }
+    const msg = validate(name, value);
     setErrors((prev) => ({ ...prev, [name]: msg }));
   };
 
@@ -61,6 +71,7 @@ export default function SignIn() {
           type="email"
           placeholder="Email"
           name="email"
+          autoComplete="email"
           onChange={handleInput}
           value={formData.email}
         />

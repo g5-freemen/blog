@@ -6,10 +6,18 @@ const SET_TAGS = 'SET_TAGS';
 const SET_ARTICLES = 'SET_ARTICLES';
 const SET_LOADING = 'SET_LOADING';
 const SET_LIMIT = 'SET_LIMIT';
+const SET_USER = 'SET_USER';
 
 type ActionType = {
   type?: string;
   payload?: any;
+};
+
+export type UserType = {
+  email: string;
+  username: string;
+  bio: string | null;
+  image: string | null;
 };
 
 const initialState = {
@@ -17,6 +25,7 @@ const initialState = {
   articles: [],
   loading: false,
   limit: DEFAULT_ARTICLES_LIMIT,
+  user: undefined,
 };
 
 export default function rootReducer(
@@ -32,17 +41,19 @@ export default function rootReducer(
       return { ...state, loading: action.payload };
     case SET_LIMIT:
       return { ...state, limit: action.payload };
+    case SET_USER:
+      return { ...state, user: action.payload };
     default:
       return state;
   }
 }
 
-export const setTags = (value: string[] | null) => ({
+export const setTags = (value: string[] | string) => ({
   type: SET_TAGS,
   payload: value,
 });
 
-export const setArticles = (value: ArticleType[] | null) => ({
+export const setArticles = (value: ArticleType[] | string) => ({
   type: SET_ARTICLES,
   payload: value,
 });
@@ -57,7 +68,13 @@ export const setLimit = (value: number) => ({
   payload: value,
 });
 
+export const setUser = (value: UserType) => ({
+  type: SET_USER,
+  payload: value,
+});
+
 export const selectTags = (store: RootState) => store.tags;
 export const selectArticles = (store: RootState) => store.articles;
 export const selectLoading = (store: RootState) => store.loading;
 export const selectLimit = (store: RootState) => store.limit;
+export const selectUser = (store: RootState) => store.user;
