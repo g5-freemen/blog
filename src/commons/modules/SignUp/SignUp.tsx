@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
+import { errorsToasts } from '../../utils/errorsToasts';
 import { registerUser } from '../../utils/httpService';
 import {
   isAllFilled,
@@ -42,12 +43,7 @@ export default function SignUp() {
     const { response, data } = fetchData;
 
     if (!response.ok) {
-      const errorsKeys = Object.keys(data.errors);
-      const errorsValues = Object.values(data.errors);
-      errorsKeys.forEach((key, i) => {
-        const keyCap = key[0].toUpperCase() + key.slice(1);
-        toast(`${keyCap} ${errorsValues[i]}`, { type: 'error' });
-      });
+      errorsToasts(data);
       return false;
     }
 
