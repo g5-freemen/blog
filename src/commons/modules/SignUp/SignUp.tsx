@@ -6,13 +6,7 @@ import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { registerUser } from '../../utils/httpService';
-import {
-  isAllFilled,
-  isAnyError,
-  isValidEmail,
-  isValidPassword,
-  required,
-} from '../../utils/validations';
+import { isAllFilled, isAnyError, validate } from '../../utils/validations';
 import styles from '../SignIn/SignIn.module.css';
 
 export interface ISignUp {
@@ -56,14 +50,7 @@ export default function SignUp() {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
 
-    let msg: string;
-    if (name === 'username') {
-      msg = required(value).msg;
-    } else if (name === 'email') {
-      msg = isValidEmail(value).msg;
-    } else if (name === 'password') {
-      msg = isValidPassword(value).msg;
-    }
+    const msg = validate(name, value);
     setErrors((prev) => ({ ...prev, [name]: msg }));
   };
 
@@ -86,6 +73,7 @@ export default function SignUp() {
           type="email"
           placeholder="Email"
           name="email"
+          autoComplete="email"
           onChange={handleInput}
           value={formData.email}
         />

@@ -1,7 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
+import { UserType } from '../../redux/rootReducer';
 import NavItem from '../NavItem/NavItem';
 
 const Nav = styled.nav`
@@ -29,20 +31,72 @@ const Brand = styled.a`
 
 const Ul = styled.ul`
   display: flex;
+  align-items: center;
 `;
 
-export const items = [
-  { url: '/', text: 'Home' },
-  { url: '/login', text: 'Sign in' },
-  { url: '/register', text: 'Sign up' },
-];
+interface INavbar {
+  user: UserType | undefined;
+}
 
-export default function Navbar() {
+const iconStyle = { width: '16px', height: '16px', marginRight: '2px' };
+
+export default function Navbar(props: INavbar) {
+  const { user } = props;
   const location = useLocation();
   const isActive = useCallback(
     (val: string) => location.pathname === val,
     [location.pathname],
   );
+
+  const noUserItems = useMemo(
+    () => [
+      { url: '/', text: 'Home' },
+      { url: '/login', text: 'Sign in' },
+      { url: '/register', text: 'Sign up' },
+    ],
+    [],
+  );
+
+  const userItems = useMemo(
+    () => [
+      { url: '/', text: 'Home' },
+      {
+        url: '/editor',
+        text: (
+          <>
+            <IoCreateOutline style={iconStyle} />
+            New Article
+          </>
+        ),
+      },
+      {
+        url: '/settings',
+        text: (
+          <>
+            <IoSettingsSharp style={iconStyle} />
+            Settings
+          </>
+        ),
+      },
+      {
+        url: '/profile',
+        text: (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img
+              src={`${user?.image}`}
+              alt="avatar"
+              style={{ width: '26px', height: '26px', borderRadius: '50%' }}
+            />
+            &nbsp;
+            {user?.username}
+          </div>
+        ),
+      },
+    ],
+    [user],
+  );
+
+  const items = user ? userItems : noUserItems;
 
   return (
     <Nav>
@@ -57,35 +111,6 @@ export default function Navbar() {
           />
         ))}
       </Ul>
-
-      {/* <ul show-authed="true" class="nav navbar-nav pull-xs-right" style="display: none;">
-
-      <li class="nav-item">
-        <a class="nav-link active" ui-sref-active="active" ui-sref="app.home" href="#/">
-          Home
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" ui-sref-active="active" ui-sref="app.editor" href="#/editor/">
-          <i class="ion-compose"></i>&nbsp;New Article
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" ui-sref-active="active" ui-sref="app.settings" href="#/settings">
-          <i class="ion-gear-a"></i>&nbsp;Settings
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link ng-binding" ui-sref-active="active"
-         ui-sref="app.profile.main({ username: $ctrl.currentUser.username })" href="#/@">
-          <img class="user-pic"/>
-        </a>
-      </li>
-
-    </ul> */}
     </Nav>
   );
 }

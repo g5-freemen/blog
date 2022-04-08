@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ArticleType } from '../../components/Article/Article';
-import { fetchArticles } from '../../components/Articles/fetchArticles';
-import { fetchTags } from '../../components/Tags/fetchTags';
 import Banner from '../../components/Banner/Banner';
 import Articles from '../../components/Articles/Articles';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
+import { fetchArticles, fetchTags } from '../../utils/httpService';
 import {
   selectArticles,
   selectLimit,
@@ -27,7 +25,7 @@ export default function Homepage() {
   const loading = useSelector(selectLoading);
 
   const getArticles = useCallback(async () => {
-    const articlesList: ArticleType[] | null = await fetchArticles(limit);
+    const articlesList = await fetchArticles(limit);
     dispatch(setArticles(articlesList));
   }, [limit]);
 
@@ -53,11 +51,17 @@ export default function Homepage() {
     }
 
     if (value === 'articles' && articles) {
-      return <Articles articlesList={articles} />;
+      if (typeof articles !== 'string') {
+        return <Articles articlesList={articles} />;
+      }
+      return articles;
     }
 
     if (value === 'tags' && tags) {
-      return <Tags tagsList={tags} />;
+      if (typeof tags !== 'string') {
+        return <Tags tagsList={tags} />;
+      }
+      return tags;
     }
 
     return 'Error';
