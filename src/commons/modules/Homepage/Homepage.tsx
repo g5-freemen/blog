@@ -6,16 +6,18 @@ import Articles from '../../components/Articles/Articles';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
-import { fetchArticles, fetchTags } from '../../utils/httpService';
+import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices';
 import {
-  selectArticles,
   selectLimit,
   selectLoading,
+  setLoading,
+} from '../../redux/reducers/globalReducer';
+import {
+  selectArticles,
   selectTags,
   setArticles,
-  setLoading,
   setTags,
-} from '../../redux/rootReducer';
+} from '../../redux/reducers/feedReducer';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {

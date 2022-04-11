@@ -5,7 +5,7 @@ import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
 import { errorsToasts } from '../../utils/errorsToasts';
-import { registerUser } from '../../utils/httpService';
+import { registerUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
 import styles from '../SignIn/SignIn.module.css';
 

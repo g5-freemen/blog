@@ -1,7 +1,6 @@
-import { ISignIn } from '../modules/SignIn/SignIn';
-import { ISignUp } from '../modules/SignUp/SignUp';
-import { ArticleType } from '../components/Article/Article';
-import { apiUrl } from './constants';
+import { ArticleType } from '../../components/Article/Article';
+import { apiUrl, headerContent } from '../constants';
+import { RequestType } from './types';
 
 type ArticlesType = Promise<ArticleType[] | string>;
 
@@ -10,11 +9,10 @@ export async function fetchArticles(
   token: string,
 ): ArticlesType {
   try {
-    let requestOptions: any = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    let requestOptions: RequestType = {
+      headers: headerContent,
     };
+
     if (token) {
       requestOptions = {
         ...requestOptions,
@@ -24,6 +22,7 @@ export async function fetchArticles(
         },
       };
     }
+
     const response = await fetch(
       `${apiUrl}/api/articles?limit=${limit}`,
       requestOptions,
@@ -45,44 +44,13 @@ export async function fetchTags(): Promise<string[] | string> {
   }
 }
 
-export async function registerUser(formData: ISignUp) {
-  try {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: { ...formData } }),
-    };
-    const response = await fetch(`${apiUrl}/api/users`, requestOptions);
-    const data = await response.json();
-
-    return { response, data };
-  } catch (e: any) {
-    return typeof e === 'string' ? e : e.message;
-  }
-}
-
-export async function loginUser(formData: ISignIn) {
-  try {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user: { ...formData } }),
-    };
-    const response = await fetch(`${apiUrl}/api/users/login`, requestOptions);
-    const data = await response.json();
-    return { response, data };
-  } catch (e: any) {
-    return typeof e === 'string' ? e : e.message;
-  }
-}
-
 export async function favorite(
   slug: string,
   token: string,
   favorited: boolean,
 ) {
   try {
-    const requestOptions = {
+    const requestOptions: RequestType = {
       method: favorited ? 'DELETE' : 'POST',
       headers: {
         'Content-Type': 'application/json',
