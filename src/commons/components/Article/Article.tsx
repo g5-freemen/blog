@@ -52,15 +52,14 @@ export default function Article(props: ArticleProps) {
   const dispatch = useDispatch();
 
   const pressFavorite = async () => {
-    const user = cookies.get('user');
-    if (!user) {
+    const token = cookies.get('token');
+    if (!token) {
       toast("You're not logged in!", { type: 'warning', autoClose: 2500 });
       return false;
     }
 
-    const token = cookies.get('token');
     const { slug, favorited } = article;
-    favorite(slug, token, favorited)
+    await favorite(slug, token, favorited)
       .then(() => fetchArticles(limit, token))
       .then((data) => dispatch(setArticles(data)));
     return true;

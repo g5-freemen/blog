@@ -45,8 +45,7 @@ export default function SignIn() {
     cookies.set('user', user);
     cookies.set('token', token);
     const successMsg = `${data.user.username} Logged in`;
-    toast(successMsg, { type: 'success' });
-    cookies.get('user');
+    toast(successMsg, { type: 'success', autoClose: 2500 });
     return navigate('/');
   };
 

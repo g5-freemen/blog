@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   const cookies = new Cookies();
-  const user = cookies.get('user');
 
   useEffect(
     () => () => {
@@ -22,7 +21,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Navbar user={user} />
+      <Navbar />
       <ToastContainer />
       <Routes>
         <Route path="/login" element={<SignIn />} />

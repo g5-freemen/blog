@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { Cookies } from 'react-cookie';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -34,14 +35,11 @@ const Ul = styled.ul`
   align-items: center;
 `;
 
-interface INavbar {
-  user: UserType | undefined;
-}
-
 const iconStyle = { width: '16px', height: '16px', marginRight: '2px' };
 
-export default function Navbar(props: INavbar) {
-  const { user } = props;
+export default function Navbar() {
+  const cookies = new Cookies();
+  const user: UserType | undefined = cookies.get('user');
   const location = useLocation();
   const isActive = useCallback(
     (val: string) => location.pathname === val,
