@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Cookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
-import { setUser } from '../../redux/rootReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpService';
 import { validate } from '../../utils/validations';
@@ -24,7 +22,6 @@ const defaultFormValues: ISignIn = {
 
 export default function SignIn() {
   const cookies = new Cookies();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultFormValues);
@@ -45,10 +42,11 @@ export default function SignIn() {
     }
 
     const { token, ...user } = data.user;
-    dispatch(setUser(user));
+    cookies.set('user', user);
     cookies.set('token', token);
     const successMsg = `${data.user.username} Logged in`;
     toast(successMsg, { type: 'success' });
+    cookies.get('user');
     return navigate('/');
   };
 
