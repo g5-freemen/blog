@@ -12,7 +12,7 @@ export default function rootReducer(
 ) {
   switch (action.type) {
     case SET_USER:
-      return { ...state, limit: action.payload };
+      return { ...state, user: action.payload };
     default:
       return state;
   }
