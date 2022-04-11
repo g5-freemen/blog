@@ -11,13 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function App() {
   const cookies = new Cookies();
 
-  useEffect(
-    () => () => {
-      cookies.remove('user');
-      cookies.remove('token');
-    },
-    [],
-  );
+  useEffect(() => () => cookies.remove('token'), []);
 
   return (
     <BrowserRouter>
