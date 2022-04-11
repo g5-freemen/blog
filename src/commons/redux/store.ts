@@ -1,9 +1,20 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import {
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import saga from './saga';
-import rootReducer from './rootReducer';
+import globalReducer from './reducers/globalReducer';
+import feedReducer from './reducers/feedReducer';
+import userReducer from './reducers/userReducer';
 
 const sagaMiddleware = createSagaMiddleware();
+const rootReducer = combineReducers({
+  globalReducer,
+  feedReducer,
+  userReducer,
+});
 const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
 
 const store = configureStore({

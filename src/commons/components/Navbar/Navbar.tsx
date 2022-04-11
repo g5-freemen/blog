@@ -4,7 +4,7 @@ import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
-import { UserType } from '../../redux/rootReducer';
+import { UserType } from '../../redux/reducers/types';
 import NavItem from '../NavItem/NavItem';
 
 const Nav = styled.nav`
