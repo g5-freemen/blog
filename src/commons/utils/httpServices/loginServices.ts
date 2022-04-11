@@ -33,3 +33,16 @@ export async function loginUser(formData: ISignIn) {
     return typeof e === 'string' ? e : e.message;
   }
 }
+
+export async function fetchCurrentUser(token: string) {
+  try {
+    const requestOptions: RequestType = {
+      headers: { ...headerContent, Authorization: `Token ${token}` },
+    };
+    const response = await fetch(`${apiUrl}/api/user`, requestOptions);
+    const data = await response.json();
+    return data.user;
+  } catch (e: any) {
+    return typeof e === 'string' ? e : e.message;
+  }
+}
