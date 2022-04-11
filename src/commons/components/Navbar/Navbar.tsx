@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
-import { Cookies } from 'react-cookie';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import { UserType } from '../../redux/reducers/types';
+import { selectUser } from '../../redux/reducers/userReducer';
 import NavItem from '../NavItem/NavItem';
 
 const Nav = styled.nav`
@@ -38,8 +39,7 @@ const Ul = styled.ul`
 const iconStyle = { width: '16px', height: '16px', marginRight: '2px' };
 
 export default function Navbar() {
-  const cookies = new Cookies();
-  const user: UserType | undefined = cookies.get('user');
+  const user: UserType | undefined = useSelector(selectUser);
   const location = useLocation();
   const isActive = useCallback(
     (val: string) => location.pathname === val,
@@ -55,46 +55,49 @@ export default function Navbar() {
     [],
   );
 
-  const userItems = useMemo(
-    () => [
-      { url: '/', text: 'Home' },
-      {
-        url: '/editor',
-        text: (
-          <>
-            <IoCreateOutline style={iconStyle} />
-            New Article
-          </>
-        ),
-      },
-      {
-        url: '/settings',
-        text: (
-          <>
-            <IoSettingsSharp style={iconStyle} />
-            Settings
-          </>
-        ),
-      },
-      {
-        url: '/profile',
-        text: (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <img
-              src={`${user?.image}`}
-              alt="avatar"
-              style={{ width: '26px', height: '26px', borderRadius: '50%' }}
-            />
-            &nbsp;
-            {user?.username}
-          </div>
-        ),
-      },
-    ],
-    [user],
-  );
+  const items = useMemo(() => {
+    if (user) {
+      const { username, image } = user;
 
-  const items = user ? userItems : noUserItems;
+      return [
+        { url: '/', text: 'Home' },
+        {
+          url: '/editor',
+          text: (
+            <>
+              <IoCreateOutline style={iconStyle} />
+              New Article
+            </>
+          ),
+        },
+        {
+          url: '/settings',
+          text: (
+            <>
+              <IoSettingsSharp style={iconStyle} />
+              Settings
+            </>
+          ),
+        },
+        {
+          url: '/profile',
+          text: (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img
+                src={`${image}`}
+                alt="avatar"
+                style={{ width: '26px', height: '26px', borderRadius: '50%' }}
+              />
+              &nbsp;
+              {username}
+            </div>
+          ),
+        },
+      ];
+    }
+
+    return noUserItems;
+  }, [user]);
 
   return (
     <Nav>
