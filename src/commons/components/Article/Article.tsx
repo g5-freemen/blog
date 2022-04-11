@@ -1,6 +1,12 @@
 import React from 'react';
+import { Cookies } from 'react-cookie';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
+import { selectLimit, setArticles } from '../../redux/rootReducer';
+import { favorite, fetchArticles } from '../../utils/httpService';
+import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 import Tag from '../Tag/Tag';
 import styles from './Article.module.css';
 
@@ -41,6 +47,24 @@ const Avatar = styled.div<AvatarProps>`
 
 export default function Article(props: ArticleProps) {
   const { article } = props;
+  const cookies = new Cookies();
+  const limit = useSelector(selectLimit);
+  const dispatch = useDispatch();
+
+  const pressFavorite = async () => {
+    const user = cookies.get('user');
+    if (!user) {
+      toast("You're not logged in!", { type: 'warning', autoClose: 2500 });
+      return false;
+    }
+
+    const token = cookies.get('token');
+    const { slug, favorited } = article;
+    favorite(slug, token, favorited)
+      .then(() => fetchArticles(limit, token))
+      .then((data) => dispatch(setArticles(data)));
+    return true;
+  };
 
   return (
     <article className={styles.article}>
@@ -58,9 +82,11 @@ export default function Article(props: ArticleProps) {
             </div>
           </div>
         </div>
-        <button type="button" className={styles.favoriteBtn}>
-          {`❤ ${article.favoritesCount}`}
-        </button>
+        <FavoriteBtn
+          counter={article.favoritesCount}
+          favorited={article.favorited}
+          onPress={pressFavorite}
+        />
       </div>
       <h2 className={styles.title}>{article.title}</h2>
       <p className={styles.description}>{article.description}</p>

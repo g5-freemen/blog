@@ -5,9 +5,29 @@ import { apiUrl } from './constants';
 
 type ArticlesType = Promise<ArticleType[] | string>;
 
-export async function fetchArticles(limit: number): ArticlesType {
+export async function fetchArticles(
+  limit: number,
+  token: string,
+): ArticlesType {
   try {
-    const response = await fetch(`${apiUrl}/api/articles?limit=${limit}`);
+    let requestOptions: any = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    if (token) {
+      requestOptions = {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          Authorization: `Token ${token}`,
+        },
+      };
+    }
+    const response = await fetch(
+      `${apiUrl}/api/articles?limit=${limit}`,
+      requestOptions,
+    );
     const data = await response.json();
     return data ? data.articles : [];
   } catch (e: any) {
@@ -49,6 +69,30 @@ export async function loginUser(formData: ISignIn) {
       body: JSON.stringify({ user: { ...formData } }),
     };
     const response = await fetch(`${apiUrl}/api/users/login`, requestOptions);
+    const data = await response.json();
+    return { response, data };
+  } catch (e: any) {
+    return typeof e === 'string' ? e : e.message;
+  }
+}
+
+export async function favorite(
+  slug: string,
+  token: string,
+  favorited: boolean,
+) {
+  try {
+    const requestOptions = {
+      method: favorited ? 'DELETE' : 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+    };
+    const response = await fetch(
+      `${apiUrl}/api/articles/${slug}/favorite`,
+      requestOptions,
+    );
     const data = await response.json();
     return { response, data };
   } catch (e: any) {

@@ -30,32 +30,6 @@
   font-weight: 300;
 }
 
-.favoriteBtn {
-  display: inline-block;
-  font-weight: normal;
-  line-height: 1.25;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid transparent;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 0.25rem;
-  color: #5cb85c;
-  background-image: none;
-  background-color: transparent;
-  border-color: #5cb85c;
-  font-size: 0.875rem;
-  transition: all 0.2s;
-}
-
-.favoriteBtn:hover {
-  color: #fff;
-  background-color: #5cb85c;
-}
-
 .title {
   margin: 0 0 3px;
   font-weight: 600;

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Cookies } from 'react-cookie';
 import Banner from '../../components/Banner/Banner';
 import Articles from '../../components/Articles/Articles';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
@@ -18,6 +19,7 @@ import {
 import styles from './Homepage.module.css';
 
 export default function Homepage() {
+  const cookies = new Cookies();
   const dispatch = useDispatch();
   const tags = useSelector(selectTags);
   const articles = useSelector(selectArticles);
@@ -25,7 +27,8 @@ export default function Homepage() {
   const loading = useSelector(selectLoading);
 
   const getArticles = useCallback(async () => {
-    const articlesList = await fetchArticles(limit);
+    const token = cookies.get('token');
+    const articlesList = await fetchArticles(limit, token);
     dispatch(setArticles(articlesList));
   }, [limit]);
 
