@@ -32,7 +32,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar user={user} />
       <ToastContainer />
       <Routes>
         <Route path="/login" element={<SignIn />} />
