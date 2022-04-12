@@ -34,14 +34,30 @@ export async function loginUser(formData: ISignIn) {
   }
 }
 
-export async function fetchCurrentUser(token: string) {
+export async function updateUser(formData: any, cookieToken: string) {
   try {
     const requestOptions: RequestType = {
-      headers: { ...headerContent, Authorization: `Token ${token}` },
+      method: 'PUT',
+      headers: { ...headerContent, Authorization: `Token ${cookieToken}` },
+      body: JSON.stringify({ user: { ...formData } }),
     };
     const response = await fetch(`${apiUrl}/api/user`, requestOptions);
     const data = await response.json();
-    return data.user;
+    return { response, data };
+  } catch (e: any) {
+    return typeof e === 'string' ? e : e.message;
+  }
+}
+
+export async function fetchCurrentUser(cookieToken: string) {
+  try {
+    const requestOptions: RequestType = {
+      headers: { ...headerContent, Authorization: `Token ${cookieToken}` },
+    };
+    const response = await fetch(`${apiUrl}/api/user`, requestOptions);
+    const data = await response.json();
+    const { token, ...user } = data.user;
+    return user;
   } catch (e: any) {
     return typeof e === 'string' ? e : e.message;
   }

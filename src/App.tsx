@@ -7,6 +7,7 @@ import Navbar from './commons/components/Navbar/Navbar';
 import Homepage from './commons/modules/Homepage/Homepage';
 import SignIn from './commons/modules/SignIn/SignIn';
 import SignUp from './commons/modules/SignUp/SignUp';
+import Settings from './commons/modules/Settings/Settings';
 import { fetchCurrentUser } from './commons/utils/httpServices/loginServices';
 import { selectUser, setUser } from './commons/redux/reducers/userReducer';
 import 'react-toastify/dist/ReactToastify.css';
@@ -37,6 +38,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/" element={<Homepage />} />
       </Routes>
     </BrowserRouter>
