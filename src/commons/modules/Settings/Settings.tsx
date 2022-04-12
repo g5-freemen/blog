@@ -35,6 +35,7 @@ export default function Settings() {
     const cookieToken = cookies.get('token');
     const obj: any = { ...formData };
     Object.keys(obj).forEach((key) => !obj[key] && delete obj[key]);
+    obj.bio = formData.bio || ' ';
     const fetchData = await updateUser(obj, cookieToken);
 
     if (typeof fetchData !== 'string') {
@@ -53,7 +54,9 @@ export default function Settings() {
     }
   };
 
-  const handleInput = (ev: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (
+    ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
 
@@ -91,7 +94,13 @@ export default function Settings() {
           value={formData.username}
         />
         <ErrorMsg>{errors.username}</ErrorMsg>
-        <TextArea rows={8} placeholder="Short bio about you" />
+        <TextArea
+          rows={8}
+          placeholder="Short bio about you"
+          name="bio"
+          onChange={handleInput}
+          value={formData.bio || ''}
+        />
         <Input
           type="email"
           placeholder="Email"
