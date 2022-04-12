@@ -42,6 +42,7 @@ export default function Settings() {
         type: 'success',
         autoClose: 2500,
       });
+      cookies.set('token', token);
       dispatch(setUser(userdata));
     }
   };

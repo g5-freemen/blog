@@ -9,7 +9,7 @@ import { Input } from '../../components/Input/Input';
 import { setUser } from '../../redux/reducers/userReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpServices/loginServices';
-import { validate } from '../../utils/validations';
+import { isAllFilled, isAnyError, validate } from '../../utils/validations';
 import styles from './SignIn.module.css';
 
 export interface ISignIn {
@@ -86,7 +86,14 @@ export default function SignIn() {
         />
         <ErrorMsg>{errors.password}</ErrorMsg>
         <div className={styles.right}>
-          <Button type="submit">Sign In</Button>
+          <Button
+            type="submit"
+            disabled={
+              isAnyError(Object.values(errors)) || !isAllFilled(formData)
+            }
+          >
+            Sign In
+          </Button>
         </div>
       </form>
     </div>
