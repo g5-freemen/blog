@@ -19,7 +19,11 @@ export default function App() {
 
   async function getCurrentUser(token: string) {
     const data = await fetchCurrentUser(token);
-    dispatch(setUser(data));
+    if (typeof data !== 'string') {
+      dispatch(setUser(data));
+    } else {
+      dispatch(setUser(undefined));
+    }
   }
 
   useEffect(() => {
