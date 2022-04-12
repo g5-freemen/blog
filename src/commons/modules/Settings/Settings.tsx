@@ -31,19 +31,25 @@ export default function Settings() {
   const [errors, setErrors] = useState(defaultErrors);
 
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
-    const cookieToken = cookies.get('token');
     ev.preventDefault();
+    const cookieToken = cookies.get('token');
     const obj: any = { ...formData };
     Object.keys(obj).forEach((key) => !obj[key] && delete obj[key]);
-    const { response, data } = await updateUser(obj, cookieToken);
-    if (response.ok) {
-      const { token, ...userdata } = data.user;
-      toast('User has been successfully updated!', {
-        type: 'success',
-        autoClose: 2500,
-      });
-      cookies.set('token', token);
-      dispatch(setUser(userdata));
+    const fetchData = await updateUser(obj, cookieToken);
+
+    if (typeof fetchData !== 'string') {
+      const { response, data } = fetchData;
+      if (response.ok) {
+        const { token, ...userdata } = data.user;
+        toast('User has been successfully updated!', {
+          type: 'success',
+          autoClose: 2500,
+        });
+        cookies.set('token', token);
+        dispatch(setUser(userdata));
+      }
+    } else {
+      toast(fetchData, { type: 'warning' });
     }
   };
 
@@ -104,19 +110,12 @@ export default function Settings() {
           value={formData.password}
         />
         <ErrorMsg>{errors.password}</ErrorMsg>
-        <div className={styles.right}>
+        <div className={styles.row}>
+          <Button type="button" red onClick={logOut}>
+            Logout
+          </Button>
           <Button type="submit">Update Settings</Button>
         </div>
-        <hr className={styles.hr} />
-        <Button
-          type="button"
-          red
-          small
-          onClick={logOut}
-          className={styles.left}
-        >
-          Or click here to logout.
-        </Button>
       </form>
     </div>
   );
