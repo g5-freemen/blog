@@ -1,5 +1,6 @@
 import { ArticleType } from '../../components/Article/Article';
 import { apiUrl, headerContent } from '../constants';
+import { errorHandler } from './errorHandler';
 import { RequestType } from './types';
 
 type ArticlesType = Promise<ArticleType[] | string>;
@@ -29,8 +30,8 @@ export async function fetchArticles(
     );
     const data = await response.json();
     return data ? data.articles : [];
-  } catch (e: any) {
-    return typeof e === 'string' ? e : e.message;
+  } catch (e) {
+    return errorHandler(e);
   }
 }
 
@@ -39,8 +40,8 @@ export async function fetchTags(): Promise<string[] | string> {
     const response = await fetch(`${apiUrl}/api/tags`);
     const data = await response.json();
     return data ? data.tags : [];
-  } catch (e: any) {
-    return typeof e === 'string' ? e : e.message;
+  } catch (e) {
+    return errorHandler(e);
   }
 }
 
@@ -63,7 +64,7 @@ export async function favorite(
     );
     const data = await response.json();
     return { response, data };
-  } catch (e: any) {
-    return typeof e === 'string' ? e : e.message;
+  } catch (e) {
+    return errorHandler(e);
   }
 }
