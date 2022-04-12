@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { ToastContainer } from 'react-toastify';
@@ -8,12 +8,13 @@ import Homepage from './commons/modules/Homepage/Homepage';
 import SignIn from './commons/modules/SignIn/SignIn';
 import SignUp from './commons/modules/SignUp/SignUp';
 import { fetchCurrentUser } from './commons/utils/httpServices/loginServices';
-import { setUser } from './commons/redux/reducers/userReducer';
+import { selectUser, setUser } from './commons/redux/reducers/userReducer';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   async function getCurrentUser(token: string) {
     const data = await fetchCurrentUser(token);
@@ -22,7 +23,7 @@ export default function App() {
 
   useEffect(() => {
     const token = cookies.get('token');
-    if (token) {
+    if (token && !user) {
       getCurrentUser(token);
     }
 
