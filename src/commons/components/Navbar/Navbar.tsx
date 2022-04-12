@@ -1,11 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
+import { IconType } from 'react-icons';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import { UserType } from '../../redux/reducers/types';
-import { selectUser } from '../../redux/reducers/userReducer';
 import NavItem from '../NavItem/NavItem';
 
 const Nav = styled.nav`
@@ -36,15 +35,30 @@ const Ul = styled.ul`
   align-items: center;
 `;
 
+const Img = styled.img`
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  margin-right: 4px;
+`;
+
 const iconStyle = { width: '16px', height: '16px', marginRight: '2px' };
 
-export default function Navbar() {
-  const user: UserType | undefined = useSelector(selectUser);
-  const location = useLocation();
-  const isActive = useCallback(
-    (val: string) => location.pathname === val,
-    [location.pathname],
-  );
+const icon = (Component: IconType, txt: string) => (
+  <>
+    <Component style={iconStyle} />
+    {txt}
+  </>
+);
+
+interface NavbarProps {
+  user: UserType | undefined;
+}
+
+export default function Navbar(props: NavbarProps) {
+  const { user } = props;
+  const { pathname } = useLocation();
+  const isActive = useCallback((val: string) => pathname === val, [pathname]);
 
   const noUserItems = useMemo(
     () => [
@@ -63,32 +77,17 @@ export default function Navbar() {
         { url: '/', text: 'Home' },
         {
           url: '/editor',
-          text: (
-            <>
-              <IoCreateOutline style={iconStyle} />
-              New Article
-            </>
-          ),
+          text: icon(IoCreateOutline, 'New Article'),
         },
         {
           url: '/settings',
-          text: (
-            <>
-              <IoSettingsSharp style={iconStyle} />
-              Settings
-            </>
-          ),
+          text: icon(IoSettingsSharp, 'Settings'),
         },
         {
           url: '/profile',
           text: (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img
-                src={`${image}`}
-                alt="avatar"
-                style={{ width: '26px', height: '26px', borderRadius: '50%' }}
-              />
-              &nbsp;
+              <Img src={`${image}`} alt="avatar" />
               {username}
             </div>
           ),
