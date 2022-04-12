@@ -6,3 +6,15 @@ export type RequestType = {
   };
   body?: string;
 };
+
+export type ErrorType = {
+  message: string;
+};
+
+export type UpdateUserType = {
+  email?: string;
+  username?: string;
+  password?: string;
+  bio?: string | null;
+  image?: string | null;
+};
