@@ -4,10 +4,15 @@
   align-items: center;
 }
 
-.row {
+.rowContainer {
   width: 75%;
   display: flex;
   flex: 12;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
 }
 
 .main,
@@ -23,4 +28,11 @@
 
 .aside {
   flex: 3;
+}
+
+.p {
+  padding: 1.5rem 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 1.5;
+  color: #373a3c;
 }
