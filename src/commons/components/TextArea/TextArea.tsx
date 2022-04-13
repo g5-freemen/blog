@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
-export const TextArea = styled.textarea`
-  margin-bottom: 1.5rem;
+interface ITextArea {
+  small?: boolean;
+}
+
+export const TextArea = styled.textarea<ITextArea>`
   padding: 0.75rem 1.5rem;
   width: 100%;
-  font-size: 1.25rem;
+  font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
   line-height: 1.25;
   color: #55595c;
   background-color: #fff;
@@ -23,7 +26,7 @@ export const TextArea = styled.textarea`
     outline: none;
   }
 
-  &:placeholder {
+  &::placeholder {
     color: #99a3b0;
   }
 

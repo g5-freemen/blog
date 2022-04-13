@@ -7,6 +7,7 @@ import Navbar from './commons/components/Navbar/Navbar';
 import Homepage from './commons/modules/Homepage/Homepage';
 import SignIn from './commons/modules/SignIn/SignIn';
 import SignUp from './commons/modules/SignUp/SignUp';
+import NewArticle from './commons/modules/NewArticle/NewArticle';
 import Settings from './commons/modules/Settings/Settings';
 import { fetchCurrentUser } from './commons/utils/httpServices/loginServices';
 import { selectUser, setUser } from './commons/redux/reducers/userReducer';
@@ -40,6 +41,7 @@ export default function App() {
       <Navbar user={user} />
       <ToastContainer />
       <Routes>
+        <Route path="/editor" element={<NewArticle />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/settings" element={<Settings />} />

@@ -1,4 +1,5 @@
 import { ArticleType } from '../../components/Article/Article';
+import { NewArticleType } from '../../modules/NewArticle/NewArticle';
 import { apiUrl, headerContent } from '../constants';
 import { errorHandler } from './errorHandler';
 import { RequestType } from './types';
@@ -32,11 +33,52 @@ export async function fetchArticles(
   }
 }
 
-export async function fetchTags(): Promise<string[] | string> {
+export async function fetchTags(token: string): Promise<string[] | string> {
   try {
-    const response = await fetch(`${apiUrl}/api/tags`);
+    let requestOptions: RequestType = {
+      headers: headerContent,
+    };
+
+    if (token) {
+      requestOptions = {
+        ...requestOptions,
+        headers: {
+          ...requestOptions.headers,
+          Authorization: `Token ${token}`,
+        },
+      };
+    }
+
+    const response = await fetch(`${apiUrl}/api/tags`, requestOptions);
     const data = await response.json();
     return data ? data.tags : [];
+  } catch (e) {
+    return errorHandler(e);
+  }
+}
+
+export async function createArticle(
+  formData: NewArticleType,
+  cookieToken: string,
+): Promise<ArticleType | string> {
+  try {
+    const requestOptions: RequestType = {
+      method: 'POST',
+      headers: { ...headerContent, Authorization: `Token ${cookieToken}` },
+      body: JSON.stringify({
+        article: {
+          title: formData.title,
+          description: formData.about,
+          body: formData.content,
+          tagList: formData.tags.split(' '),
+        },
+      }),
+    };
+
+    const request = `${apiUrl}/api/articles`;
+    const response = await fetch(request, requestOptions);
+    const data = await response.json();
+    return data;
   } catch (e) {
     return errorHandler(e);
   }

@@ -25,7 +25,7 @@ export const Input = styled.input<IInput>`
     outline: none;
   }
 
-  &:placeholder {
+  &::placeholder {
     color: #99a3b0;
   }
 

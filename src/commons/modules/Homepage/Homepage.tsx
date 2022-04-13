@@ -29,6 +29,7 @@ import { selectUser } from '../../redux/reducers/userReducer';
 
 export default function Homepage() {
   const cookies = new Cookies();
+  const token = cookies.get('token');
   const dispatch = useDispatch();
   const activePill = useSelector(selectActivePill);
   const user = useSelector(selectUser);
@@ -38,7 +39,6 @@ export default function Homepage() {
   const loading = useSelector(selectLoading);
 
   const getArticles = useCallback(async () => {
-    const token = cookies.get('token');
     let articlesList;
     if (activePill === 'user' && user) {
       const str = `&author=${user.username}`;
@@ -53,7 +53,7 @@ export default function Homepage() {
   }, [limit, activePill]);
 
   const getTags = useCallback(async () => {
-    const tagsList = await fetchTags();
+    const tagsList = await fetchTags(token);
     dispatch(setTags(tagsList));
   }, []);
 

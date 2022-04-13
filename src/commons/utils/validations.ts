@@ -27,9 +27,14 @@ export function isValidPassword(password: string) {
   return { valid, msg: valid ? '' : errMsg };
 }
 
-export function validate(name: string, value: string) {
+export function validate(...args: [string, string, string[]?]) {
+  const [name, value, requiredFields = []] = args;
   let msg: string = '';
-  if (name === 'username') {
+  if (
+    name === 'username'
+    || (Array.isArray(requiredFields)
+      && requiredFields.find((el: string) => el === name))
+  ) {
     msg = required(value).msg;
   } else if (name === 'email') {
     msg = isValidEmail(value).msg;
