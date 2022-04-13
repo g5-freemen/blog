@@ -1,5 +1,7 @@
+export type MethodType = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
 export type RequestType = {
-  method?: 'POST' | 'PUT' | 'DELETE';
+  method?: MethodType;
   headers: {
     'Content-Type': string;
     Authorization?: string;
