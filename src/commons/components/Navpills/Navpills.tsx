@@ -35,14 +35,13 @@ export default function Navpills() {
     [activePill],
   );
 
-  const clickPill = (event: any) => {
-    const target = event.target as HTMLElement;
-    const innerText = target.innerText.toLowerCase();
-    if (innerText.includes('your')) {
+  const clickPill = (event: React.MouseEvent<HTMLElement>) => {
+    const { innerText } = event.target as HTMLElement;
+    if (innerText.includes('Your')) {
       dispatch(setActivePill('user'));
     }
 
-    if (innerText.includes('global')) {
+    if (innerText.includes('Global')) {
       dispatch(setActivePill(undefined));
     }
 
