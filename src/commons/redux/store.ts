@@ -4,10 +4,10 @@ import {
   getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import saga from './saga';
-import globalReducer from './reducers/globalReducer';
 import feedReducer from './reducers/feedReducer';
+import globalReducer from './reducers/globalReducer';
 import userReducer from './reducers/userReducer';
+import saga from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineReducers({

@@ -8,6 +8,7 @@ type ArticlesType = Promise<ArticleType[] | string>;
 export async function fetchArticles(
   limit: number,
   token: string,
+  str: string | undefined,
 ): ArticlesType {
   try {
     let requestOptions: RequestType = {
@@ -24,10 +25,8 @@ export async function fetchArticles(
       };
     }
 
-    const response = await fetch(
-      `${apiUrl}/api/articles?limit=${limit}`,
-      requestOptions,
-    );
+    const request = `${apiUrl}/api/articles?limit=${limit}${str || ''}`;
+    const response = await fetch(request, requestOptions);
     const data = await response.json();
     return data ? data.articles : [];
   } catch (e) {

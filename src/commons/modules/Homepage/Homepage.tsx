@@ -6,33 +6,51 @@ import Articles from '../../components/Articles/Articles';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
-import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices';
+import { ArticleType } from '../../components/Article/Article';
+import {
+  selectActivePill,
+  selectArticles,
+  selectTags,
+  setArticles,
+  setTags,
+} from '../../redux/reducers/feedReducer';
 import {
   selectLimit,
   selectLoading,
   setLoading,
 } from '../../redux/reducers/globalReducer';
 import {
-  selectArticles,
-  selectTags,
-  setArticles,
-  setTags,
-} from '../../redux/reducers/feedReducer';
+  fetchArticles,
+  fetchTags,
+} from '../../utils/httpServices/feedServices';
 import styles from './Homepage.module.css';
+import Navpills from '../../components/Navpills/Navpills';
+import { selectUser } from '../../redux/reducers/userReducer';
 
 export default function Homepage() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
-  const tags = useSelector(selectTags);
-  const articles = useSelector(selectArticles);
+  const activePill = useSelector(selectActivePill);
+  const user = useSelector(selectUser);
+  const tags: string[] = useSelector(selectTags);
+  const articles: ArticleType[] = useSelector(selectArticles);
   const limit = useSelector(selectLimit);
   const loading = useSelector(selectLoading);
 
   const getArticles = useCallback(async () => {
     const token = cookies.get('token');
-    const articlesList = await fetchArticles(limit, token);
+    let articlesList;
+    if (activePill === 'user' && user) {
+      const str = `&author=${user.username}`;
+      articlesList = await fetchArticles(limit, token, str);
+    } else if (activePill && activePill.includes('#')) {
+      const str = `&tag=${activePill.slice(1)}`;
+      articlesList = await fetchArticles(limit, token, str);
+    } else {
+      articlesList = await fetchArticles(limit, token, undefined);
+    }
     dispatch(setArticles(articlesList));
-  }, [limit]);
+  }, [limit, activePill]);
 
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags();
@@ -48,7 +66,7 @@ export default function Homepage() {
 
   useEffect(() => {
     getArticles();
-  }, [limit]);
+  }, [limit, activePill]);
 
   const show = (value: string) => {
     if (loading) {
@@ -57,7 +75,10 @@ export default function Homepage() {
 
     if (value === 'articles' && articles) {
       if (typeof articles !== 'string') {
-        return <Articles articlesList={articles} />;
+        if (articles.length > 0) {
+          return <Articles articlesList={articles} />;
+        }
+        return <p className={styles.p}>No articles are here... yet.</p>;
       }
       return articles;
     }
@@ -75,9 +96,12 @@ export default function Homepage() {
   return (
     <div className={styles.container}>
       <Banner />
-      <div className={styles.row}>
+      <div className={styles.rowContainer}>
         <main className={styles.main}>
-          <ArticlesLimiter limits={[5, 10, 20, 50, 100]} />
+          <div className={styles.row}>
+            <Navpills />
+            <ArticlesLimiter limits={[5, 10, 20, 50, 100]} />
+          </div>
           {show('articles')}
         </main>
         <aside className={styles.aside}>{show('tags')}</aside>
