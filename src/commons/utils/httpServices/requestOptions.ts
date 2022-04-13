@@ -3,20 +3,14 @@ import { MethodType, RequestType } from './types';
 
 export function options(...args: [string | undefined, MethodType?, string?]) {
   const [token, method = 'GET', body] = args;
-  let requestOptions: RequestType = {
+  const requestOptions: RequestType = {
     method,
-    headers: headerContent,
+    headers: { ...headerContent, Authorization: `Token ${token}` },
     body,
   };
 
-  if (token) {
-    requestOptions = {
-      ...requestOptions,
-      headers: {
-        ...requestOptions.headers,
-        Authorization: `Token ${token}`,
-      },
-    };
+  if (!token) {
+    delete requestOptions.headers.Authorization;
   }
 
   return requestOptions;
