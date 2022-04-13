@@ -101,6 +101,7 @@ export default function Settings() {
           onChange={handleInput}
           value={formData.bio || ''}
         />
+        <br />
         <Input
           type="email"
           placeholder="Email"
