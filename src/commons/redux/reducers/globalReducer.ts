@@ -5,7 +5,7 @@ import { ActionType } from './types';
 
 const initialState = {
   loading: false,
-  articlesLimit: DEFAULT_ARTICLES_LIMIT,
+  limit: DEFAULT_ARTICLES_LIMIT,
 };
 
 export default function globalReducer(
@@ -33,6 +33,4 @@ export const setLimit = (value: number) => ({
 });
 
 export const selectLoading = (store: RootState) => store.globalReducer.loading;
-export function selectLimit(store: RootState) {
-  return store.globalReducer.articlesLimit;
-}
+export const selectLimit = (store: RootState) => store.globalReducer.limit;
