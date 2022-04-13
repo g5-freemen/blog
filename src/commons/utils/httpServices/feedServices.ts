@@ -1,8 +1,8 @@
 import { ArticleType } from '../../components/Article/Article';
 import { NewArticleType } from '../../modules/NewArticle/NewArticle';
-import { apiUrl, headerContent } from '../constants';
+import { apiUrl } from '../constants';
 import { errorHandler } from './errorHandler';
-import { RequestType } from './types';
+import { options } from './requestOptions';
 
 export async function fetchArticles(
   limit: number,
@@ -10,22 +10,8 @@ export async function fetchArticles(
   str?: string,
 ): Promise<ArticleType[] | string> {
   try {
-    let requestOptions: RequestType = {
-      headers: headerContent,
-    };
-
-    if (token) {
-      requestOptions = {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          Authorization: `Token ${token}`,
-        },
-      };
-    }
-
     const request = `${apiUrl}/api/articles?limit=${limit}${str || ''}`;
-    const response = await fetch(request, requestOptions);
+    const response = await fetch(request, options(token));
     const data = await response.json();
     return data ? data.articles : [];
   } catch (e) {
@@ -35,21 +21,7 @@ export async function fetchArticles(
 
 export async function fetchTags(token: string): Promise<string[] | string> {
   try {
-    let requestOptions: RequestType = {
-      headers: headerContent,
-    };
-
-    if (token) {
-      requestOptions = {
-        ...requestOptions,
-        headers: {
-          ...requestOptions.headers,
-          Authorization: `Token ${token}`,
-        },
-      };
-    }
-
-    const response = await fetch(`${apiUrl}/api/tags`, requestOptions);
+    const response = await fetch(`${apiUrl}/api/tags`, options(token));
     const data = await response.json();
     return data ? data.tags : [];
   } catch (e) {
@@ -59,24 +31,20 @@ export async function fetchTags(token: string): Promise<string[] | string> {
 
 export async function createArticle(
   formData: NewArticleType,
-  cookieToken: string,
+  token: string,
 ): Promise<ArticleType | string> {
   try {
-    const requestOptions: RequestType = {
-      method: 'POST',
-      headers: { ...headerContent, Authorization: `Token ${cookieToken}` },
-      body: JSON.stringify({
-        article: {
-          title: formData.title,
-          description: formData.about,
-          body: formData.content,
-          tagList: formData.tags.split(' '),
-        },
-      }),
-    };
+    const body = JSON.stringify({
+      article: {
+        title: formData.title,
+        description: formData.about,
+        body: formData.content,
+        tagList: formData.tags.split(' '),
+      },
+    });
 
     const request = `${apiUrl}/api/articles`;
-    const response = await fetch(request, requestOptions);
+    const response = await fetch(request, options(token, 'POST', body));
     const data = await response.json();
     return data;
   } catch (e) {
@@ -90,16 +58,10 @@ export async function favorite(
   favorited: boolean,
 ) {
   try {
-    const requestOptions: RequestType = {
-      method: favorited ? 'DELETE' : 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,
-      },
-    };
+    const method = favorited ? 'DELETE' : 'POST';
     const response = await fetch(
       `${apiUrl}/api/articles/${slug}/favorite`,
-      requestOptions,
+      options(token, method),
     );
     const data = await response.json();
     return { response, data };

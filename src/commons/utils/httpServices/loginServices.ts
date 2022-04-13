@@ -1,19 +1,18 @@
 import { ISignIn } from '../../modules/SignIn/SignIn';
 import { ISignUp } from '../../modules/SignUp/SignUp';
-import { apiUrl, headerContent } from '../constants';
+import { apiUrl } from '../constants';
 import { errorHandler } from './errorHandler';
-import { RequestType, UpdateUserType } from './types';
+import { options } from './requestOptions';
+import { UpdateUserType } from './types';
 
 export async function registerUser(formData: ISignUp) {
   try {
-    const requestOptions: RequestType = {
-      method: 'POST',
-      headers: headerContent,
-      body: JSON.stringify({ user: { ...formData } }),
-    };
-    const response = await fetch(`${apiUrl}/api/users`, requestOptions);
+    const body = JSON.stringify({ user: { ...formData } });
+    const response = await fetch(
+      `${apiUrl}/api/users`,
+      options(undefined, 'POST', body),
+    );
     const data = await response.json();
-
     return { response, data };
   } catch (e) {
     return errorHandler(e);
@@ -22,12 +21,11 @@ export async function registerUser(formData: ISignUp) {
 
 export async function loginUser(formData: ISignIn) {
   try {
-    const requestOptions: RequestType = {
-      method: 'POST',
-      headers: headerContent,
-      body: JSON.stringify({ user: { ...formData } }),
-    };
-    const response = await fetch(`${apiUrl}/api/users/login`, requestOptions);
+    const body = JSON.stringify({ user: { ...formData } });
+    const response = await fetch(
+      `${apiUrl}/api/users/login`,
+      options(undefined, 'POST', body),
+    );
     const data = await response.json();
     return { response, data };
   } catch (e) {
@@ -35,17 +33,13 @@ export async function loginUser(formData: ISignIn) {
   }
 }
 
-export async function updateUser(
-  formData: UpdateUserType,
-  cookieToken: string,
-) {
+export async function updateUser(formData: UpdateUserType, token: string) {
   try {
-    const requestOptions: RequestType = {
-      method: 'PUT',
-      headers: { ...headerContent, Authorization: `Token ${cookieToken}` },
-      body: JSON.stringify({ user: { ...formData } }),
-    };
-    const response = await fetch(`${apiUrl}/api/user`, requestOptions);
+    const body = JSON.stringify({ user: { ...formData } });
+    const response = await fetch(
+      `${apiUrl}/api/user`,
+      options(token, 'PUT', body),
+    );
     const data = await response.json();
     return { response, data };
   } catch (e) {
@@ -55,10 +49,7 @@ export async function updateUser(
 
 export async function fetchCurrentUser(cookieToken: string) {
   try {
-    const requestOptions: RequestType = {
-      headers: { ...headerContent, Authorization: `Token ${cookieToken}` },
-    };
-    const response = await fetch(`${apiUrl}/api/user`, requestOptions);
+    const response = await fetch(`${apiUrl}/api/user`, options(cookieToken));
     const data = await response.json();
     const { token, ...user } = data.user;
     return user;
