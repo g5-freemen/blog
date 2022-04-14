@@ -34,12 +34,12 @@ export default function NewArticle() {
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultErrors);
 
-  async function onSubmit(ev: React.FormEvent<HTMLFormElement>) {
+  const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    const cookieToken = cookies.get('token');
+    const cookieToken: string = cookies.get('token');
     const fetchData = await createArticle(formData, cookieToken);
 
-    if (typeof fetchData === 'string') {
+    if (typeof fetchData !== 'string') {
       toast('Article has been created!', {
         type: 'success',
         autoClose: 2500,
@@ -49,7 +49,7 @@ export default function NewArticle() {
 
     toast(fetchData, { type: 'warning' });
     return false;
-  }
+  };
 
   const handleInput = (
     ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
