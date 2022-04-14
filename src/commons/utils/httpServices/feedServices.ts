@@ -46,6 +46,14 @@ export async function createArticle(
     const request = `${apiUrl}/api/articles`;
     const response = await fetch(request, options(token, 'POST', body));
     const data = await response.json();
+    if (!response.ok) {
+      const { errors } = data;
+      let result = '';
+      Object.keys(errors).forEach((key) => {
+        result += `${key}: ${errors[key].join(',')}`;
+      });
+      throw Error(result);
+    }
     return data;
   } catch (e) {
     return errorHandler(e);
