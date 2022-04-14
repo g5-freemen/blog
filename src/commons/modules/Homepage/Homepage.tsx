@@ -4,6 +4,7 @@ import { Cookies } from 'react-cookie';
 import Banner from '../../components/Banner/Banner';
 import Articles from '../../components/Articles/Articles';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
+import Navpills from '../../components/Navpills/Navpills';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
 import { ArticleType } from '../../components/Article/Article';
@@ -23,9 +24,8 @@ import {
   fetchArticles,
   fetchTags,
 } from '../../utils/httpServices/feedServices';
-import styles from './Homepage.module.css';
-import Navpills from '../../components/Navpills/Navpills';
 import { selectUser } from '../../redux/reducers/userReducer';
+import styles from './Homepage.module.css';
 
 export default function Homepage() {
   const cookies = new Cookies();
