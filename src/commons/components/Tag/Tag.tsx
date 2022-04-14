@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { selectActivePill } from '../../redux/reducers/feedReducer';
 
 interface TagStyledProps {
-  outlined?: boolean;
   active: boolean;
+  outlined?: boolean;
 }
 
 const outlinedStyle = `border: 1px solid #ddd;

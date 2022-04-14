@@ -8,7 +8,7 @@ type ArticlesType = Promise<ArticleType[] | string>;
 export async function fetchArticles(
   limit: number,
   token: string,
-  str: string | undefined,
+  str?: string,
 ): ArticlesType {
   try {
     let requestOptions: RequestType = {
