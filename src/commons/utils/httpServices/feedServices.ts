@@ -3,13 +3,11 @@ import { apiUrl, headerContent } from '../constants';
 import { errorHandler } from './errorHandler';
 import { RequestType } from './types';
 
-type ArticlesType = Promise<ArticleType[] | string>;
-
 export async function fetchArticles(
   limit: number,
   token: string,
   str?: string,
-): ArticlesType {
+): Promise<ArticleType[] | string> {
   try {
     let requestOptions: RequestType = {
       headers: headerContent,
