@@ -52,11 +52,13 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
+    publicPath: '/',
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
   devServer: {
     static: path.join(__dirname, 'public'),
+    historyApiFallback: true,
     compress: true,
     hot: true,
     open: true,

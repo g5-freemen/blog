@@ -10,7 +10,7 @@ export default function Articles(props: ArticlesProps) {
   const { articlesList } = props;
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       {articlesList.map((article) => (
         <Article key={uuid()} article={article} />
       ))}

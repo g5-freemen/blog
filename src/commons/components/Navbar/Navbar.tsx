@@ -35,9 +35,13 @@ const Ul = styled.ul`
   align-items: center;
 `;
 
-const Img = styled.img`
-  width: 26px;
-  height: 26px;
+interface IImg {
+  size: string;
+}
+
+export const Img = styled.img<IImg>`
+  width: ${({ size }) => size};
+  height: ${({ size }) => size};
   border-radius: 50%;
   margin-right: 4px;
 `;
@@ -84,10 +88,10 @@ export default function Navbar(props: NavbarProps) {
           text: icon(IoSettingsSharp, 'Settings'),
         },
         {
-          url: '/profile',
+          url: `/@${user.username}`,
           text: (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Img src={`${image}`} alt="avatar" />
+              <Img src={`${image}`} alt="avatar" size="26px" />
               {username}
             </div>
           ),

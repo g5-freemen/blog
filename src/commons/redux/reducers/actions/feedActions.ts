@@ -1,3 +1,5 @@
 export const SET_TAGS = 'SET_TAGS';
 export const SET_ARTICLES = 'SET_ARTICLES';
+export const SET_ARTICLES_COUNT = 'SET_ARTICLES_COUNT';
+export const SET_ARTICLES_PAGE = 'SET_ARTICLES_PAGE';
 export const SET_ACTIVE_PILL = 'SET_ACTIVE_PILL';

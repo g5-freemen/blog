@@ -1,13 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   selectActivePill,
+  selectArticlesCount,
   setActivePill,
 } from '../../redux/reducers/feedReducer';
 import { selectUser } from '../../redux/reducers/userReducer';
 
 interface ILi {
+  count: number;
   active?: boolean;
 }
 
@@ -24,39 +27,69 @@ const Li = styled.li<ILi>`
   border-bottom: 2px solid
     ${({ active }) => (active ? '#5CB85C' : 'transparent')};
   color: ${({ active }) => (active ? '#5CB85C' : '#aaa')};
+
+  &::after {
+    content: ' ${({ count, active }) => active && count > 0 && count}';
+    font-size: 0.7rem;
+    font-weight: 600;
+    vertical-align: super;
+  }
 `;
+
+const possibleValues = ['Your', 'Global', 'My', 'Favorited', '#'];
 
 export default function Navpills() {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const user = useSelector(selectUser);
   const activePill = useSelector(selectActivePill);
+  const counter = useSelector(selectArticlesCount);
   const isActive = useCallback(
-    (val: string | undefined) => activePill === val,
+    (val: string) => activePill === val,
     [activePill],
   );
 
+  useEffect(() => {
+    if (pathname === '/') {
+      dispatch(setActivePill('Global'));
+    } else {
+      dispatch(setActivePill('My'));
+    }
+  }, [pathname]);
+
   const clickPill = (event: React.MouseEvent<HTMLElement>) => {
     const { innerText } = event.target as HTMLElement;
-    if (innerText.includes('Your')) {
-      dispatch(setActivePill('user'));
-    }
-
-    if (innerText.includes('Global')) {
-      dispatch(setActivePill(undefined));
-    }
-
-    if (innerText.includes('#')) {
-      dispatch(setActivePill(innerText));
-    }
+    possibleValues.forEach((str) => {
+      if (innerText.includes(str)) {
+        dispatch(setActivePill(str === '#' ? innerText : str));
+      }
+    });
   };
 
-  return (
+  return pathname === '/' ? (
     <NavpillsContainer onClick={clickPill}>
-      {user && <Li active={isActive('user')}>Your Feed</Li>}
-      <Li active={isActive(undefined)}>Global Feed</Li>
-      {activePill && activePill.includes('#') && (
-        <Li active={isActive(activePill)}>{activePill}</Li>
+      {user && (
+        <Li active={isActive('Your')} count={counter}>
+          Your Feed
+        </Li>
       )}
+      <Li active={isActive('Global')} count={counter}>
+        Global Feed
+      </Li>
+      {activePill && activePill.includes('#') && (
+        <Li active={isActive(activePill)} count={counter}>
+          {activePill}
+        </Li>
+      )}
+    </NavpillsContainer>
+  ) : (
+    <NavpillsContainer onClick={clickPill}>
+      <Li active={isActive('My')} count={counter}>
+        My Articles
+      </Li>
+      <Li active={isActive('Favorited')} count={counter}>
+        Favorited Articles
+      </Li>
     </NavpillsContainer>
   );
 }

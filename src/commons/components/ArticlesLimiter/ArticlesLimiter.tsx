@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectLimit, setLimit } from '../../redux/reducers/globalReducer';
@@ -13,6 +13,7 @@ const Select = styled.select`
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.3rem;
   cursor: pointer;
+  outline: none;
 
   &:hover {
     border-radius: 0.3rem 0.3rem 0 0;
@@ -21,12 +22,17 @@ const Select = styled.select`
 
 interface ArticlesLimiterProps {
   limits: number[];
+  defaultValue: number;
 }
 
 export default function ArticlesLimiter(props: ArticlesLimiterProps) {
-  const { limits } = props;
+  const { limits, defaultValue } = props;
   const dispatch = useDispatch();
   const limit = useSelector(selectLimit);
+
+  useEffect(() => {
+    dispatch(setLimit(defaultValue));
+  }, []);
 
   return (
     <Select

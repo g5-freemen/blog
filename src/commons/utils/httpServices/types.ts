@@ -1,3 +1,5 @@
+import { ArticleType } from '../../components/Article/Article';
+
 export type MethodType = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export type RequestType = {
@@ -20,3 +22,8 @@ export type UpdateUserType = {
   bio?: string | null;
   image?: string | null;
 };
+
+export interface IArticles {
+  articles: ArticleType[];
+  articlesCount: number;
+}

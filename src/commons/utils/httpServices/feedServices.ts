@@ -3,17 +3,18 @@ import { NewArticleType } from '../../modules/NewArticle/NewArticle';
 import { apiUrl } from '../constants';
 import { errorHandler } from './errorHandler';
 import { options } from './requestOptions';
+import { IArticles } from './types';
 
 export async function fetchArticles(
   limit: number,
   token: string,
   str?: string,
-): Promise<ArticleType[] | string> {
+): Promise<IArticles | string> {
   try {
     const request = `${apiUrl}/api/articles?limit=${limit}${str || ''}`;
     const response = await fetch(request, options(token));
-    const data = await response.json();
-    return data ? data.articles : [];
+    const data: IArticles = await response.json();
+    return data;
   } catch (e) {
     return errorHandler(e);
   }
