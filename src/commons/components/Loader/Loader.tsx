@@ -1,20 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styles from './Loader.module.css';
 
 interface ILoader {
-  content?: string;
+  content?: React.ReactNode;
 }
-
-const LoaderContainer = styled.span`
-  font-size: 18px;
-  font-style: italic;
-  color: gray;
-`;
 
 export default function Loader(props: ILoader) {
   const { content } = props;
 
-  return <LoaderContainer>{content}</LoaderContainer>;
+  return <span className={styles.pouring}>{content}</span>;
 }
 
 Loader.defaultProps = {

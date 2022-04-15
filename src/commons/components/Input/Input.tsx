@@ -7,6 +7,7 @@ interface IInput {
 export const Input = styled.input<IInput>`
   padding: 0.75rem 1.5rem;
   width: 100%;
+  position: relative;
   font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
   line-height: 1.25;
   color: #55595c;

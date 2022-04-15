@@ -2,20 +2,48 @@ import styled from 'styled-components';
 
 interface IButton {
   red?: boolean;
+  grey?: boolean;
   small?: boolean;
 }
 
+const redStyle = `
+border-color: #B85C5C;
+color: #B85C5C;
+background-color: #fff;
+
+&:hover,
+&:focus {
+  background-color:  #B85C5C;
+  border-color: #B85C5C;
+  color: #fff;
+}
+`;
+
+const greyStyle = `
+color: #999;
+border: 1px solid #999;
+background-color: transparent;
+
+&:hover,
+&:focus {
+  background-color: #ccc;
+  color: #999;
+  border: 1px solid #999;
+}
+`;
+
 export const Button = styled.button<IButton>`
   padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   line-height: 1.25;
   font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
-  color: ${({ red }) => (red ? '#B85C5C' : '#fff')};
-  background-color: ${({ red }) => (red ? '#fff' : '#5cb85c')};
+  color: #fff;
+  background-color: #5cb85c;
   border: 1px solid transparent;
-  border-color: ${({ red }) => (red ? '#B85C5C' : '#5cb85c')};
+  border-color: #5cb85c;
   border-radius: 0.3rem;
-  text-align: center;
-  vertical-align: middle;
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
@@ -23,9 +51,8 @@ export const Button = styled.button<IButton>`
 
   &:hover,
   &:focus {
-    background-color: ${({ red }) => (red ? '#B85C5C' : '#449d44')};
-    border-color: ${({ red }) => (red ? '#B85C5C' : '#419641')};
-    ${({ red }) => red && 'color: #fff'};
+    background-color: #449d44;
+    border-color: #419641;
   }
 
   &:disabled {
@@ -34,4 +61,7 @@ export const Button = styled.button<IButton>`
     color: #ddd;
     cursor: auto;
   }
+
+  ${({ red }) => red && redStyle}
+  ${({ grey }) => grey && greyStyle}
 `;

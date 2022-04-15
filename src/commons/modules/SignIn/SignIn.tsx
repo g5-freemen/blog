@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Cookies } from 'react-cookie';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ImEyeBlocked, ImEye } from 'react-icons/im';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
+import {
+  selectShowPassword,
+  setShowPassword,
+} from '../../redux/reducers/globalReducer';
 import { setUser } from '../../redux/reducers/userReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpServices/loginServices';
@@ -22,10 +27,13 @@ const defaultFormValues: ISignIn = {
   password: '',
 };
 
+const iconStyle = { width: '24px', height: '24px', opacity: 0.6 };
+
 export default function SignIn() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const showPassword = useSelector(selectShowPassword);
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultFormValues);
 
@@ -60,6 +68,8 @@ export default function SignIn() {
     setErrors((prev) => ({ ...prev, [name]: msg }));
   };
 
+  const toggleShowPassword = () => dispatch(setShowPassword(!showPassword));
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Sign in</h1>
@@ -76,14 +86,27 @@ export default function SignIn() {
           value={formData.email}
         />
         <ErrorMsg>{errors.email}</ErrorMsg>
-        <Input
-          type="password"
-          autoComplete="current-password"
-          placeholder="Password"
-          name="password"
-          onChange={handleInput}
-          value={formData.password}
-        />
+        <div className={styles.row}>
+          <Input
+            type={showPassword ? 'text' : 'password'}
+            autoComplete="current-password"
+            placeholder="Password"
+            name="password"
+            onChange={handleInput}
+            value={formData.password}
+          />
+          <button
+            type="button"
+            className={styles.pswdBtn}
+            onClick={toggleShowPassword}
+          >
+            {showPassword ? (
+              <ImEye style={iconStyle} />
+            ) : (
+              <ImEyeBlocked style={iconStyle} />
+            )}
+          </button>
+        </div>
         <ErrorMsg>{errors.password}</ErrorMsg>
         <div className={styles.right}>
           <Button

@@ -15,6 +15,8 @@ const Li = styled.li`
 `;
 
 const TextWrapper = styled.span<LinkProps>`
+  display: flex;
+  align-items: center;
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
   text-decoration: none;

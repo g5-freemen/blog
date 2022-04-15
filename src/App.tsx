@@ -9,6 +9,7 @@ import SignIn from './commons/modules/SignIn/SignIn';
 import SignUp from './commons/modules/SignUp/SignUp';
 import NewArticle from './commons/modules/NewArticle/NewArticle';
 import Settings from './commons/modules/Settings/Settings';
+import Personal from './commons/modules/Personal/Personal';
 import { fetchCurrentUser } from './commons/utils/httpServices/loginServices';
 import { selectUser, setUser } from './commons/redux/reducers/userReducer';
 import 'react-toastify/dist/ReactToastify.css';
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/settings" element={<Settings />} />
+        {user && <Route path={`/@${user.username}`} element={<Personal />} />}
         <Route path="/" element={<Homepage />} />
       </Routes>
     </BrowserRouter>

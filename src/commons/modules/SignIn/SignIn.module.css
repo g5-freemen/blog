@@ -34,3 +34,15 @@
 .right {
   margin-left: auto;
 }
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.pswdBtn {
+  position: absolute;
+  right: 1.5rem;
+  background: none;
+  border: none;
+}
