@@ -28,7 +28,7 @@ interface ArticlesLimiterProps {
 export default function ArticlesLimiter(props: ArticlesLimiterProps) {
   const { limits, defaultValue } = props;
   const dispatch = useDispatch();
-  const limit = useSelector(selectLimit);
+  const limit: number = useSelector(selectLimit);
 
   useEffect(() => {
     dispatch(setLimit(defaultValue));

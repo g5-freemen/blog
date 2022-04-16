@@ -34,16 +34,16 @@ import Pagination from '../../components/Pagination/Pagination';
 
 export default function Homepage() {
   const cookies = new Cookies();
-  const token = cookies.get('token');
+  const token: string = cookies.get('token');
   const dispatch = useDispatch();
   const activePill: string = useSelector(selectActivePill);
   const user = useSelector(selectUser);
   const tags: string[] = useSelector(selectTags);
   const articles: ArticleType[] = useSelector(selectArticles);
-  const articlesCount = useSelector(selectArticlesCount);
-  const limit = useSelector(selectLimit);
-  const currentPage = useSelector(selectPage);
-  const loading = useSelector(selectLoading);
+  const articlesCount: number = useSelector(selectArticlesCount);
+  const limit: number = useSelector(selectLimit);
+  const currentPage: number = useSelector(selectPage);
+  const loading: boolean = useSelector(selectLoading);
 
   const getArticles = useCallback(async () => {
     dispatch(setArticlesCount(0));
