@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
-import { setArticles } from '../../redux/reducers/feedReducer';
+import { selectPage, setArticles } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 import { favorite, fetchArticles } from '../../utils/httpServices/feedServices';
 import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
@@ -50,6 +50,7 @@ export default function Article(props: ArticleProps) {
   const { article } = props;
   const cookies = new Cookies();
   const limit = useSelector(selectLimit);
+  const currentPage = useSelector(selectPage);
   const dispatch = useDispatch();
 
   const pressFavorite = async () => {
@@ -60,9 +61,12 @@ export default function Article(props: ArticleProps) {
     }
 
     const { slug, favorited } = article;
+    const str = `&offset=${(currentPage - 1) * limit}`;
     await favorite(slug, token, favorited)
-      .then(() => fetchArticles(limit, token))
-      .then((data) => dispatch(setArticles(data)));
+      .then(() => fetchArticles(limit, token, str))
+      .then((data) => {
+        dispatch(setArticles(typeof data === 'string' ? data : data.articles));
+      });
     return true;
   };
 
