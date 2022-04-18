@@ -71,7 +71,7 @@ export default function Personal() {
       dispatch(setLoading(true));
       getArticles().then(() => dispatch(setLoading(false)));
     }
-  }, [activePill, currentPage]);
+  }, [activePill, currentPage, limit, user]);
 
   const showArticles = () => {
     if (Array.isArray(articles)) {
