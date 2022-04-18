@@ -75,9 +75,7 @@ export default function Homepage() {
 
   useEffect(() => {
     dispatch(setLoading(true));
-    getArticles()
-      .then(() => getTags())
-      .then(() => dispatch(setLoading(false)));
+    getTags().then(() => dispatch(setLoading(false)));
   }, []);
 
   useEffect(() => {
