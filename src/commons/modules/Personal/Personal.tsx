@@ -38,8 +38,8 @@ export default function Personal() {
   const loading: boolean = useSelector(selectLoading);
   const limit: number = useSelector(selectLimit);
   const articles = useSelector(selectArticles);
-  const articlesCount = useSelector(selectArticlesCount);
-  const currentPage = useSelector(selectPage);
+  const articlesCount: number = useSelector(selectArticlesCount);
+  const currentPage: number = useSelector(selectPage);
   const { image, username, bio } = user;
 
   const toSettings = () => navigate('/settings');

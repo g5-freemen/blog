@@ -49,8 +49,8 @@ const Avatar = styled.div<AvatarProps>`
 export default function Article(props: ArticleProps) {
   const { article } = props;
   const cookies = new Cookies();
-  const limit = useSelector(selectLimit);
-  const currentPage = useSelector(selectPage);
+  const limit: number = useSelector(selectLimit);
+  const currentPage: number = useSelector(selectPage);
   const dispatch = useDispatch();
 
   const pressFavorite = async () => {
