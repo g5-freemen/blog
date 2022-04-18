@@ -47,13 +47,11 @@ export default function Homepage() {
 
   const getArticles = useCallback(async () => {
     dispatch(setArticlesCount(0));
-    let str = '';
+    let str = `&offset=${(currentPage - 1) * limit}`;
     if (activePill === 'Your' && user) {
-      str = `&author=${user.username}&offset=${(currentPage - 1) * limit}`;
-    } else if (activePill === 'Global' && user) {
-      str = `&offset=${(currentPage - 1) * limit}`;
+      str += `&author=${user.username}`;
     } else if (activePill && activePill.includes('#')) {
-      str = `&tag=${activePill.slice(1)}&offset=${(currentPage - 1) * limit}`;
+      str += `&tag=${activePill.slice(1)}`;
     }
     const articlesList = await fetchArticles(limit, token, str);
     if (typeof articlesList === 'string') {

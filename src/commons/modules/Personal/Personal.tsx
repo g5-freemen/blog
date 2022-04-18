@@ -46,11 +46,11 @@ export default function Personal() {
 
   const getArticles = useCallback(async () => {
     dispatch(setArticlesCount(0));
-    let str = '';
+    let str = `&offset=${(currentPage - 1) * limit}`;
     if (activePill === 'My') {
-      str = `&author=${username}&offset=${(currentPage - 1) * limit}`;
+      str += `&author=${username}`;
     } else if (activePill === 'Favorited') {
-      str = `&favorited=${username}&offset=${(currentPage - 1) * limit}`;
+      str += `&favorited=${username}`;
     }
 
     const articlesList = await fetchArticles(limit, token, str);
