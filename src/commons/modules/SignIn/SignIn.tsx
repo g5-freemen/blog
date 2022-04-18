@@ -33,7 +33,7 @@ export default function SignIn() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const showPassword = useSelector(selectShowPassword);
+  const showPassword: boolean = useSelector(selectShowPassword);
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultFormValues);
 
