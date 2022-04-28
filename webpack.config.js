@@ -54,7 +54,14 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
+    asyncChunks: true,
+    clean: true,
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   devServer: {
     static: path.join(__dirname, 'public'),
@@ -70,6 +77,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html'),
+      favicon: path.resolve(__dirname, 'public', 'favicon.png'),
     }),
   ],
 };
