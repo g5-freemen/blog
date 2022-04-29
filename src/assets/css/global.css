@@ -1,3 +1,10 @@
+:root {
+  --cGreen: #5cb85c;
+  --сGrey: #666;
+  --cWhite: #f3f3f3;
+  --cDBlue: #373a3c;
+}
+
 body * {
   -webkit-user-select: none;
   -moz-user-select: none;

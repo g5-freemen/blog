@@ -14,16 +14,18 @@ export default function Tags(props: TagsProps) {
 
   return (
     <aside className={styles.column}>
-      <ul className={styles.sidebar}>
+      <div className={styles.sidebar}>
         <p className={styles.p}>Popular Tags</p>
-        {tagsList.map((el) => (
-          <Tag
-            key={`tag-${el}`}
-            name={el}
-            onClick={() => dispatch(setActivePill(`#${el}`))}
-          />
-        ))}
-      </ul>
+        <ul>
+          {tagsList.map((el) => (
+            <Tag
+              key={`tag-${el}`}
+              name={el}
+              onClick={() => dispatch(setActivePill(`#${el}`))}
+            />
+          ))}
+        </ul>
+      </div>
     </aside>
   );
 }

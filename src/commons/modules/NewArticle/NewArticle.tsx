@@ -62,12 +62,11 @@ export default function NewArticle() {
   };
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <form noValidate className={styles.form} onSubmit={onSubmit}>
         <Input
           placeholder="Article Title"
           name="title"
-          autoComplete="title"
           onChange={handleInput}
           value={formData.title || ''}
         />
@@ -76,7 +75,6 @@ export default function NewArticle() {
           small
           placeholder="What's this article about?"
           name="about"
-          autoComplete="about"
           onChange={handleInput}
           value={formData.about}
         />
@@ -94,7 +92,6 @@ export default function NewArticle() {
           small
           placeholder="Enter tags"
           name="tags"
-          autoComplete="tags"
           onChange={handleInput}
           value={formData.tags}
         />
@@ -110,6 +107,6 @@ export default function NewArticle() {
           </Button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }

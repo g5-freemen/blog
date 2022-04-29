@@ -15,8 +15,8 @@ interface IPages {
 const activePage = (page: number) => `
 & button:nth-child(${page}) {
   font-weight: 700;
-  background-color: #5cb85c;
-  border-bottom: 1px solid #5cb85c;
+  background-color: var(--cGreen);
+  border-bottom: 1px solid var(--cGreen);
   cursor: auto;
 }
 `;
@@ -27,7 +27,7 @@ const Pages = styled.div<IPages>`
   margin: 1rem 0;
   border: rgba(0, 0, 0, 0.2) solid 1px;
   border-radius: 4px;
-  color: #373a3c;
+  color: var(--cDBlue);
   overflow: hidden;
 
   & button {

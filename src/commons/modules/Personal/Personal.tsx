@@ -90,7 +90,7 @@ export default function Personal() {
   };
 
   return (
-    <div>
+    <main>
       <div className={styles.profile}>
         <div className={styles.container}>
           <Img src={`${image}`} alt="avatar" size="100px" />
@@ -109,6 +109,6 @@ export default function Personal() {
         </div>
         {loading ? <Loader /> : showArticles()}
       </div>
-    </div>
+    </main>
   );
 }

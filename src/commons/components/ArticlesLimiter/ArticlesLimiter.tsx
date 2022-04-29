@@ -36,6 +36,7 @@ export default function ArticlesLimiter(props: ArticlesLimiterProps) {
 
   return (
     <Select
+      aria-label="articles limit"
       onChange={(ev) => dispatch(setLimit(+ev.target.value))}
       value={limit}
     >

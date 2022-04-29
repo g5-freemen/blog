@@ -74,14 +74,14 @@ export default function Settings() {
   }, [user]);
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <h1 className={styles.title}>Your Settings</h1>
       <form noValidate className={styles.form} onSubmit={onSubmit}>
         <Input
           small
           placeholder="URL of profile picture"
           name="image"
-          autoComplete="image"
+          autoComplete="photo"
           onChange={handleInput}
           value={formData.image || ''}
         />
@@ -127,6 +127,6 @@ export default function Settings() {
           <Button type="submit">Update Settings</Button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }

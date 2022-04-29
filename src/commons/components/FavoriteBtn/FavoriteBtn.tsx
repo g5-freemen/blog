@@ -18,10 +18,10 @@ const FavoriteBtnContainer = styled.button<IFavoriteBtnContainer>`
   padding: 0.5rem 1rem;
   font-size: 1rem;
   border-radius: 0.25rem;
-  color: ${({ fav }) => (fav ? '#fff' : '#5cb85c')};
-  background-color: ${({ fav }) => (fav ? '#5cb85c' : 'transparent')};
+  color: ${({ fav }) => (fav ? '#fff' : 'var(--cGreen)')};
+  background-color: ${({ fav }) => (fav ? 'var(--cGreen)' : 'transparent')};
   background-image: none;
-  border-color: #5cb85c;
+  border-color: var(--cGreen);
 `;
 
 interface IFavoriteBtn {

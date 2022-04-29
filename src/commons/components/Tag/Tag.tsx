@@ -8,26 +8,27 @@ interface TagStyledProps {
   outlined?: boolean;
 }
 
-const outlinedStyle = `border: 1px solid #ddd;
-color: #aaa;
-background: none;
+const outlinedStyle = `
+  border: 1px solid var(--сGrey);
+  color: var(--сGrey);
+  background: none;
 `;
 
-const TagContainer = styled.div<TagStyledProps>`
+const TagContainer = styled.li<TagStyledProps>`
   margin: 0 3px 0.2rem 0;
   padding: 0.1rem 0.6rem;
   display: inline-block;
   white-space: nowrap;
   color: #fff;
   border-radius: 10rem;
-  background-color: ${({ active }) => (active ? '#666' : 'rgb(129, 138, 145)')};
+  background-color: ${({ active }) => (active ? '#444' : 'var(--сGrey)')};
   ${({ outlined }) => outlined && outlinedStyle}
   font-size: 0.8rem;
   text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
   cursor: pointer;
 
   &:hover {
-    ${({ outlined }) => !outlined && 'background-color: #666;'}
+    ${({ outlined }) => !outlined && 'background-color: #444;'}
   }
 `;
 

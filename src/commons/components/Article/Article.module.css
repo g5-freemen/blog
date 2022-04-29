@@ -2,7 +2,7 @@
   padding: 1.5rem 0;
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
-  color: #373a3c;
+  color: var(--cDBlue);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -19,13 +19,13 @@
 
 .author {
   line-height: 1rem;
-  color: #5cb85c;
+  color: var(--cGreen);
   font-weight: 500;
   text-decoration: none;
 }
 
 .date {
-  color: #bbb;
+  color: var(--сGrey);
   font-size: 0.8rem;
   font-weight: 300;
 }
@@ -41,7 +41,7 @@
 .description {
   margin: 0 0 15px;
   font-weight: 300;
-  color: #999;
+  color: var(--сGrey);
   line-height: 1.3rem;
   cursor: pointer;
 }
@@ -57,6 +57,6 @@
   align-items: flex-end;
   font-size: 0.8rem;
   font-weight: 300;
-  color: #bbb;
+  color: var(--сGrey);
   cursor: pointer;
 }

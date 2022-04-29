@@ -96,11 +96,11 @@ export default function Article(props: ArticleProps) {
       <p className={styles.description}>{article.description}</p>
       <div className={styles.row}>
         <span className={styles.span}>Read more...</span>
-        <span>
+        <ul>
           {article.tagList.map((name) => (
             <Tag key={uuid()} name={name} outlined />
           ))}
-        </span>
+        </ul>
       </div>
     </article>
   );

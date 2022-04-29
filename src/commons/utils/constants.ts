@@ -4,4 +4,5 @@ export const MIN_PASSWORD_LENGTH = 6;
 
 export const headerContent = {
   'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
 };

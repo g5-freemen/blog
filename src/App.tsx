@@ -47,7 +47,7 @@ export default function App() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/settings" element={<Settings />} />
         {user && <Route path={`/@${user.username}`} element={<Personal />} />}
-        <Route path="/" element={<Homepage />} />
+        <Route path="*" element={<Homepage />} />
       </Routes>
     </BrowserRouter>
   );
