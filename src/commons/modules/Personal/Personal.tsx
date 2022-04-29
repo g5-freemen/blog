@@ -64,7 +64,7 @@ export default function Personal() {
 
   useEffect(() => {
     dispatch(setPage(1));
-  }, [activePill]);
+  }, [activePill, limit]);
 
   useEffect(() => {
     if (user && (activePill === 'My' || activePill === 'Favorited')) {
