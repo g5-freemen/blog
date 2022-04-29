@@ -19,12 +19,12 @@
       -45deg,
       transparent,
       transparent 1em,
-      #5cb85c 1em,
+      var(--cGreen) 1em,
       #0a0 50%
     ),
     repeating-linear-gradient(
       45deg,
-      #5cb85c,
+      var(--cGreen),
       #0a0 1em,
       #fff 1em,
       lightgreen 50%

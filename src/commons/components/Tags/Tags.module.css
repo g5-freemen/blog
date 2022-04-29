@@ -6,9 +6,9 @@
 
 .sidebar {
   padding: 5px 10px 10px;
-  background: #f3f3f3;
+  background: var(--cWhite);
   border-radius: 4px;
-  color: #373a3c;
+  color: var(--cDBlue);
 }
 
 .p {

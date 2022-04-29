@@ -20,15 +20,15 @@ background-color: #fff;
 `;
 
 const greyStyle = `
-color: #999;
-border: 1px solid #999;
+color: var(--сGrey);
+border: 1px solid var(--сGrey);
 background-color: transparent;
 
 &:hover,
 &:focus {
   background-color: #ccc;
-  color: #999;
-  border: 1px solid #999;
+  color: var(--сGrey);
+  border: 1px solid var(--сGrey);
 }
 `;
 
@@ -40,9 +40,9 @@ export const Button = styled.button<IButton>`
   line-height: 1.25;
   font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
   color: #fff;
-  background-color: #5cb85c;
+  background-color: var(--cGreen);
   border: 1px solid transparent;
-  border-color: #5cb85c;
+  border-color: var(--cGreen);
   border-radius: 0.3rem;
   white-space: nowrap;
   cursor: pointer;

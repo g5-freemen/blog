@@ -71,7 +71,7 @@ export default function SignIn() {
   const toggleShowPassword = () => dispatch(setShowPassword(!showPassword));
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <h1 className={styles.title}>Sign in</h1>
       <Link to={{ pathname: '/register' }} className={styles.link}>
         Need an account?
@@ -97,6 +97,7 @@ export default function SignIn() {
           />
           <button
             type="button"
+            aria-label="show/hide password button"
             className={styles.pswdBtn}
             onClick={toggleShowPassword}
           >
@@ -119,6 +120,6 @@ export default function SignIn() {
           </Button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }

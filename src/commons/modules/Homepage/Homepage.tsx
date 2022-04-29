@@ -122,7 +122,9 @@ export default function Homepage() {
           </div>
           {show('articles')}
         </main>
-        <aside className={styles.aside}>{show('tags')}</aside>
+        <aside className={styles.aside} aria-label="tags list">
+          {show('tags')}
+        </aside>
       </div>
     </div>
   );

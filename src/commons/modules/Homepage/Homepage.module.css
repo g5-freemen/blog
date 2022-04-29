@@ -34,5 +34,5 @@
   padding: 1.5rem 0;
   font-family: 'Source Sans Pro', sans-serif;
   line-height: 1.5;
-  color: #373a3c;
+  color: var(--cDBlue);
 }

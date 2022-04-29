@@ -25,8 +25,8 @@ const Li = styled.li<ILi>`
   line-height: 1.5;
   cursor: pointer;
   border-bottom: 2px solid
-    ${({ active }) => (active ? '#5CB85C' : 'transparent')};
-  color: ${({ active }) => (active ? '#5CB85C' : '#aaa')};
+    ${({ active }) => (active ? 'var(--cGreen)' : 'transparent')};
+  color: ${({ active }) => (active ? 'var(--cGreen)' : 'var(--сGrey)')};
 
   &::after {
     content: ' ${({ count, active }) => active && count > 0 && count}';

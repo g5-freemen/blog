@@ -18,9 +18,10 @@ const TextWrapper = styled.span<LinkProps>`
   display: flex;
   align-items: center;
   font-family: 'Source Sans Pro', sans-serif;
+  font-weight: ${({ active }) => (active ? '600' : '400')};
   line-height: 1.5;
   text-decoration: none;
-  color: ${({ active }) => (active ? '#373a3c' : 'rgba(0, 0, 0, 0.3)')};
+  color: ${({ active }) => (active ? 'var(--cDBlue)' : 'rgba(0, 0, 0, 0.55)')};
 
   &:hover {
     text-decoration: underline;

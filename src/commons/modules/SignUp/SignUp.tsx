@@ -55,7 +55,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <h1 className={styles.title}>Sign up</h1>
       <Link to={{ pathname: '/login' }} className={styles.link}>
         Have an account?
@@ -98,6 +98,6 @@ export default function SignUp() {
           </Button>
         </div>
       </form>
-    </div>
+    </main>
   );
 }

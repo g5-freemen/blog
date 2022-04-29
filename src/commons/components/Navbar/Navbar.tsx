@@ -16,7 +16,7 @@ const Nav = styled.nav`
   align-items: center;
   position: relative;
   font-family: 'Source Sans Pro', sans-serif;
-  color: #373a3c;
+  color: var(--cDBlue);
 `;
 
 const Brand = styled.a`
@@ -25,8 +25,7 @@ const Brand = styled.a`
   font-family: 'Titillium Web', sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  background-color: transparent;
-  color: #5cb85c;
+  color: var(--cGreen);
   text-decoration: none;
 `;
 
