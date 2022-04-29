@@ -31,7 +31,6 @@ const Li = styled.li<ILi>`
   &::after {
     content: ' ${({ count, active }) => active && count > 0 && count}';
     font-size: 0.7rem;
-    font-weight: 600;
     vertical-align: super;
   }
 `;
