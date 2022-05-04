@@ -71,15 +71,14 @@ export default function Homepage() {
     dispatch(setPage(1));
   }, [activePill]);
 
-  useEffect(() => {
+  const loader = (cb: () => Promise<any>) => {
     dispatch(setLoading(true));
-    getTags().then(() => dispatch(setLoading(false)));
-  }, []);
+    cb().then(() => dispatch(setLoading(false)));
+  };
 
-  useEffect(() => {
-    dispatch(setLoading(true));
-    getArticles().then(() => dispatch(setLoading(false)));
-  }, [limit, activePill, currentPage]);
+  useEffect(() => loader(getTags), []);
+
+  useEffect(() => loader(getArticles), [limit, activePill, currentPage]);
 
   const show = (value: string) => {
     if (loading) {
