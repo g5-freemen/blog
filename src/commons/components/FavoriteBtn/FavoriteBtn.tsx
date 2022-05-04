@@ -12,8 +12,6 @@ const FavoriteBtnContainer = styled.button<IFavoriteBtnContainer>`
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
   border: 1px solid transparent;
   padding: 0.5rem 1rem;
   font-size: 1rem;

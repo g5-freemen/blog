@@ -1,7 +1,5 @@
 .article {
   padding: 1.5rem 0;
-  font-family: 'Source Sans Pro', sans-serif;
-  line-height: 1.5;
   color: var(--cDBlue);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }

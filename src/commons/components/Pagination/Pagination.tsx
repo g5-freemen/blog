@@ -36,7 +36,6 @@ const Pages = styled.div<IPages>`
     padding: 5px 10px;
     border: none;
     border-right: rgba(0, 0, 0, 0.2) solid 1px;
-    cursor: pointer;
   }
 
   & button:last-child {

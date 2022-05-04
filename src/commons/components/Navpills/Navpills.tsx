@@ -21,8 +21,6 @@ const NavpillsContainer = styled.ul`
 
 const Li = styled.li<ILi>`
   padding: 0.5em 1em;
-  font-family: 'Source Sans Pro', sans-serif;
-  line-height: 1.5;
   cursor: pointer;
   border-bottom: 2px solid
     ${({ active }) => (active ? 'var(--cGreen)' : 'transparent')};
