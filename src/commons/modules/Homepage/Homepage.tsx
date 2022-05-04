@@ -68,8 +68,8 @@ export default function Homepage() {
   }, []);
 
   useEffect(() => {
-    dispatch(setPage(1));
-  }, [activePill]);
+    if (currentPage && currentPage !== 1) dispatch(setPage(1));
+  }, [activePill, limit]);
 
   const loader = (cb: () => Promise<any>) => {
     dispatch(setLoading(true));
@@ -78,7 +78,9 @@ export default function Homepage() {
 
   useEffect(() => loader(getTags), []);
 
-  useEffect(() => loader(getArticles), [limit, activePill, currentPage]);
+  useEffect(() => {
+    if (activePill) loader(getArticles);
+  }, [limit, activePill, currentPage]);
 
   const show = (value: string) => {
     if (loading) {
