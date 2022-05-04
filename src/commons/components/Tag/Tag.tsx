@@ -21,14 +21,14 @@ const TagContainer = styled.li<TagStyledProps>`
   white-space: nowrap;
   color: #fff;
   border-radius: 10rem;
-  background-color: ${({ active }) => (active ? '#444' : 'var(--сGrey)')};
+  background-color: ${({ active }) => (active ? 'var(--сDGrey)' : 'var(--сGrey)')};
   ${({ outlined }) => outlined && outlinedStyle}
   font-size: 0.8rem;
   text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
   cursor: pointer;
 
   &:hover {
-    ${({ outlined }) => !outlined && 'background-color: #444;'}
+    ${({ outlined }) => !outlined && 'background-color: var(--сDGrey);'}
   }
 `;
 

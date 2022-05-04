@@ -102,7 +102,7 @@ export default function Personal() {
       <div className={styles.profile}>
         <div className={styles.container}>
           <Img src={`${image}`} alt="avatar" size="100px" />
-          <p className={styles.username}>{username}</p>
+          <h1 className={styles.username}>{username}</h1>
           {bio && <p className={styles.bio}>{bio}</p>}
           <Button grey small className={styles.right} onClick={toSettings}>
             <IoSettingsSharp />

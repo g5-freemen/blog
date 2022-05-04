@@ -63,6 +63,7 @@ export default function NewArticle() {
 
   return (
     <main className={styles.container}>
+      <h1 className={styles.title}>Create New Article</h1>
       <form noValidate className={styles.form} onSubmit={onSubmit}>
         <Input
           placeholder="Article Title"

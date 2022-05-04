@@ -7,14 +7,14 @@ interface IButton {
 }
 
 const redStyle = `
-border-color: #B85C5C;
-color: #B85C5C;
+border-color: var(--cRed);
+color: var(--cRed);
 background-color: #fff;
 
 &:hover,
 &:focus {
-  background-color:  #B85C5C;
-  border-color: #B85C5C;
+  background-color: var(--cRed);
+  border-color: var(--cRed);
   color: #fff;
 }
 `;
@@ -45,8 +45,6 @@ export const Button = styled.button<IButton>`
   border-color: var(--cGreen);
   border-radius: 0.3rem;
   white-space: nowrap;
-  cursor: pointer;
-  user-select: none;
   transition: all 0.3s;
 
   &:hover,

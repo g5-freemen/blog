@@ -6,13 +6,11 @@ import { selectLimit, setLimit } from '../../redux/reducers/globalReducer';
 const Select = styled.select`
   margin: 0 0 8px auto;
   width: fit-content;
-  font-family: 'Source Sans Pro', sans-serif;
   color: #55595c;
   background-color: #fff;
   background-image: none;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.3rem;
-  cursor: pointer;
   outline: none;
 
   &:hover {

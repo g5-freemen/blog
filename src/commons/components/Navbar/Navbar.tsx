@@ -15,7 +15,6 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  font-family: 'Source Sans Pro', sans-serif;
   color: var(--cDBlue);
 `;
 
