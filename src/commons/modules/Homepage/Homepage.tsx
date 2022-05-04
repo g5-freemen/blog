@@ -65,7 +65,7 @@ export default function Homepage() {
   const getTags = useCallback(async () => {
     const tagsList = await fetchTags(token);
     dispatch(setTags(tagsList));
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (currentPage && currentPage !== 1) dispatch(setPage(1));

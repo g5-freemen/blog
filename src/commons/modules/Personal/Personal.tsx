@@ -20,13 +20,17 @@ import { selectUser } from '../../redux/reducers/userReducer';
 import {
   selectLimit,
   selectLoading,
+  setLimit,
   setLoading,
 } from '../../redux/reducers/globalReducer';
 import { fetchArticles } from '../../utils/httpServices/feedServices';
-import styles from './Personal.module.css';
 import Loader from '../../components/Loader/Loader';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Pagination from '../../components/Pagination/Pagination';
+import { DEFAULT_PERSONAL_ARTICLES_LIMIT } from '../../utils/constants';
+import styles from './Personal.module.css';
+
+const defaultLimit = DEFAULT_PERSONAL_ARTICLES_LIMIT;
 
 export default function Personal() {
   const cookies = new Cookies();
@@ -61,6 +65,10 @@ export default function Personal() {
       dispatch(setArticlesCount(articlesList.articlesCount));
     }
   }, [activePill, limit, username, currentPage]);
+
+  useEffect(() => {
+    if (limit && limit !== defaultLimit) dispatch(setLimit(defaultLimit));
+  }, []);
 
   useEffect(() => {
     if (currentPage && currentPage !== 1) dispatch(setPage(1));
@@ -105,7 +113,7 @@ export default function Personal() {
       <div className={styles.container}>
         <div className={styles.row}>
           <Navpills />
-          <ArticlesLimiter limits={[5, 10, 20]} defaultValue={5} />
+          <ArticlesLimiter limits={[5, 10, 20]} defaultValue={defaultLimit} />
         </div>
         {loading ? <Loader /> : showArticles()}
       </div>
