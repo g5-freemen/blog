@@ -60,10 +60,10 @@ export default function Personal() {
       dispatch(setArticles(articlesList.articles));
       dispatch(setArticlesCount(articlesList.articlesCount));
     }
-  }, [activePill, limit, user, currentPage]);
+  }, [activePill, limit, username, currentPage]);
 
   useEffect(() => {
-    dispatch(setPage(1));
+    if (currentPage && currentPage !== 1) dispatch(setPage(1));
   }, [activePill, limit]);
 
   useEffect(() => {
