@@ -22,6 +22,7 @@ import {
 import {
   selectLimit,
   selectLoading,
+  setLimit,
   setLoading,
 } from '../../redux/reducers/globalReducer';
 import {
@@ -31,6 +32,9 @@ import {
 import { selectUser } from '../../redux/reducers/userReducer';
 import styles from './Homepage.module.css';
 import Pagination from '../../components/Pagination/Pagination';
+import { DEFAULT_ARTICLES_LIMIT } from '../../utils/constants';
+
+const defaultLimit = DEFAULT_ARTICLES_LIMIT;
 
 export default function Homepage() {
   const cookies = new Cookies();
@@ -66,6 +70,10 @@ export default function Homepage() {
     const tagsList = await fetchTags(token);
     dispatch(setTags(tagsList));
   }, [token]);
+
+  useEffect(() => {
+    if (limit && limit !== defaultLimit) dispatch(setLimit(defaultLimit));
+  }, []);
 
   useEffect(() => {
     if (currentPage && currentPage !== 1) dispatch(setPage(1));
@@ -119,7 +127,10 @@ export default function Homepage() {
         <main className={styles.main}>
           <div className={styles.row}>
             <Navpills />
-            <ArticlesLimiter limits={[5, 10, 20, 50, 100]} defaultValue={20} />
+            <ArticlesLimiter
+              limits={[5, 10, 20, 50, 100]}
+              defaultValue={defaultLimit}
+            />
           </div>
           {show('articles')}
         </main>
