@@ -79,7 +79,7 @@ export default function Homepage() {
     if (currentPage && currentPage !== 1) dispatch(setPage(1));
   }, [activePill, limit]);
 
-  const loader = (cb: () => Promise<any>) => {
+  const loader = (cb: () => Promise<void>) => {
     dispatch(setLoading(true));
     cb().then(() => dispatch(setLoading(false)));
   };
