@@ -22,7 +22,6 @@ const activePage = (page: number) => `
 `;
 
 const Pages = styled.div<IPages>`
-  width: fit-content;
   display: flex;
   margin: 1rem 0;
   border: rgba(0, 0, 0, 0.2) solid 1px;

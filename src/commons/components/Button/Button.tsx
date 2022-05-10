@@ -41,8 +41,7 @@ export const Button = styled.button<IButton>`
   font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
   color: #fff;
   background-color: var(--cGreen);
-  border: 1px solid transparent;
-  border-color: var(--cGreen);
+  border: 1px solid var(--cGreen);
   border-radius: 0.3rem;
   white-space: nowrap;
   transition: all 0.3s;

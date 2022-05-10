@@ -10,9 +10,7 @@ export const TextArea = styled.textarea<ITextArea>`
   font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
   line-height: 1.25;
   color: #55595c;
-  background-color: #fff;
-  background-image: none;
-  background-clip: padding-box;
+  background: #fff padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.3rem;
   resize: vertical;
