@@ -6,20 +6,18 @@ interface IFavoriteBtnContainer {
 }
 
 const FavoriteBtnContainer = styled.button<IFavoriteBtnContainer>`
+  padding: 0.5rem 1rem;
   display: inline-block;
   line-height: 1.25;
   font-size: 0.875rem;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  border: 1px solid transparent;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  border: 1px solid var(--cGreen);
   border-radius: 0.25rem;
+  font-size: 1rem;
   color: ${({ fav }) => (fav ? '#fff' : 'var(--cGreen)')};
   background-color: ${({ fav }) => (fav ? 'var(--cGreen)' : 'transparent')};
-  background-image: none;
-  border-color: var(--cGreen);
 `;
 
 interface IFavoriteBtn {

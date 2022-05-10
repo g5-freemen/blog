@@ -5,10 +5,8 @@ import { selectLimit, setLimit } from '../../redux/reducers/globalReducer';
 
 const Select = styled.select`
   margin: 0 0 8px auto;
-  width: fit-content;
   color: #55595c;
-  background-color: #fff;
-  background-image: none;
+  background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.3rem;
   outline: none;
