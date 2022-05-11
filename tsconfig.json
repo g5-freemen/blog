@@ -23,7 +23,7 @@
     {
       "singleline": "never",
       "multiline": {
-        "objects": "always", // <==================
+        "objects": "always",
         "arrays": "always",
         "functions": "never",
         "typeLiterals": "ignore"
