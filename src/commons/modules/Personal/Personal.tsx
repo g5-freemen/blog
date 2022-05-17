@@ -19,9 +19,9 @@ import {
 import { selectUser } from '../../redux/reducers/userReducer';
 import {
   selectLimit,
-  selectLoading,
+  selectLoadingArticles,
   setLimit,
-  setLoading,
+  setLoadingArticles,
 } from '../../redux/reducers/globalReducer';
 import { fetchArticles } from '../../utils/httpServices/feedServices';
 import Loader from '../../components/Loader/Loader';
@@ -39,7 +39,7 @@ export default function Personal() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const activePill: string = useSelector(selectActivePill);
-  const loading: boolean = useSelector(selectLoading);
+  const loadingArticles: boolean = useSelector(selectLoadingArticles);
   const limit: number = useSelector(selectLimit);
   const articles = useSelector(selectArticles);
   const articlesCount: number = useSelector(selectArticlesCount);
@@ -67,17 +67,21 @@ export default function Personal() {
   }, [activePill, limit, username, currentPage]);
 
   useEffect(() => {
-    if (limit && limit !== defaultLimit) dispatch(setLimit(defaultLimit));
+    if (limit && limit !== defaultLimit) {
+      dispatch(setLimit(defaultLimit));
+    }
   }, []);
 
   useEffect(() => {
-    if (currentPage && currentPage !== 1) dispatch(setPage(1));
+    if (currentPage && currentPage !== 1) {
+      dispatch(setPage(1));
+    }
   }, [activePill, limit]);
 
   useEffect(() => {
     if (user && (activePill === 'My' || activePill === 'Favorited')) {
-      dispatch(setLoading(true));
-      getArticles().then(() => dispatch(setLoading(false)));
+      dispatch(setLoadingArticles(true));
+      getArticles();
     }
   }, [activePill, currentPage, limit, user]);
 
@@ -115,7 +119,7 @@ export default function Personal() {
           <Navpills />
           <ArticlesLimiter limits={[5, 10, 20]} defaultValue={defaultLimit} />
         </div>
-        {loading ? <Loader /> : showArticles()}
+        {loadingArticles ? <Loader /> : showArticles()}
       </div>
     </main>
   );

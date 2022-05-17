@@ -21,9 +21,11 @@ import {
 } from '../../redux/reducers/feedReducer';
 import {
   selectLimit,
-  selectLoading,
+  selectLoadingArticles,
+  selectLoadingTags,
   setLimit,
-  setLoading,
+  setLoadingArticles,
+  setLoadingTags,
 } from '../../redux/reducers/globalReducer';
 import {
   fetchArticles,
@@ -47,7 +49,8 @@ export default function Homepage() {
   const articlesCount: number = useSelector(selectArticlesCount);
   const limit: number = useSelector(selectLimit);
   const currentPage: number = useSelector(selectPage);
-  const loading: boolean = useSelector(selectLoading);
+  const loadingArticles: boolean = useSelector(selectLoadingArticles);
+  const loadingTags: boolean = useSelector(selectLoadingTags);
 
   const getArticles = useCallback(async () => {
     dispatch(setArticlesCount(0));
@@ -79,19 +82,23 @@ export default function Homepage() {
     if (currentPage && currentPage !== 1) dispatch(setPage(1));
   }, [activePill, limit]);
 
-  const loader = (cb: () => Promise<void>) => {
-    dispatch(setLoading(true));
-    cb().then(() => dispatch(setLoading(false)));
-  };
-
-  useEffect(() => loader(getTags), []);
+  useEffect(() => {
+    dispatch(setLoadingTags(true));
+    getTags();
+  }, []);
 
   useEffect(() => {
-    if (activePill) loader(getArticles);
+    if (activePill) {
+      dispatch(setLoadingArticles(true));
+      getArticles();
+    }
   }, [limit, activePill, currentPage]);
 
   const show = (value: string) => {
-    if (loading) {
+    if (
+      (value === 'articles' && loadingArticles) ||
+      (value === 'tags' && loadingTags)
+    ) {
       return <Loader content={`Loading ${value}...`} />;
     }
 
