@@ -9,6 +9,7 @@ import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';
 import { UserType } from '../../redux/reducers/types';
 import { selectUser, setUser } from '../../redux/reducers/userReducer';
+import { TOAST_TIMEOUT } from '../../utils/constants';
 import { updateUser } from '../../utils/httpServices/loginServices';
 import { validate } from '../../utils/validations';
 import styles from './Settings.module.css';
@@ -44,13 +45,13 @@ export default function Settings() {
         const { token, ...userdata } = data.user;
         toast('User has been successfully updated!', {
           type: 'success',
-          autoClose: 2500,
+          autoClose: TOAST_TIMEOUT,
         });
         cookies.set('token', token);
         dispatch(setUser(userdata));
       }
     } else {
-      toast(fetchData, { type: 'warning' });
+      toast(fetchData, { type: 'warning', autoClose: TOAST_TIMEOUT });
     }
   };
 
@@ -66,7 +67,7 @@ export default function Settings() {
 
   const logOut = useCallback(() => {
     if (user) {
-      toast('You have successfully logged out!', { autoClose: 2500 });
+      toast('You have successfully logged out!', { autoClose: TOAST_TIMEOUT });
     }
     cookies.remove('token');
     dispatch(setUser(undefined));

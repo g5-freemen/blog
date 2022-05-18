@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import { selectPage, setArticles } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
+import { TOAST_TIMEOUT } from '../../utils/constants';
 import { favorite, fetchArticles } from '../../utils/httpServices/feedServices';
 import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 import Tag from '../Tag/Tag';
@@ -56,7 +57,10 @@ export default function Article(props: ArticleProps) {
   const pressFavorite = async () => {
     const token = cookies.get('token');
     if (!token) {
-      toast("You're not logged in!", { type: 'warning', autoClose: 2500 });
+      toast("You're not logged in!", {
+        type: 'warning',
+        autoClose: TOAST_TIMEOUT,
+      });
       return false;
     }
 

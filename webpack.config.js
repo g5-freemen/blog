@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
-module.exports = {
-  devtool: 'source-map',
+module.exports = (_, argv) => ({
+  devtool: argv.mode === 'production' ? 'source-map' : 'inline-source-map',
   entry: './src/index.tsx',
   module: {
     rules: [
@@ -86,5 +87,13 @@ module.exports = {
       template: path.resolve(__dirname, 'public', 'index.html'),
       favicon: path.resolve(__dirname, 'public', 'favicon.png'),
     }),
+    new CompressionPlugin({
+      filename: '[path][base].gz',
+      test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
+      algorithm: 'gzip',
+      minRatio: 0.8,
+      threshold: 8192,
+      exclude: /.map$/,
+    }),
   ],
-};
+});

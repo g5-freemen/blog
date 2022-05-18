@@ -15,6 +15,7 @@ import { setUser } from '../../redux/reducers/userReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
+import { TOAST_TIMEOUT } from '../../utils/constants';
 import styles from './SignIn.module.css';
 
 export interface ISignIn {
@@ -42,7 +43,7 @@ export default function SignIn() {
 
     const fetchData = await loginUser(formData);
     if (typeof fetchData === 'string') {
-      toast(fetchData, { type: 'error' });
+      toast(fetchData, { type: 'error', autoClose: TOAST_TIMEOUT });
       return false;
     }
 
@@ -56,7 +57,7 @@ export default function SignIn() {
     dispatch(setUser(user));
     cookies.set('token', token);
     const successMsg = `${data.user.username} Logged in`;
-    toast(successMsg, { type: 'success', autoClose: 2500 });
+    toast(successMsg, { type: 'success', autoClose: TOAST_TIMEOUT });
     return navigate('/');
   };
 
