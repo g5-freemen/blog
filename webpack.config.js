@@ -52,7 +52,7 @@ module.exports = (_, argv) => ({
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name][ext][query]',
+          filename: 'fonts/[name][ext]',
         },
       },
     ],
@@ -63,7 +63,7 @@ module.exports = (_, argv) => ({
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].bundle.js',
+    filename: '[name].[fullhash].js',
     asyncChunks: true,
     clean: true,
   },
@@ -88,7 +88,9 @@ module.exports = (_, argv) => ({
       template: path.resolve(__dirname, 'public', 'index.html'),
       favicon: path.resolve(__dirname, 'public', 'favicon.png'),
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[fullhash].css',
+    }),
     new CompressionPlugin({
       filename: '[path][base].gz',
       test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
