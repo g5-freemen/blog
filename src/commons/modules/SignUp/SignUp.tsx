@@ -7,6 +7,7 @@ import { Input } from '../../components/Input/Input';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { registerUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
+import { TOAST_TIMEOUT } from '../../utils/constants';
 import styles from '../SignIn/SignIn.module.css';
 
 export interface ISignUp {
@@ -30,7 +31,7 @@ export default function SignUp() {
     ev.preventDefault();
     const fetchData = await registerUser(formData);
     if (typeof fetchData === 'string') {
-      toast(fetchData, { type: 'error' });
+      toast(fetchData, { type: 'error', autoClose: TOAST_TIMEOUT });
       return false;
     }
 
@@ -42,7 +43,7 @@ export default function SignUp() {
     }
 
     const successMsg = `${data.user.username} Registered Successfully!`;
-    toast(successMsg, { type: 'success' });
+    toast(successMsg, { type: 'success', autoClose: TOAST_TIMEOUT });
     return navigate('/');
   };
 

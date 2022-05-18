@@ -6,6 +6,7 @@ import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';
+import { TOAST_TIMEOUT } from '../../utils/constants';
 import { createArticle } from '../../utils/httpServices/feedServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
 import styles from './NewArticle.module.css';
@@ -42,12 +43,12 @@ export default function NewArticle() {
     if (typeof fetchData !== 'string') {
       toast('Article has been created!', {
         type: 'success',
-        autoClose: 2500,
+        autoClose: TOAST_TIMEOUT,
       });
       return navigate('/');
     }
 
-    toast(fetchData, { type: 'warning' });
+    toast(fetchData, { type: 'warning', autoClose: TOAST_TIMEOUT });
     return false;
   };
 
