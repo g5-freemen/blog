@@ -101,7 +101,7 @@ export default function Settings() {
           name="username"
           autoComplete="username"
           onChange={handleInput}
-          value={formData.username}
+          value={formData.username || ''}
         />
         <ErrorMsg>{errors.username}</ErrorMsg>
         <TextArea
@@ -118,7 +118,7 @@ export default function Settings() {
           name="email"
           autoComplete="email"
           onChange={handleInput}
-          value={formData.email}
+          value={formData.email || ''}
         />
         <ErrorMsg>{errors.email}</ErrorMsg>
         <Input
