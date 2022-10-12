@@ -62,11 +62,7 @@ export async function createArticle(
   }
 }
 
-export async function favorite(
-  slug: string,
-  token: string,
-  favorited: boolean,
-) {
+export async function favorite(slug: string, token: string, favorited: boolean) {
   try {
     const method = favorited ? 'DELETE' : 'POST';
     const url = `${apiUrl}/api/articles/${slug}/favorite`;

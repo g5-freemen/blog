@@ -32,8 +32,7 @@ export function validate(...args: [string, string, string[]?]) {
   let msg: string = '';
   if (
     name === 'username' ||
-    (Array.isArray(requiredFields) &&
-      requiredFields.find((el: string) => el === name))
+    (Array.isArray(requiredFields) && requiredFields.find((el: string) => el === name))
   ) {
     msg = required(value).msg;
   } else if (name === 'email') {

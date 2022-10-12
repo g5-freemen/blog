@@ -8,10 +8,7 @@ import { ProfileResponse, UpdateUserType } from './types';
 export async function registerUser(formData: ISignUp) {
   try {
     const body = JSON.stringify({ user: { ...formData } });
-    const response = await fetch(
-      `${apiUrl}/api/users`,
-      options(undefined, 'POST', body),
-    );
+    const response = await fetch(`${apiUrl}/api/users`, options(undefined, 'POST', body));
     const data = await response.json();
     return { response, data };
   } catch (e) {

@@ -45,6 +45,8 @@ export default function Settings() {
     obj.bio = formData.bio || ' ';
     obj.image = obj.image ? obj.image.replace(/\s/g, '') : '';
 
+    if (Object.values(errors).find((el) => el)) return;
+
     const fetchData = await updateUser(obj, cookieToken);
 
     if (typeof fetchData !== 'string') {

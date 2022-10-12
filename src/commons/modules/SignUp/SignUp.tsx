@@ -91,9 +91,7 @@ export default function SignUp() {
         <div className={styles.right}>
           <Button
             type="submit"
-            disabled={
-              isAnyError(Object.values(errors)) || !isAllFilled(formData)
-            }
+            disabled={isAnyError(Object.values(errors)) || !isAllFilled(formData)}
           >
             Sign Up
           </Button>

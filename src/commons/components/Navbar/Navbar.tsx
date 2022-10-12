@@ -78,8 +78,15 @@ export default function Navbar(props: NavbarProps) {
           url: `/@${user.username}`,
           text: (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {user.image && user.image.trim() && (
-                <Img src={`${user.image}`} alt="avatar" size="26px" />
+              {user?.image && user.image.trim() && (
+                <Img
+                  src={`${user.image}`}
+                  alt="avatar"
+                  size="26px"
+                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                    e.currentTarget.src = './unknown_user.png';
+                  }}
+                />
               )}
               {user.username}
             </div>

@@ -105,7 +105,16 @@ export default function Personal() {
     <main>
       <div className={styles.profile}>
         <div className={styles.container}>
-          {image && <Img src={`${image}`} alt="avatar" size="100px" />}
+          {image && (
+            <Img
+              src={`${image}`}
+              alt="avatar"
+              size="100px"
+              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                e.currentTarget.src = './unknown_user.png';
+              }}
+            />
+          )}
           <h1 className={styles.username}>{username}</h1>
           {bio && <p className={styles.bio}>{bio}</p>}
           <Button grey small className={styles.right} onClick={toSettings}>
