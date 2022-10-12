@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +21,8 @@ export default function Settings() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-
   const defaultFormValues: SettingsType = { ...user, password: '' };
+
   const defaultErrors = { ...user, password: '' };
   Object.keys(defaultErrors).forEach((key) => {
     defaultErrors[key] = '';
@@ -31,33 +31,40 @@ export default function Settings() {
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultErrors);
 
+  useEffect(() => {
+    if (user) {
+      setFormData({ ...user, password: '' });
+    }
+  }, [user]);
+
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
     const cookieToken = cookies.get('token');
     const obj: any = { ...formData };
     Object.keys(obj).forEach((key) => !obj[key] && delete obj[key]);
     obj.bio = formData.bio || ' ';
+    obj.image = obj.image ? obj.image.replace(/\s/g, '') : '';
+
     const fetchData = await updateUser(obj, cookieToken);
 
     if (typeof fetchData !== 'string') {
       const { response, data } = fetchData;
       if (response.ok) {
-        const { token, ...userdata } = data.user;
+        const { token } = data.user;
         toast('User has been successfully updated!', {
           type: 'success',
           autoClose: TOAST_TIMEOUT,
         });
         cookies.set('token', token);
-        dispatch(setUser(userdata));
+
+        dispatch(setUser(formData));
       }
     } else {
       toast(fetchData, { type: 'warning', autoClose: TOAST_TIMEOUT });
     }
   };
 
-  const handleInput = (
-    ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleInput = (ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
 
@@ -70,9 +77,9 @@ export default function Settings() {
       toast('You have successfully logged out!', { autoClose: TOAST_TIMEOUT });
     }
     cookies.remove('token');
-    dispatch(setUser(undefined));
+    dispatch(setUser(null));
     return navigate('/');
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <main className={styles.container}>

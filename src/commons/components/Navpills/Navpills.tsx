@@ -22,8 +22,7 @@ const NavpillsContainer = styled.ul`
 const Li = styled.li<ILi>`
   padding: 0.5em 1em;
   cursor: pointer;
-  border-bottom: 2px solid
-    ${({ active }) => (active ? 'var(--cGreen)' : 'transparent')};
+  border-bottom: 2px solid ${({ active }) => (active ? 'var(--cGreen)' : 'transparent')};
   color: ${({ active }) => (active ? 'var(--cGreen)' : 'var(--сGrey)')};
 
   &::after {
@@ -41,10 +40,7 @@ export default function Navpills() {
   const user = useSelector(selectUser);
   const activePill = useSelector(selectActivePill);
   const counter = useSelector(selectArticlesCount);
-  const isActive = useCallback(
-    (val: string) => activePill === val,
-    [activePill],
-  );
+  const isActive = useCallback((val: string) => activePill === val, [activePill]);
 
   useEffect(() => {
     if (pathname === '/') {

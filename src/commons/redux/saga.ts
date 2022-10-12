@@ -1,9 +1,6 @@
 import { takeEvery, put } from 'redux-saga/effects';
 import { SET_ARTICLES, SET_TAGS } from './reducers/actions/feedActions';
-import {
-  SET_LOADING_ARTICLES,
-  SET_LOADING_TAGS,
-} from './reducers/actions/globalActions';
+import { SET_LOADING_ARTICLES, SET_LOADING_TAGS } from './reducers/actions/globalActions';
 
 export function* finishLoading(val: string) {
   const loadedType = val === 'tags' ? SET_LOADING_TAGS : SET_LOADING_ARTICLES;

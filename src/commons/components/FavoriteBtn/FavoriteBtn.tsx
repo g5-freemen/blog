@@ -30,12 +30,7 @@ export default function FavoriteBtn(props: IFavoriteBtn) {
   const { counter, favorited, onPress } = props;
 
   return (
-    <FavoriteBtnContainer
-      type="button"
-      fav={favorited}
-      onClick={onPress}
-      onKeyPress={onPress}
-    >
+    <FavoriteBtnContainer type="button" fav={favorited} onClick={onPress} onKeyDown={onPress}>
       {`❤ ${counter}`}
     </FavoriteBtnContainer>
   );

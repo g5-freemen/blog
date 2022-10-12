@@ -18,11 +18,7 @@ export default function Tags(props: TagsProps) {
         <p className={styles.p}>Popular Tags</p>
         <ul>
           {tagsList.map((el) => (
-            <Tag
-              key={`tag-${el}`}
-              name={el}
-              onClick={() => dispatch(setActivePill(`#${el}`))}
-            />
+            <Tag key={`tag-${el}`} name={el} onClick={() => dispatch(setActivePill(`#${el}`))} />
           ))}
         </ul>
       </div>

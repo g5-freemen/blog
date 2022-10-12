@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
 import { Cookies } from 'react-cookie';
 import Banner from '../../components/Banner/Banner';
 import Articles from '../../components/Articles/Articles';
@@ -22,21 +23,14 @@ import {
 import {
   selectLimit,
   selectLoadingArticles,
-  selectLoadingTags,
   setLimit,
   setLoadingArticles,
-  setLoadingTags,
 } from '../../redux/reducers/globalReducer';
-import {
-  fetchArticles,
-  fetchTags,
-} from '../../utils/httpServices/feedServices';
+import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices';
 import { selectUser } from '../../redux/reducers/userReducer';
-import styles from './Homepage.module.css';
 import Pagination from '../../components/Pagination/Pagination';
-import { DEFAULT_ARTICLES_LIMIT } from '../../utils/constants';
-
-const defaultLimit = DEFAULT_ARTICLES_LIMIT;
+import { DEFAULT_ARTICLES_LIMIT as defaultLimit } from '../../utils/constants';
+import styles from './Homepage.module.css';
 
 export default function Homepage() {
   const cookies = new Cookies();
@@ -50,10 +44,8 @@ export default function Homepage() {
   const limit: number = useSelector(selectLimit);
   const currentPage: number = useSelector(selectPage);
   const loadingArticles: boolean = useSelector(selectLoadingArticles);
-  const loadingTags: boolean = useSelector(selectLoadingTags);
 
   const getArticles = useCallback(async () => {
-    dispatch(setArticlesCount(0));
     let str = `&offset=${(currentPage - 1) * limit}`;
     if (activePill === 'Your' && user) {
       str += `&author=${user.username}`;
@@ -63,29 +55,35 @@ export default function Homepage() {
     const articlesList = await fetchArticles(limit, token, str);
     if (typeof articlesList === 'string') {
       dispatch(setArticles(articlesList));
+      dispatch(setArticlesCount(0));
     } else {
-      dispatch(setArticles(articlesList.articles));
       dispatch(setArticlesCount(articlesList.articlesCount));
+      dispatch(setArticles(articlesList.articles));
     }
-  }, [limit, activePill, currentPage]);
+  }, [limit, activePill, currentPage, user, token]);
 
-  const getTags = useCallback(async () => {
-    const tagsList = await fetchTags(token);
-    dispatch(setTags(tagsList));
-  }, [token]);
+  const { isLoading: loadingTags } = useQuery(
+    'getTags',
+    async () => {
+      const res = await fetchTags(token);
+      return res;
+    },
+    {
+      onSuccess: (data) => dispatch(setTags(data)),
+    },
+  );
 
   useEffect(() => {
-    if (limit && limit !== defaultLimit) dispatch(setLimit(defaultLimit));
+    if (limit && limit !== defaultLimit) {
+      dispatch(setLimit(defaultLimit));
+    }
   }, []);
 
   useEffect(() => {
-    if (currentPage && currentPage !== 1) dispatch(setPage(1));
+    if (currentPage && currentPage !== 1) {
+      dispatch(setPage(1));
+    }
   }, [activePill, limit]);
-
-  useEffect(() => {
-    dispatch(setLoadingTags(true));
-    getTags();
-  }, []);
 
   useEffect(() => {
     if (activePill) {
@@ -95,10 +93,7 @@ export default function Homepage() {
   }, [limit, activePill, currentPage]);
 
   const show = (value: string) => {
-    if (
-      (value === 'articles' && loadingArticles) ||
-      (value === 'tags' && loadingTags)
-    ) {
+    if ((value === 'articles' && loadingArticles) || (value === 'tags' && loadingTags)) {
       return <Loader content={`Loading ${value}...`} />;
     }
 
@@ -134,10 +129,7 @@ export default function Homepage() {
         <main className={styles.main}>
           <div className={styles.row}>
             <Navpills />
-            <ArticlesLimiter
-              limits={[5, 10, 20, 50, 100]}
-              defaultValue={defaultLimit}
-            />
+            <ArticlesLimiter limits={[5, 10, 20, 50, 100]} defaultValue={defaultLimit} />
           </div>
           {show('articles')}
         </main>

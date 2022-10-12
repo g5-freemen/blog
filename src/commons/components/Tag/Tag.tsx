@@ -41,10 +41,7 @@ interface TagProps {
 export default function Tag(props: TagProps) {
   const { name, outlined, onClick } = props;
   const activePill = useSelector(selectActivePill);
-  const isActive = useCallback(
-    (val: string) => `#${val}` === activePill,
-    [activePill],
-  );
+  const isActive = useCallback((val: string) => `#${val}` === activePill, [activePill]);
 
   return (
     <TagContainer outlined={outlined} onClick={onClick} active={isActive(name)}>

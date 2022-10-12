@@ -62,19 +62,8 @@ export default function Navbar(props: NavbarProps) {
   const { pathname } = useLocation();
   const isActive = useCallback((val: string) => pathname === val, [pathname]);
 
-  const noUserItems = useMemo(
-    () => [
-      { url: '/', text: 'Home' },
-      { url: '/login', text: 'Sign in' },
-      { url: '/register', text: 'Sign up' },
-    ],
-    [],
-  );
-
   const items = useMemo(() => {
     if (user) {
-      const { username, image } = user;
-
       return [
         { url: '/', text: 'Home' },
         {
@@ -89,28 +78,29 @@ export default function Navbar(props: NavbarProps) {
           url: `/@${user.username}`,
           text: (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Img src={`${image}`} alt="avatar" size="26px" />
-              {username}
+              {user.image && user.image.trim() && (
+                <Img src={`${user.image}`} alt="avatar" size="26px" />
+              )}
+              {user.username}
             </div>
           ),
         },
       ];
     }
 
-    return noUserItems;
+    return [
+      { url: '/', text: 'Home' },
+      { url: '/login', text: 'Sign in' },
+      { url: '/register', text: 'Sign up' },
+    ];
   }, [user]);
 
   return (
     <Nav>
       <Brand href="#/">conduit</Brand>
       <Ul>
-        {items.map((el) => (
-          <NavItem
-            key={uuid()}
-            active={isActive(el.url)}
-            url={el.url}
-            text={el.text}
-          />
+        {items.map(({ url, text }) => (
+          <NavItem key={uuid()} active={isActive(url)} url={url} text={text} />
         ))}
       </Ul>
     </Nav>

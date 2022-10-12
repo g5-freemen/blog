@@ -27,3 +27,12 @@ export interface IArticles {
   articles: ArticleType[];
   articlesCount: number;
 }
+
+export type UserProfileType = {
+  username: string;
+  bio: string;
+  image: string;
+  following: boolean;
+};
+
+export type ProfileResponse = { profile: UserProfileType };

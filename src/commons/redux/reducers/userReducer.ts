@@ -18,7 +18,7 @@ export default function rootReducer(
   }
 }
 
-export const setUser = (value: UserType | undefined) => ({
+export const setUser = (value: UserType | null) => ({
   type: SET_USER,
   payload: value,
 });

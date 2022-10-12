@@ -11,8 +11,8 @@ export async function fetchArticles(
   str?: string,
 ): Promise<IArticles | string> {
   try {
-    const request = `${apiUrl}/api/articles?limit=${limit}${str || ''}`;
-    const response = await fetch(request, options(token));
+    const url = `${apiUrl}/api/articles?limit=${limit}${str || ''}`;
+    const response = await fetch(url, options(token));
     const data: IArticles = await response.json();
     return data;
   } catch (e) {
@@ -35,12 +35,13 @@ export async function createArticle(
   token: string,
 ): Promise<ArticleType | string> {
   try {
+    const { title, about, content, tags } = formData;
     const body = JSON.stringify({
       article: {
-        title: formData.title,
-        description: formData.about,
-        body: formData.content,
-        tagList: formData.tags.split(' '),
+        title,
+        description: about,
+        body: content,
+        tagList: tags.split(' '),
       },
     });
 
@@ -68,10 +69,8 @@ export async function favorite(
 ) {
   try {
     const method = favorited ? 'DELETE' : 'POST';
-    const response = await fetch(
-      `${apiUrl}/api/articles/${slug}/favorite`,
-      options(token, method),
-    );
+    const url = `${apiUrl}/api/articles/${slug}/favorite`;
+    const response = await fetch(url, options(token, method));
     const data = await response.json();
     return { response, data };
   } catch (e) {

@@ -105,7 +105,7 @@ export default function Personal() {
     <main>
       <div className={styles.profile}>
         <div className={styles.container}>
-          <Img src={`${image}`} alt="avatar" size="100px" />
+          {image && <Img src={`${image}`} alt="avatar" size="100px" />}
           <h1 className={styles.username}>{username}</h1>
           {bio && <p className={styles.bio}>{bio}</p>}
           <Button grey small className={styles.right} onClick={toSettings}>

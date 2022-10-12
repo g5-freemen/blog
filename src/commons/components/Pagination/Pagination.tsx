@@ -1,11 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {
-  selectArticlesCount,
-  selectPage,
-  setPage,
-} from '../../redux/reducers/feedReducer';
+import { selectArticlesCount, selectPage, setPage } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 
 interface IPages {
@@ -22,8 +18,9 @@ const activePage = (page: number) => `
 `;
 
 const Pages = styled.div<IPages>`
+  margin: 1rem auto;
+  width: fit-content;
   display: flex;
-  margin: 1rem 0;
   border: rgba(0, 0, 0, 0.2) solid 1px;
   border-radius: 4px;
   color: var(--cDBlue);
@@ -65,7 +62,7 @@ export default function Pagination() {
           key={`page-${el}`}
           type="button"
           onClick={() => dispatch(setPage(el))}
-          onKeyPress={() => dispatch(setPage(el))}
+          onKeyDown={() => dispatch(setPage(el))}
         >
           {el}
         </button>

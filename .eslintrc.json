@@ -19,6 +19,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "object-curly-newline": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx", ".ts"] }],
     "operator-linebreak": ["error", "after"],
     "import/prefer-default-export": "off",

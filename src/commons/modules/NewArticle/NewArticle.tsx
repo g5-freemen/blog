@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Cookies } from 'react-cookie';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button } from '../../components/Button/Button';
@@ -31,6 +32,7 @@ const requiredFields = ['title', 'about', 'content', 'tags'];
 export default function NewArticle() {
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultErrors);
@@ -41,6 +43,7 @@ export default function NewArticle() {
     const fetchData = await createArticle(formData, cookieToken);
 
     if (typeof fetchData !== 'string') {
+      queryClient.invalidateQueries('getTags');
       toast('Article has been created!', {
         type: 'success',
         autoClose: TOAST_TIMEOUT,
@@ -52,9 +55,7 @@ export default function NewArticle() {
     return false;
   };
 
-  const handleInput = (
-    ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleInput = (ev: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
 
@@ -101,9 +102,7 @@ export default function NewArticle() {
         <div className={styles.row}>
           <Button
             type="submit"
-            disabled={
-              isAnyError(Object.values(errors)) || !isAllFilled(formData)
-            }
+            disabled={isAnyError(Object.values(errors)) || !isAllFilled(formData)}
           >
             Publish Article
           </Button>

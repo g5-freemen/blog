@@ -7,10 +7,7 @@ import { ImEyeBlocked, ImEye } from 'react-icons/im';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
-import {
-  selectShowPassword,
-  setShowPassword,
-} from '../../redux/reducers/globalReducer';
+import { selectShowPassword, setShowPassword } from '../../redux/reducers/globalReducer';
 import { setUser } from '../../redux/reducers/userReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpServices/loginServices';
@@ -102,20 +99,14 @@ export default function SignIn() {
             className={styles.pswdBtn}
             onClick={toggleShowPassword}
           >
-            {showPassword ? (
-              <ImEye style={iconStyle} />
-            ) : (
-              <ImEyeBlocked style={iconStyle} />
-            )}
+            {showPassword ? <ImEye style={iconStyle} /> : <ImEyeBlocked style={iconStyle} />}
           </button>
         </div>
         <ErrorMsg>{errors.password}</ErrorMsg>
         <div className={styles.right}>
           <Button
             type="submit"
-            disabled={
-              isAnyError(Object.values(errors)) || !isAllFilled(formData)
-            }
+            disabled={isAnyError(Object.values(errors)) || !isAllFilled(formData)}
           >
             Sign In
           </Button>

@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 export function errorHandler(e: unknown): string {
   if (
     e instanceof TypeError ||
