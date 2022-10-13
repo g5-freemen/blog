@@ -28,6 +28,7 @@ import Loader from '../../components/Loader/Loader';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Pagination from '../../components/Pagination/Pagination';
 import { DEFAULT_PERSONAL_ARTICLES_LIMIT } from '../../utils/constants';
+import errorImg from '../../../../public/unknown-user.svg';
 import styles from './Personal.module.css';
 
 const defaultLimit = DEFAULT_PERSONAL_ARTICLES_LIMIT;
@@ -111,7 +112,7 @@ export default function Personal() {
               alt="avatar"
               size="100px"
               onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                e.currentTarget.src = './unknown_user.png';
+                e.currentTarget.src = errorImg;
               }}
             />
           )}

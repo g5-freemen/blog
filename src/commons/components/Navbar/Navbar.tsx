@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { v4 as uuid } from 'uuid';
 import { UserType } from '../../redux/reducers/types';
 import NavItem from '../NavItem/NavItem';
+import errorImg from '../../../../public/unknown-user.svg';
 
 const Nav = styled.nav`
   width: 75%;
@@ -84,7 +85,7 @@ export default function Navbar(props: NavbarProps) {
                   alt="avatar"
                   size="26px"
                   onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                    e.currentTarget.src = './unknown_user.png';
+                    e.currentTarget.src = errorImg;
                   }}
                 />
               )}
