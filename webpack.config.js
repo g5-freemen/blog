@@ -65,7 +65,7 @@ module.exports = (_, argv) => ({
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    publicPath: '/',
+    publicPath: '',
     path: path.resolve(__dirname, 'build'),
     filename: '[name].[fullhash].js',
     asyncChunks: true,
