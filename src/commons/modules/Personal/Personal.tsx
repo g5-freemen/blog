@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,6 +45,11 @@ export default function Personal() {
   const articlesCount: number = useSelector(selectArticlesCount);
   const currentPage: number = useSelector(selectPage);
   const { image, username, bio } = user;
+  const [imageError, setImageError] = useState(false);
+
+  const onErrorImage = () => {
+    if (!imageError) setImageError(true);
+  };
 
   const toSettings = () => navigate('/settings');
 
@@ -105,7 +110,9 @@ export default function Personal() {
     <main>
       <div className={styles.profile}>
         <div className={styles.container}>
-          {image && <Img src={`${image}`} alt="avatar" size="100px" />}
+          {image && !imageError && (
+            <Img src={`${image}`} alt="avatar" size="100px" onError={onErrorImage} />
+          )}
           <h1 className={styles.username}>{username}</h1>
           {bio && <p className={styles.bio}>{bio}</p>}
           <Button grey small className={styles.right} onClick={toSettings}>

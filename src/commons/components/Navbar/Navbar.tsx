@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { IconType } from 'react-icons';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
@@ -61,6 +61,11 @@ export default function Navbar(props: NavbarProps) {
   const { user } = props;
   const { pathname } = useLocation();
   const isActive = useCallback((val: string) => pathname === val, [pathname]);
+  const [imageError, setImageError] = useState(false);
+
+  const onErrorImage = () => {
+    if (!imageError) setImageError(true);
+  };
 
   const items = useMemo(() => {
     if (user) {
@@ -78,8 +83,8 @@ export default function Navbar(props: NavbarProps) {
           url: `/@${user.username}`,
           text: (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              {user?.image && user.image.trim() && (
-                <Img src={`${user.image}`} alt="avatar" size="26px" />
+              {user?.image && user.image.trim() && !imageError && (
+                <Img src={`${user.image}`} alt="avatar" size="26px" onError={onErrorImage} />
               )}
               {user.username}
             </div>
@@ -93,7 +98,7 @@ export default function Navbar(props: NavbarProps) {
       { url: '/login', text: 'Sign in' },
       { url: '/register', text: 'Sign up' },
     ];
-  }, [user]);
+  }, [user, imageError]);
 
   return (
     <Nav>
