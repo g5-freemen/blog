@@ -1,1 +1,1 @@
-# [Blog](https://g5-freemen.github.io/blog/build/)
+# [Blog](https://blog-9.netlify.app/@g5-freemen)
