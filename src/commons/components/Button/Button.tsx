@@ -37,6 +37,7 @@ export const Button = styled.button<IButton>`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   line-height: 1.25;
   font-size: ${({ small }) => (small ? '1rem' : '1.25rem')};
   color: #fff;

@@ -28,7 +28,6 @@ import Loader from '../../components/Loader/Loader';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Pagination from '../../components/Pagination/Pagination';
 import { DEFAULT_PERSONAL_ARTICLES_LIMIT } from '../../utils/constants';
-import errorImg from '../../../../public/unknown-user.svg';
 import styles from './Personal.module.css';
 
 const defaultLimit = DEFAULT_PERSONAL_ARTICLES_LIMIT;
@@ -106,21 +105,12 @@ export default function Personal() {
     <main>
       <div className={styles.profile}>
         <div className={styles.container}>
-          {image && (
-            <Img
-              src={`${image}`}
-              alt="avatar"
-              size="100px"
-              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                e.currentTarget.src = errorImg;
-              }}
-            />
-          )}
+          {image && <Img src={`${image}`} alt="avatar" size="100px" />}
           <h1 className={styles.username}>{username}</h1>
           {bio && <p className={styles.bio}>{bio}</p>}
           <Button grey small className={styles.right} onClick={toSettings}>
             <IoSettingsSharp />
-            &nbsp;Edit Profile Settings
+            Edit Profile Settings
           </Button>
         </div>
       </div>
