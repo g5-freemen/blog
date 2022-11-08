@@ -1,23 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import uuid from 'react-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectArticlesCount, selectPage, setPage } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 
-interface IPages {
-  page: number;
+interface IButton {
+  isActive?: boolean;
 }
 
-const activePage = (page: number) => `
-& button:nth-child(${page}) {
-  font-weight: 700;
-  background-color: var(--cGreen);
-  border-bottom: 1px solid var(--cGreen);
-  cursor: auto;
-}
-`;
-
-const Pages = styled.div<IPages>`
+const Pages = styled.div`
   margin: 1rem auto;
   width: fit-content;
   display: flex;
@@ -25,24 +17,40 @@ const Pages = styled.div<IPages>`
   border-radius: 4px;
   color: var(--cDBlue);
   overflow: hidden;
+`;
 
-  & button {
+const Button = styled.button<IButton>`
+   {
     font-size: 1.5rem;
     height: 100%;
     padding: 5px 10px;
     border: none;
     border-right: rgba(0, 0, 0, 0.2) solid 1px;
+    transition: all 0.3s;
   }
 
-  & button:last-child {
+  :last-child {
     border-right: none;
   }
 
-  & button:hover {
+  :hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  ${({ page }) => activePage(page)}
+  ${({ isActive }) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
+    isActive &&
+    `
+  {
+    font-weight: 700;
+    background-color: var(--cGreen);
+    border-bottom: 1px solid var(--cGreen);
+    cursor: auto;
+  }
+
+  :hover {
+    background-color: var(--сGreenHover);
+  }`}
 `;
 
 export default function Pagination() {
@@ -55,18 +63,50 @@ export default function Pagination() {
     .fill(0)
     .map((_, i) => i + 1);
 
+  const button = useCallback(
+    (el: number, isActive: boolean = false) => (
+      <Button
+        key={uuid()}
+        type="button"
+        onClick={() => (el ? dispatch(setPage(el)) : {})}
+        onKeyDown={() => (el ? dispatch(setPage(el)) : {})}
+        isActive={isActive}
+      >
+        {el || '...'}
+      </Button>
+    ),
+    [dispatch],
+  );
+
   return articlesCount ? (
-    <Pages page={currentPage}>
-      {pages.map((el) => (
-        <button
-          key={`page-${el}`}
-          type="button"
-          onClick={() => dispatch(setPage(el))}
-          onKeyDown={() => dispatch(setPage(el))}
-        >
-          {el}
-        </button>
-      ))}
+    <Pages>
+      {pages.map((el, i, arr) => {
+        const isActive = i + 1 === currentPage;
+        if (pagesNum > 18) {
+          if (currentPage < 4) {
+            if (i > 4 && i < pagesNum - 6) return null;
+            if (i === 4) return button(0);
+          } else if (currentPage > pagesNum - 6) {
+            if (i === 1) return button(0);
+            if (i > 0 && i < pagesNum - 7) return null;
+          } else {
+            if (currentPage === i + 1) {
+              return (
+                <>
+                  {button(0)}
+                  {button(arr[i - 1], false)}
+                  {button(el, isActive)}
+                  {button(arr[i + 1], false)}
+                  {button(0)}
+                </>
+              );
+            }
+            if (i !== 0 && i !== pagesNum - 1) return null;
+          }
+        }
+
+        return button(el, isActive);
+      })}
     </Pages>
   ) : null;
 }

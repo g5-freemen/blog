@@ -7,9 +7,9 @@ import {
   SET_ARTICLES_PAGE,
   SET_TAGS,
 } from './actions/feedActions';
-import { ActionType } from './types';
+import { ActionType, State } from './types';
 
-const initialState = {
+const initialState: State = {
   tags: [],
   articles: [],
   articlesCount: 0,
@@ -17,10 +17,7 @@ const initialState = {
   activePill: 'Global',
 };
 
-export default function feedReducer(
-  state = initialState,
-  action: ActionType = {},
-) {
+export default function feedReducer(state = initialState, action: ActionType = {}) {
   switch (action.type) {
     case SET_TAGS:
       return { ...state, tags: action.payload };
@@ -63,7 +60,7 @@ export const setActivePill = (value: string) => ({
 });
 
 export const selectTags = (store: RootState) => store.feedReducer.tags;
-export const selectPage = (store: RootState) => store.feedReducer.page;
+export const selectPage = (store: RootState): number => store.feedReducer.page;
 export const selectArticles = (store: RootState) => store.feedReducer.articles;
 export function selectArticlesCount(store: RootState) {
   return store.feedReducer.articlesCount;

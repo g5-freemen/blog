@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { IconType } from 'react-icons';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
@@ -63,9 +63,13 @@ export default function Navbar(props: NavbarProps) {
   const isActive = useCallback((val: string) => pathname === val, [pathname]);
   const [imageError, setImageError] = useState(false);
 
-  const onErrorImage = () => {
+  const onErrorImage = useCallback(() => {
     if (!imageError) setImageError(true);
-  };
+  }, [imageError]);
+
+  useEffect(() => {
+    if (imageError) setImageError(false);
+  }, [user?.image]);
 
   const items = useMemo(() => {
     if (user) {
