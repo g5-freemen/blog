@@ -9,3 +9,8 @@ export const headerContent = {
   'Content-Type': 'application/json',
   'Access-Control-Allow-Origin': '*',
 };
+
+export const options = {
+  staleTime: 240000,
+  cacheTime: 480000,
+};

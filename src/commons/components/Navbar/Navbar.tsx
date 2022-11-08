@@ -88,7 +88,15 @@ export default function Navbar(props: NavbarProps) {
           text: (
             <div style={{ display: 'flex', alignItems: 'center' }}>
               {user?.image && user.image.trim() && !imageError && (
-                <Img src={`${user.image}`} alt="avatar" size="26px" onError={onErrorImage} />
+                <Img
+                  src={`${user.image}`}
+                  alt="avatar"
+                  size="26px"
+                  onError={onErrorImage}
+                  onLoad={() => {
+                    if (imageError) setImageError(false);
+                  }}
+                />
               )}
               {user.username}
             </div>

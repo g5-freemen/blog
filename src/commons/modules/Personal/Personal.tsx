@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,17 +18,12 @@ import {
   setPage,
 } from '../../redux/reducers/feedReducer';
 import { selectUser } from '../../redux/reducers/userReducer';
-import {
-  selectLimit,
-  selectLoadingArticles,
-  setLimit,
-  setLoadingArticles,
-} from '../../redux/reducers/globalReducer';
+import { selectLimit, setLimit, setLoadingArticles } from '../../redux/reducers/globalReducer';
 import { fetchArticles } from '../../utils/httpServices/feedServices';
 import Loader from '../../components/Loader/Loader';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Pagination from '../../components/Pagination/Pagination';
-import { DEFAULT_PERSONAL_ARTICLES_LIMIT } from '../../utils/constants';
+import { DEFAULT_PERSONAL_ARTICLES_LIMIT, options } from '../../utils/constants';
 import styles from './Personal.module.css';
 
 const defaultLimit = DEFAULT_PERSONAL_ARTICLES_LIMIT;
@@ -39,13 +35,13 @@ export default function Personal() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const activePill: string = useSelector(selectActivePill);
-  const loadingArticles: boolean = useSelector(selectLoadingArticles);
   const limit: number = useSelector(selectLimit);
   const articles = useSelector(selectArticles);
   const articlesCount: number = useSelector(selectArticlesCount);
   const currentPage: number = useSelector(selectPage);
   const { image, username, bio } = user;
   const [imageError, setImageError] = useState(false);
+  const [searchStr, setSearchStr] = useState('');
 
   const onErrorImage = () => {
     if (!imageError) setImageError(true);
@@ -53,29 +49,32 @@ export default function Personal() {
 
   const toSettings = () => navigate('/settings');
 
-  const getArticles = useCallback(async () => {
-    dispatch(setArticlesCount(0));
-    let str = `&offset=${(currentPage - 1) * limit}`;
-    if (activePill === 'My') {
-      str += `&author=${username}`;
-    } else if (activePill === 'Favorited') {
-      str += `&favorited=${username}`;
-    }
+  const { data: articlesData, isLoading: loadingArticles } = useQuery(
+    `getArticles-${limit}-${searchStr}-${token}`,
+    () => {
+      if (!searchStr || !limit) return null;
+      return fetchArticles(limit, token, searchStr);
+    },
+    options,
+  );
 
-    const articlesList = await fetchArticles(limit, token, str);
-    if (typeof articlesList === 'string') {
-      dispatch(setArticles(articlesList));
-    } else {
-      dispatch(setArticles(articlesList.articles));
-      dispatch(setArticlesCount(articlesList.articlesCount));
+  useEffect(() => {
+    if (articlesData) {
+      if (typeof articlesData === 'string') {
+        dispatch(setArticles(articlesData));
+        dispatch(setArticlesCount(0));
+      } else {
+        dispatch(setArticlesCount(articlesData.articlesCount));
+        dispatch(setArticles(articlesData.articles));
+      }
     }
-  }, [activePill, limit, username, currentPage]);
+  }, [articlesData]);
 
   useEffect(() => {
     if (limit && limit !== defaultLimit) {
       dispatch(setLimit(defaultLimit));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (currentPage && currentPage !== 1) {
@@ -86,7 +85,15 @@ export default function Personal() {
   useEffect(() => {
     if (user && (activePill === 'My' || activePill === 'Favorited')) {
       dispatch(setLoadingArticles(true));
-      getArticles();
+      dispatch(setArticlesCount(0));
+
+      let str = `&offset=${(currentPage - 1) * limit}`;
+      if (activePill === 'My') {
+        str += `&author=${username}`;
+      } else if (activePill === 'Favorited') {
+        str += `&favorited=${username}`;
+      }
+      setSearchStr(str);
     }
   }, [activePill, currentPage, limit, user]);
 
@@ -111,7 +118,15 @@ export default function Personal() {
       <div className={styles.profile}>
         <div className={styles.container}>
           {image && !imageError && (
-            <Img src={`${image}`} alt="avatar" size="100px" onError={onErrorImage} />
+            <Img
+              src={`${image}`}
+              alt="avatar"
+              size="100px"
+              onError={onErrorImage}
+              onLoad={() => {
+                if (imageError) setImageError(false);
+              }}
+            />
           )}
           <h1 className={styles.username}>{username}</h1>
           {bio && <p className={styles.bio}>{bio}</p>}
@@ -123,7 +138,7 @@ export default function Personal() {
       </div>
       <div className={styles.container}>
         <div className={styles.row}>
-          <Navpills />
+          <Navpills isLoading={loadingArticles} />
           <ArticlesLimiter limits={[5, 10, 20]} defaultValue={defaultLimit} />
         </div>
         {loadingArticles ? <Loader /> : showArticles()}

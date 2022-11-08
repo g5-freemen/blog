@@ -34,53 +34,54 @@ const Li = styled.li<ILi>`
 
 const possibleValues = ['Your', 'Global', 'My', 'Favorited', '#'];
 
-export default function Navpills() {
+export default function Navpills(props: { isLoading: boolean }) {
+  const { isLoading } = props;
   const dispatch = useDispatch();
   const { pathname } = useLocation();
   const user = useSelector(selectUser);
   const activePill = useSelector(selectActivePill);
   const counter = useSelector(selectArticlesCount);
+  const count = isLoading ? 0 : counter;
   const isActive = useCallback((val: string) => activePill === val, [activePill]);
 
   useEffect(() => {
-    if (pathname === '/') {
-      dispatch(setActivePill('Global'));
-    } else {
-      dispatch(setActivePill('My'));
-    }
+    dispatch(setActivePill(pathname === '/' ? 'Global' : 'My'));
   }, [pathname]);
 
-  const clickPill = (event: React.MouseEvent<HTMLElement>) => {
-    const { innerText } = event.target as HTMLElement;
-    possibleValues.forEach((str) => {
-      if (innerText.includes(str)) {
-        dispatch(setActivePill(str === '#' ? innerText : str));
-      }
-    });
-  };
+  const clickPill = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      const { innerText } = event.target as HTMLElement;
+      possibleValues.forEach((str) => {
+        if (innerText.includes(str)) {
+          dispatch(setActivePill(str === '#' ? innerText : str));
+        }
+      });
+    },
+    [dispatch],
+  );
 
   return pathname === '/' ? (
     <NavpillsContainer onClick={clickPill}>
       {user && (
-        <Li active={isActive('Your')} count={counter}>
+        <Li active={isActive('Your')} count={count}>
           Your Feed
         </Li>
       )}
-      <Li active={isActive('Global')} count={counter}>
+      <Li active={isActive('Global')} count={count}>
         Global Feed
       </Li>
       {activePill && activePill.includes('#') && (
-        <Li active={isActive(activePill)} count={counter}>
+        <Li active={isActive(activePill)} count={count}>
           {activePill}
         </Li>
       )}
     </NavpillsContainer>
   ) : (
     <NavpillsContainer onClick={clickPill}>
-      <Li active={isActive('My')} count={counter}>
+      <Li active={isActive('My')} count={count}>
         My Articles
       </Li>
-      <Li active={isActive('Favorited')} count={counter}>
+      <Li active={isActive('Favorited')} count={count}>
         Favorited Articles
       </Li>
     </NavpillsContainer>
