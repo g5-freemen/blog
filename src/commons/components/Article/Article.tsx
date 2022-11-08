@@ -3,7 +3,7 @@ import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import { v4 as uuid } from 'uuid';
+import uuid from 'react-uuid';
 import { selectPage, setArticles } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 import { TOAST_TIMEOUT } from '../../utils/constants';

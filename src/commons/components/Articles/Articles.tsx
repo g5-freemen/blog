@@ -1,5 +1,5 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
+import uuid from 'react-uuid';
 import Article, { ArticleType } from '../Article/Article';
 
 interface ArticlesProps {
