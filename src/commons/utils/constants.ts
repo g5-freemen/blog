@@ -14,3 +14,10 @@ export const options = {
   staleTime: 240000,
   cacheTime: 480000,
 };
+
+export const errorMessage = {
+  email: 'Invalid Email',
+  url: 'Invalid URL',
+  fieldRequired: 'This field is required',
+  password: `Password must be at least ${MIN_PASSWORD_LENGTH} characters`,
+};

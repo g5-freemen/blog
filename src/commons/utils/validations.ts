@@ -1,30 +1,26 @@
-import { MIN_PASSWORD_LENGTH } from './constants';
+import { errorMessage, MIN_PASSWORD_LENGTH } from './constants';
 
 const emailRegEx = /^[a-z0-9_.+-]+@[a-z0-9-]+.[a-z0-9-.]+$/i;
 const imageRegEx = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/i;
 
 export function required(val: string) {
   const valid = !!val.length;
-  const errMsg = 'This field is required';
-  return { valid, msg: valid ? '' : errMsg };
+  return { valid, msg: valid ? '' : errorMessage.fieldRequired };
 }
 
 export function isValidEmail(email: string) {
-  const valid = email.match(emailRegEx);
-  const errMsg = 'Invalid Email';
-  return { valid, msg: valid ? '' : errMsg };
+  const valid = !!email.match(emailRegEx);
+  return { valid, msg: valid ? '' : errorMessage.email };
 }
 
 export function isValidImage(url: string) {
-  const valid = url.match(imageRegEx);
-  const errMsg = 'Invalid URL';
-  return { valid, msg: valid ? '' : errMsg };
+  const valid = !!url.match(imageRegEx);
+  return { valid, msg: valid ? '' : errorMessage.url };
 }
 
 export function isValidPassword(password: string) {
   const valid = password.length >= MIN_PASSWORD_LENGTH;
-  const errMsg = `Password must be at least ${MIN_PASSWORD_LENGTH} characters`;
-  return { valid, msg: valid ? '' : errMsg };
+  return { valid, msg: valid ? '' : errorMessage.password };
 }
 
 export function validate(...args: [string, string, string[]?]) {
