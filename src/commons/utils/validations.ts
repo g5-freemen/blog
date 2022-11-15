@@ -9,12 +9,12 @@ export function required(val: string) {
 }
 
 export function isValidEmail(email: string) {
-  const valid = !!email.match(emailRegEx);
+  const valid = emailRegEx.test(email);
   return { valid, msg: valid ? '' : errorMessage.email };
 }
 
 export function isValidImage(url: string) {
-  const valid = !!url.match(imageRegEx);
+  const valid = imageRegEx.test(url);
   return { valid, msg: valid ? '' : errorMessage.url };
 }
 
@@ -28,7 +28,7 @@ export function validate(...args: [string, string, string[]?]) {
   let msg: string = '';
   if (
     name === 'username' ||
-    (Array.isArray(requiredFields) && requiredFields.find((el: string) => el === name))
+    (requiredFields.length && requiredFields.find((el: string) => el === name))
   ) {
     msg = required(value).msg;
   } else if (name === 'email') {
@@ -44,6 +44,7 @@ export function validate(...args: [string, string, string[]?]) {
 
 export const isAllFilled = (obj: Object) => {
   const arr = Object.values(obj);
+  if (arr.length === 0) return false;
   return arr.filter((el) => el).length === arr.length;
 };
 
