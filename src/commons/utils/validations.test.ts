@@ -61,6 +61,7 @@ describe('validations', () => {
 
   test('isAnyError function', () => {
     expect(isAnyError(['', '', ''])).toBeFalsy();
+    expect(isAnyError(['', '', ''])).toMatchSnapshot();
     expect(isAnyError([errorMessage.email, '', ''])).toBeTruthy();
     expect(isAnyError([errorMessage.email, errorMessage.url, errorMessage.password])).toBeTruthy();
   });
