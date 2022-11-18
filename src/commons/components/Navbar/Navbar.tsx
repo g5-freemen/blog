@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IconType } from 'react-icons';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import uuid from 'react-uuid';
-import { UserType } from '../../redux/reducers/types';
 import NavItem from '../NavItem/NavItem';
+import { selectUser } from '../../redux/reducers/userReducer';
 
 const Nav = styled.nav`
   width: 75%;
@@ -42,6 +43,12 @@ export const Img = styled.img<IImg>`
   height: ${({ size }) => size};
   border-radius: 50%;
   margin-right: 4px;
+  transition: width 0.5s, height 0.5s;
+
+  &:hover {
+    width: ${({ size }) => `${+size.replace('px', '') * 1.5}px`};
+    height: ${({ size }) => `${+size.replace('px', '') * 1.5}px`};
+  }
 `;
 
 const iconStyle = { width: '16px', height: '16px', marginRight: '2px' };
@@ -53,12 +60,8 @@ const icon = (Component: IconType, txt: string) => (
   </>
 );
 
-interface NavbarProps {
-  user: UserType | undefined;
-}
-
-export default function Navbar(props: NavbarProps) {
-  const { user } = props;
+export default function Navbar() {
+  const user = useSelector(selectUser);
   const { pathname } = useLocation();
   const isActive = useCallback((val: string) => pathname === val, [pathname]);
   const [imageError, setImageError] = useState(false);

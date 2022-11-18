@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Banner component Banner is match with snapshot 1`] = `
+<div
+  class="banner"
+  role="banner"
+>
+  <h1
+    class="title"
+  >
+    conduit
+  </h1>
+  <p
+    class="content"
+  >
+    A place to share your knowledge.
+  </p>
+</div>
+`;
