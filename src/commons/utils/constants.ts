@@ -1,3 +1,15 @@
+export interface CookieSetOptions {
+  path?: string;
+  expires?: Date;
+  maxAge?: number;
+  domain?: string;
+  secure?: boolean;
+  httpOnly?: boolean;
+  sameSite?: boolean | 'none' | 'lax' | 'strict';
+  // eslint-disable-next-line no-unused-vars
+  encode?: (value: string) => string;
+}
+
 export const apiUrl = 'https://api.realworld.io';
 // export const apiUrl = 'https://conduit.productionready.io';
 export const DEFAULT_ARTICLES_LIMIT = 20;
@@ -13,6 +25,11 @@ export const headerContent = {
 export const options = {
   staleTime: 240000,
   cacheTime: 480000,
+};
+
+export const cookiesOptions: CookieSetOptions = {
+  secure: true,
+  sameSite: 'strict',
 };
 
 export const errorMessage = {

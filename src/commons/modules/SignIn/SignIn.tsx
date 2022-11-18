@@ -12,8 +12,9 @@ import { setUser } from '../../redux/reducers/userReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
-import { TOAST_TIMEOUT } from '../../utils/constants';
+import { cookiesOptions, TOAST_TIMEOUT } from '../../utils/constants';
 import styles from './SignIn.module.css';
+import Spinner from '../../components/Spinner/Spinner';
 
 export interface ISignIn {
   email: string;
@@ -34,27 +35,32 @@ export default function SignIn() {
   const showPassword: boolean = useSelector(selectShowPassword);
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultFormValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
+    setIsSubmitting(true);
 
     const fetchData = await loginUser(formData);
     if (typeof fetchData === 'string') {
       toast(fetchData, { type: 'error', autoClose: TOAST_TIMEOUT });
+      setIsSubmitting(false);
       return false;
     }
 
     const { response, data } = fetchData;
     if (!response.ok) {
       errorsToasts(data);
+      setIsSubmitting(false);
       return false;
     }
 
     const { token, ...user } = data.user;
     dispatch(setUser(user));
-    cookies.set('token', token);
+    cookies.set('token', token, cookiesOptions);
     const successMsg = `${data.user.username} Logged in`;
     toast(successMsg, { type: 'success', autoClose: TOAST_TIMEOUT });
+    setIsSubmitting(false);
     return navigate('/');
   };
 
@@ -105,10 +111,11 @@ export default function SignIn() {
         <ErrorMsg>{errors.password}</ErrorMsg>
         <div className={styles.right}>
           <Button
+            className={styles.submitBtn}
             type="submit"
-            disabled={isAnyError(Object.values(errors)) || !isAllFilled(formData)}
+            disabled={isAnyError(Object.values(errors)) || !isAllFilled(formData) || isSubmitting}
           >
-            Sign In
+            {isSubmitting ? <Spinner /> : 'Sign In'}
           </Button>
         </div>
       </form>

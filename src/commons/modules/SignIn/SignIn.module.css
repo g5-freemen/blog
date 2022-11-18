@@ -44,3 +44,8 @@
   background: none;
   border: none;
 }
+
+.submitBtn {
+  min-width: 7rem;
+  min-height: 3.5rem;
+}

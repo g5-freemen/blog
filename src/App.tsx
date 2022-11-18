@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Cookies } from 'react-cookie';
+import { Cookies, CookiesProvider } from 'react-cookie';
 import { ToastContainer } from 'react-toastify';
 import Navbar from './commons/components/Navbar/Navbar';
 import AppRouters from './AppRoutes';
@@ -36,11 +36,13 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Navbar />
-        <ToastContainer />
-        <AppRouters />
-      </BrowserRouter>
+      <CookiesProvider>
+        <BrowserRouter>
+          <Navbar />
+          <ToastContainer />
+          <AppRouters />
+        </BrowserRouter>
+      </CookiesProvider>
     </QueryClientProvider>
   );
 }

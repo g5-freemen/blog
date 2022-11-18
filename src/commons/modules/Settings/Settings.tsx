@@ -9,7 +9,7 @@ import { Input } from '../../components/Input/Input';
 import { TextArea } from '../../components/TextArea/TextArea';
 import { UserType } from '../../redux/reducers/types';
 import { selectUser, setUser } from '../../redux/reducers/userReducer';
-import { TOAST_TIMEOUT } from '../../utils/constants';
+import { cookiesOptions, TOAST_TIMEOUT } from '../../utils/constants';
 import { updateUser } from '../../utils/httpServices/loginServices';
 import { validate } from '../../utils/validations';
 import styles from './Settings.module.css';
@@ -57,7 +57,7 @@ export default function Settings() {
           type: 'success',
           autoClose: TOAST_TIMEOUT,
         });
-        cookies.set('token', token);
+        cookies.set('token', token, cookiesOptions);
 
         dispatch(setUser(formData));
       }
