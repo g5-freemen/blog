@@ -6,7 +6,17 @@ export function options(...args: [string | undefined, MethodType?, string?]) {
 
   const requestOptions: RequestType = {
     method,
-    headers: { ...headerContent, Authorization: `Token ${token}` },
+    // mode: 'cors', // no-cors, *cors, same-origin
+    // credentials: 'include', // include, *same-origin, omit
+    // eslint-disable-next-line max-len
+    // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    headers: {
+      ...headerContent,
+      Authorization: `Token ${token}`,
+      // 'Cache-Control': 'no-cache, no-store, must-revalidate',
+      // Pragma: 'no-cache',
+      // Expires: '0',
+    },
     body,
   };
 
