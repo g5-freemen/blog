@@ -16,7 +16,6 @@ const Nav = styled.nav`
     max-width: 75%;
   }
 
-  min-width: 500px;
   margin: 0 auto;
   padding: 0.5rem 1rem;
   display: flex;
@@ -27,7 +26,6 @@ const Nav = styled.nav`
 `;
 
 const Brand = styled.a`
-  margin-right: 2rem;
   padding: 0 0 0.25rem 0;
   font-family: 'Titillium Web', sans-serif;
   font-size: 1.5rem;
@@ -38,7 +36,6 @@ const Brand = styled.a`
 
 const Ul = styled.ul`
   display: flex;
-  align-items: center;
 `;
 
 interface IImg {
