@@ -35,7 +35,6 @@
 
 .main {
   flex: 9;
-  overflow-x: hidden;
 }
 
 .aside {
