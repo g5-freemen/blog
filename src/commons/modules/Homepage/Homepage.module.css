@@ -4,8 +4,19 @@
   align-items: center;
 }
 
+@media (max-width: 1200px) {
+  .rowContainer {
+    max-width: 99vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .rowContainer {
+    max-width: 75%;
+  }
+}
+
 .rowContainer {
-  width: 75%;
   display: flex;
   flex: 12;
 }

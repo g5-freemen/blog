@@ -8,8 +8,15 @@ import NavItem from '../NavItem/NavItem';
 import { selectUser } from '../../redux/reducers/userReducer';
 
 const Nav = styled.nav`
+  @media (max-width: 1200px) {
+    max-width: 99vw;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 75%;
+  }
+
   min-width: 500px;
-  max-width: 99vw;
   margin: 0 auto;
   padding: 0.5rem 1rem;
   display: flex;
