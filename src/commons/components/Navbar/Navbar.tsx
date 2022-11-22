@@ -9,7 +9,7 @@ import { selectUser } from '../../redux/reducers/userReducer';
 
 const Nav = styled.nav`
   @media (max-width: 1200px) {
-    max-width: 99vw;
+    max-width: 100%;
   }
 
   @media (min-width: 1200px) {

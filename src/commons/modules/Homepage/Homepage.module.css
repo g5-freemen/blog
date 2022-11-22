@@ -6,7 +6,7 @@
 
 @media (max-width: 1200px) {
   .rowContainer {
-    max-width: 99vw;
+    max-width: 100%;
   }
 }
 
@@ -19,6 +19,7 @@
 .rowContainer {
   display: flex;
   flex: 12;
+  overflow-x: hidden;
 }
 
 .row {
