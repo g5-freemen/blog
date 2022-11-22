@@ -19,7 +19,6 @@
 .rowContainer {
   display: flex;
   flex: 12;
-  overflow-x: hidden;
 }
 
 .row {
@@ -36,6 +35,7 @@
 
 .main {
   flex: 9;
+  overflow-x: hidden;
 }
 
 .aside {
