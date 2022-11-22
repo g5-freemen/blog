@@ -7,11 +7,12 @@ interface ArticlesProps {
 
 export default function Articles(props: ArticlesProps) {
   const { articlesList } = props;
+  const id = useId();
 
   return (
     <div style={{ width: '100%' }}>
       {articlesList.map((article) => (
-        <Article key={useId()} article={article} />
+        <Article key={id} article={article} />
       ))}
     </div>
   );

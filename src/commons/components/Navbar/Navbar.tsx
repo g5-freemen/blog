@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import uuid from 'react-uuid';
 import { useSelector } from 'react-redux';
 import { IconType } from 'react-icons';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
@@ -124,7 +125,7 @@ export default function Navbar() {
       <Brand href="#/">conduit</Brand>
       <Ul>
         {items.map(({ url, text }) => (
-          <NavItem key={useId()} active={isActive(url)} url={url} text={text} />
+          <NavItem key={uuid()} active={isActive(url)} url={url} text={text} />
         ))}
       </Ul>
     </Nav>
