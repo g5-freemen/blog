@@ -1,5 +1,4 @@
-import React from 'react';
-import uuid from 'react-uuid';
+import React, { useId } from 'react';
 import Article, { ArticleType } from '../Article/Article';
 
 interface ArticlesProps {
@@ -12,7 +11,7 @@ export default function Articles(props: ArticlesProps) {
   return (
     <div style={{ width: '100%' }}>
       {articlesList.map((article) => (
-        <Article key={uuid()} article={article} />
+        <Article key={useId()} article={article} />
       ))}
     </div>
   );

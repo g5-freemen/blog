@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IconType } from 'react-icons';
 import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import uuid from 'react-uuid';
 import NavItem from '../NavItem/NavItem';
 import { selectUser } from '../../redux/reducers/userReducer';
 
@@ -120,7 +119,7 @@ export default function Navbar() {
       <Brand href="#/">conduit</Brand>
       <Ul>
         {items.map(({ url, text }) => (
-          <NavItem key={uuid()} active={isActive(url)} url={url} text={text} />
+          <NavItem key={useId()} active={isActive(url)} url={url} text={text} />
         ))}
       </Ul>
     </Nav>

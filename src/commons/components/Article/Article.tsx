@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
-import uuid from 'react-uuid';
 import { selectPage, setArticles } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 import { TOAST_TIMEOUT } from '../../utils/constants';
@@ -102,7 +101,7 @@ export default function Article(props: ArticleProps) {
         <span className={styles.span}>Read more...</span>
         <ul>
           {article.tagList.map((name) => (
-            <Tag key={uuid()} name={name} outlined />
+            <Tag key={useId()} name={name} outlined />
           ))}
         </ul>
       </div>

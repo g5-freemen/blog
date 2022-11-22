@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import uuid from 'react-uuid';
+import React, { useCallback, useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectArticlesCount, selectPage, setPage } from '../../redux/reducers/feedReducer';
@@ -66,7 +65,7 @@ export default function Pagination() {
   const button = useCallback(
     (el: number, isActive: boolean = false) => (
       <Button
-        key={uuid()}
+        key={useId()}
         type="button"
         onClick={() => (el ? dispatch(setPage(el)) : {})}
         onKeyDown={() => (el ? dispatch(setPage(el)) : {})}
