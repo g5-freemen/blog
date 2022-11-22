@@ -37,6 +37,7 @@ const Brand = styled.a`
 
 const Ul = styled.ul`
   display: flex;
+  align-items: center;
 `;
 
 interface IImg {
