@@ -26,6 +26,7 @@
 
 .form {
   min-width: 50%;
+  width: 100%;
   position: relative;
   min-height: 1px;
   padding: 0 15px 1rem;
