@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { ImEyeBlocked, ImEye } from 'react-icons/im';
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
+import { Spinner } from '../../components/Spinner/Spinner';
 import { selectShowPassword, setShowPassword } from '../../redux/reducers/globalReducer';
 import { setUser } from '../../redux/reducers/userReducer';
 import { errorsToasts } from '../../utils/errorsToasts';
@@ -14,7 +15,6 @@ import { loginUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
 import { cookiesOptions, TOAST_TIMEOUT } from '../../utils/constants';
 import styles from './SignIn.module.css';
-import Spinner from '../../components/Spinner/Spinner';
 
 export interface ISignIn {
   email: string;
@@ -36,6 +36,7 @@ export default function SignIn() {
   const [formData, setFormData] = useState(defaultFormValues);
   const [errors, setErrors] = useState(defaultFormValues);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
@@ -68,8 +69,10 @@ export default function SignIn() {
     const { name, value } = ev.target;
     setFormData({ ...formData, [name]: value });
 
-    const msg = validate(name, value);
-    setErrors((prev) => ({ ...prev, [name]: msg }));
+    startTransition(() => {
+      const msg = validate(name, value);
+      setErrors((prev) => ({ ...prev, [name]: msg }));
+    });
   };
 
   const toggleShowPassword = () => dispatch(setShowPassword(!showPassword));
@@ -89,7 +92,7 @@ export default function SignIn() {
           onChange={handleInput}
           value={formData.email}
         />
-        <ErrorMsg>{errors.email}</ErrorMsg>
+        <ErrorMsg>{isPending ? '' : errors.email}</ErrorMsg>
         <div className={styles.row}>
           <Input
             type={showPassword ? 'text' : 'password'}
@@ -108,7 +111,7 @@ export default function SignIn() {
             {showPassword ? <ImEye style={iconStyle} /> : <ImEyeBlocked style={iconStyle} />}
           </button>
         </div>
-        <ErrorMsg>{errors.password}</ErrorMsg>
+        <ErrorMsg>{isPending ? '' : errors.password}</ErrorMsg>
         <div className={styles.right}>
           <Button
             className={styles.submitBtn}

@@ -25,6 +25,13 @@
     "operator-linebreak": ["error", "after"],
     "import/prefer-default-export": "off",
     "react/require-default-props": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
