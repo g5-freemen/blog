@@ -21,21 +21,18 @@ const Pages = styled.div`
 const Button = styled.button<IButton>`
   @media (max-width: 1200px) {
     font-size: 1rem;
-    padding: 5px;
   }
 
   @media (min-width: 1200px) {
     font-size: 1.5rem;
-    padding: 5px 10px;
   }
 
    {
-    max-width: 100%;
+    padding: 5px;
     height: 100%;
     border: none;
     border-right: rgba(0, 0, 0, 0.2) solid 1px;
     transition: all 0.3s;
-    overflow: auto;
   }
 
   :last-child {
