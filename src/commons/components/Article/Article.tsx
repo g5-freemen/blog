@@ -1,5 +1,6 @@
 import React from 'react';
 import uuid from 'react-uuid';
+import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -49,10 +50,12 @@ const Avatar = styled.div<AvatarProps>`
 
 export default function Article(props: ArticleProps) {
   const { article } = props;
+  const { slug, favorited } = article;
   const cookies = new Cookies();
   const limit: number = useSelector(selectLimit);
   const currentPage: number = useSelector(selectPage);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const pressFavorite = async () => {
     const token = cookies.get('token');
@@ -64,7 +67,6 @@ export default function Article(props: ArticleProps) {
       return false;
     }
 
-    const { slug, favorited } = article;
     const str = `&offset=${(currentPage - 1) * limit}`;
     await favorite(slug, token, favorited)
       .then(() => fetchArticles(limit, token, str))
@@ -73,6 +75,8 @@ export default function Article(props: ArticleProps) {
       });
     return true;
   };
+
+  const navigateToArticle = () => navigate(`article/${slug}`);
 
   return (
     <article className={styles.article}>
@@ -96,10 +100,20 @@ export default function Article(props: ArticleProps) {
           onPress={pressFavorite}
         />
       </div>
-      <h2 className={styles.title}>{article.title}</h2>
-      <p className={styles.description}>{article.description}</p>
+      <div role="link" tabIndex={0} onKeyDown={navigateToArticle} onClick={navigateToArticle}>
+        <h2 className={styles.title}>{article.title}</h2>
+        <p className={styles.description}>{article.description}</p>
+      </div>
       <div className={styles.row}>
-        <span className={styles.span}>Read more...</span>
+        <span
+          className={styles.span}
+          role="link"
+          tabIndex={0}
+          onKeyDown={navigateToArticle}
+          onClick={navigateToArticle}
+        >
+          Read more...
+        </span>
         <ul>
           {article.tagList.map((name) => (
             <Tag key={uuid()} name={name} outlined />

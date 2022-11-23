@@ -1,0 +1,26 @@
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 25vh;
+}
+
+.banner {
+  padding: 2rem 1rem;
+  background-color: #333;
+  color: #fff;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.body {
+  padding: 1rem;
+}
+
+.body p {
+  font-family: 'Source Serif Pro';
+  font-size: 1.2rem;
+}

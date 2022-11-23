@@ -2,8 +2,12 @@ import React from 'react';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
 import styles from './Spinner.module.css';
 
-export const Spinner = () => (
+interface Props {
+  size?: string | number;
+}
+
+export const Spinner = ({ size = undefined }: Props) => (
   <div className={styles.wrapper}>
-    <CgSpinnerTwoAlt />
+    <CgSpinnerTwoAlt size={size} />
   </div>
 );

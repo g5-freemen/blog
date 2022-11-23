@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import ArticleView from './commons/modules/ArticleView/ArticleView';
 import Homepage from './commons/modules/Homepage/Homepage';
 import NewArticle from './commons/modules/NewArticle/NewArticle';
 import Personal from './commons/modules/Personal/Personal';
@@ -15,6 +16,7 @@ export default function AppRouters() {
   return (
     <Routes>
       <Route path="/editor" element={<NewArticle />} />
+      <Route path="/article/:slug" element={<ArticleView />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/settings" element={<Settings />} />

@@ -6,6 +6,13 @@
 }
 
 @font-face {
+  font-family: 'Source Serif Pro';
+  src: url(../../../public/fonts/SourceSerifPro.woff2) format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Source Sans Pro';
   src: url(../../../public/fonts/SourceSansPro-Light.woff2) format('woff2');
   font-weight: 300;
