@@ -30,10 +30,12 @@ const Button = styled.button<IButton>`
   }
 
    {
+    max-width: 100%;
     height: 100%;
     border: none;
     border-right: rgba(0, 0, 0, 0.2) solid 1px;
     transition: all 0.3s;
+    overflow: auto;
   }
 
   :last-child {
@@ -65,6 +67,7 @@ export default function Pagination() {
   const articlesCount = useSelector(selectArticlesCount);
   const limit = useSelector(selectLimit);
   const pagesNum = Math.ceil(articlesCount / limit);
+  const lastPagesNum = pagesNum > 99 ? 4 : 5;
   const currentPage = useSelector(selectPage);
   const pages = Array(pagesNum)
     .fill(0)
@@ -91,11 +94,11 @@ export default function Pagination() {
         const isActive = i + 1 === currentPage;
         if (pagesNum > 18) {
           if (currentPage < 4) {
-            if (i > 4 && i < pagesNum - 6) return null;
+            if (i > 4 && i < pagesNum - lastPagesNum) return null;
             if (i === 4) return button(0);
-          } else if (currentPage > pagesNum - 6) {
+          } else if (currentPage > pagesNum - lastPagesNum) {
             if (i === 1) return button(0);
-            if (i > 0 && i < pagesNum - 7) return null;
+            if (i > 0 && i < pagesNum - (lastPagesNum + 1)) return null;
           } else {
             if (currentPage === i + 1) {
               return (
