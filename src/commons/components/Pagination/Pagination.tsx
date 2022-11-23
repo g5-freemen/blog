@@ -16,14 +16,21 @@ const Pages = styled.div`
   border: rgba(0, 0, 0, 0.2) solid 1px;
   border-radius: 4px;
   color: var(--cDBlue);
-  overflow: hidden;
 `;
 
 const Button = styled.button<IButton>`
-   {
+  @media (max-width: 1200px) {
+    font-size: 1rem;
+    padding: 5px;
+  }
+
+  @media (min-width: 1200px) {
     font-size: 1.5rem;
-    height: 100%;
     padding: 5px 10px;
+  }
+
+   {
+    height: 100%;
     border: none;
     border-right: rgba(0, 0, 0, 0.2) solid 1px;
     transition: all 0.3s;
