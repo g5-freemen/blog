@@ -10,6 +10,8 @@ export interface CookieSetOptions {
   encode?: (value: string) => string;
 }
 
+export const limits = [1, 5, 10, 20, 50, 100];
+
 export const apiUrl = 'https://api.realworld.io';
 // export const apiUrl = 'https://conduit.productionready.io';
 export const DEFAULT_ARTICLES_LIMIT = 20;

@@ -24,7 +24,7 @@ import { selectLimit, setLimit } from '../../redux/reducers/globalReducer';
 import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices';
 import { selectUser } from '../../redux/reducers/userReducer';
 import Pagination from '../../components/Pagination/Pagination';
-import { DEFAULT_ARTICLES_LIMIT as defaultLimit, options } from '../../utils/constants';
+import { DEFAULT_ARTICLES_LIMIT as defaultLimit, limits, options } from '../../utils/constants';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {
@@ -126,7 +126,7 @@ export default function Homepage() {
         <main className={styles.main}>
           <div className={styles.row}>
             <Navpills isLoading={loadingArticles} />
-            <ArticlesLimiter limits={[5, 10, 20, 50, 100]} defaultValue={defaultLimit} />
+            <ArticlesLimiter limits={limits} defaultValue={defaultLimit} />
           </div>
           {show('articles')}
         </main>
