@@ -25,6 +25,7 @@ export default function DeleteBtn() {
 
   return (
     <Button
+      small
       type="button"
       className={styles.btn}
       onClick={onClick}

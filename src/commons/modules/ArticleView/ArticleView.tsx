@@ -4,7 +4,9 @@ import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import uuid from 'react-uuid';
+import { TiPencil } from 'react-icons/ti';
 import Author from '../../components/Author/Author';
+import { Button } from '../../components/Button/Button';
 import Comment from '../../components/Comment/Comment';
 import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import DeleteBtn from '../../components/DeleteBtn/DeleteBtn';
@@ -88,7 +90,17 @@ export default function ArticleView() {
       );
     }
 
-    if (token) return <DeleteBtn />;
+    if (token) {
+      return (
+        <>
+          <Button type="button" small>
+            <TiPencil />
+            Edit Article
+          </Button>
+          <DeleteBtn />
+        </>
+      );
+    }
 
     return null;
   };
