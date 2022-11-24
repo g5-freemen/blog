@@ -1,0 +1,11 @@
+.btn {
+  color: red !important;
+  background-color: transparent !important;
+  border-color: red !important;
+  font-size: 0.8rem !important;
+}
+
+.btn:hover {
+  color: #fff !important;
+  background-color: red !important;
+}

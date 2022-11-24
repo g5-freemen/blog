@@ -1,4 +1,4 @@
-import { ArticleType } from '../../components/Article/Article';
+import { ArticleType } from '../../utils/httpServices/types';
 import { RootState } from '../store';
 import {
   SET_ACTIVE_PILL,

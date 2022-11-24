@@ -2,11 +2,12 @@ import React from 'react';
 import { Cookies } from 'react-cookie';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import uuid from 'react-uuid';
 import Author from '../../components/Author/Author';
 import Comment from '../../components/Comment/Comment';
 import CommentEditor from '../../components/CommentEditor/CommentEditor';
+import DeleteBtn from '../../components/DeleteBtn/DeleteBtn';
 import FavoriteBtn from '../../components/FavoriteBtn/FavoriteBtn';
 import FollowBtn from '../../components/FollowBtn/FollowBtn';
 import { Spinner } from '../../components/Spinner/Spinner';
@@ -24,16 +25,21 @@ import { CommentType } from '../../utils/httpServices/types';
 import styles from './ArticleView.module.css';
 
 export default function ArticleView() {
+  const navigate = useNavigate();
   const { slug } = useParams();
   const user = useSelector(selectUser);
   const cookies = new Cookies();
   const token: string = cookies.get('token');
 
-  const { data, isLoading, refetch } = useQuery(
+  const { data, isLoading, isSuccess, isError, refetch } = useQuery(
     `getArticle-${slug}`,
     () => fetchArticle(slug, token),
     options,
   );
+
+  if ((isSuccess && !data) || isError) {
+    navigate('/');
+  }
 
   const { data: comments } = useQuery(
     `getComments-${slug}`,
@@ -63,23 +69,29 @@ export default function ArticleView() {
     return new Date(dateOne) > new Date(dateTwo) ? -1 : 1;
   }
 
-  const showBtns = () =>
-    // eslint-disable-next-line implicit-arrow-linebreak
-    user?.username !== article?.author.username && (
-      <>
-        <FollowBtn
-          followed={article?.author.following}
-          text={article?.author.username}
-          onPress={pressFollow}
-        />
-        <FavoriteBtn
-          counter={article?.favoritesCount || 0}
-          favorited={article?.favorited || false}
-          text={`${article?.favorited ? 'Unfavorite' : 'Favorite'} Article`}
-          onPress={pressFavorite}
-        />
-      </>
-    );
+  const showBtns = () => {
+    if (user?.username && user?.username !== article?.author.username) {
+      return (
+        <>
+          <FollowBtn
+            followed={article?.author.following}
+            text={article?.author.username}
+            onPress={pressFollow}
+          />
+          <FavoriteBtn
+            counter={article?.favoritesCount || 0}
+            favorited={article?.favorited || false}
+            text={`${article?.favorited ? 'Unfavorite' : 'Favorite'} Article`}
+            onPress={pressFavorite}
+          />
+        </>
+      );
+    }
+
+    if (token) return <DeleteBtn />;
+
+    return null;
+  };
 
   return (
     <div>

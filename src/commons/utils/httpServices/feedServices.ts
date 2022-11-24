@@ -60,6 +60,18 @@ export async function deleteComment(slug: string, id: number, token: string): Pr
   }
 }
 
+export async function deleteArticle(slug: string, token: string): Promise<any> {
+  try {
+    if (!slug) throw new Error('No slug!');
+    const url = `${apiUrl}/api/articles/${slug}`;
+    const response = await fetch(url, options(token, 'DELETE'));
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    return errorHandler(e);
+  }
+}
+
 export async function fetchArticles(
   limit: number,
   token: string,
