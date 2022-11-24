@@ -1,7 +1,7 @@
 import React from 'react';
 import uuid from 'react-uuid';
+import { ArticleType } from '../../utils/httpServices/types';
 import Article from '../Article/Article';
-import { ArticleType } from '../Article/types';
 
 interface ArticlesProps {
   articlesList: ArticleType[];
