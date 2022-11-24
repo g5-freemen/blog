@@ -65,20 +65,22 @@ export default function ArticleView() {
       ) : (
         <>
           <div className={styles.banner}>
-            <h1 className={styles.title}>{article?.title}</h1>
-            <div className={styles.flex}>
-              <Author article={article} />
-              <FollowBtn
-                followed={article?.author.following}
-                text={article?.author.username}
-                onPress={pressFollow}
-              />
-              <FavoriteBtn
-                counter={article?.favoritesCount || 0}
-                favorited={article?.favorited || false}
-                text={`${article?.favorited ? 'Unfavorite' : 'Favorite'} Article`}
-                onPress={pressFavorite}
-              />
+            <div className={styles.bannerContainer}>
+              <h1 className={styles.title}>{article?.title}</h1>
+              <div className={styles.flex}>
+                <Author article={article} />
+                <FollowBtn
+                  followed={article?.author.following}
+                  text={article?.author.username}
+                  onPress={pressFollow}
+                />
+                <FavoriteBtn
+                  counter={article?.favoritesCount || 0}
+                  favorited={article?.favorited || false}
+                  text={`${article?.favorited ? 'Unfavorite' : 'Favorite'} Article`}
+                  onPress={pressFavorite}
+                />
+              </div>
             </div>
           </div>
           <div className={styles.body}>

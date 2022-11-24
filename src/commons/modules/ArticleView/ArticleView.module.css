@@ -5,6 +5,25 @@
   min-height: 25vh;
 }
 
+@media (max-width: 1200px) {
+  .bannerContainer,
+  .body {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .bannerContainer,
+  .body {
+    max-width: 75%;
+  }
+}
+
+.bannerContainer,
+.body {
+  margin: 0 auto;
+}
+
 .banner {
   padding: 2rem 1rem;
   background-color: #333;
