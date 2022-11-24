@@ -43,8 +43,7 @@ export default function NewArticle() {
     const fetchData = await createArticle(formData, cookieToken);
 
     if (typeof fetchData !== 'string') {
-      queryClient.invalidateQueries('getTags');
-      queryClient.invalidateQueries({ queryKey: ['getArticles'] });
+      queryClient.invalidateQueries();
       toast('Article has been created!', {
         type: 'success',
         autoClose: TOAST_TIMEOUT,
