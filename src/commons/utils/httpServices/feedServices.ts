@@ -1,9 +1,8 @@
-import { ArticleType } from '../../components/Article/types';
 import { NewArticleType } from '../../modules/NewArticle/NewArticle';
 import { apiUrl } from '../constants';
 import { errorHandler } from './errorHandler';
 import { options } from './requestOptions';
-import { IArticles } from './types';
+import { ArticleType, IArticles } from './types';
 
 export async function fetchArticle(
   slug: string | undefined,
@@ -15,6 +14,18 @@ export async function fetchArticle(
     const response = await fetch(url, options(token));
     const data = await response.json();
     return data.article;
+  } catch (e) {
+    return errorHandler(e);
+  }
+}
+
+export async function fetchComments(slug: string | undefined, token: string): Promise<any> {
+  try {
+    if (!slug) throw new Error('No slug');
+    const url = `${apiUrl}/api/articles/${slug}/comments`;
+    const response = await fetch(url, options(token));
+    const data = await response.json();
+    return data?.comments;
   } catch (e) {
     return errorHandler(e);
   }

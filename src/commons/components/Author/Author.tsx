@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ArticleType } from '../Article/types';
+import { ArticleType } from '../../utils/httpServices/types';
 import styles from './Author.module.css';
 
 interface Props {
@@ -9,12 +9,13 @@ interface Props {
 
 interface AvatarProps {
   url: string;
+  size?: string;
 }
 
-const Avatar = styled.div<AvatarProps>`
+export const Avatar = styled.div<AvatarProps>`
   margin-right: 4px;
-  width: 32px;
-  height: 32px;
+  width: ${({ size }) => size || '32px'};
+  height: ${({ size }) => size || '32px'};
   background: url(${({ url }) => url}) no-repeat center;
   background-size: contain;
   border-radius: 50%;

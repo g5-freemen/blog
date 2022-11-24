@@ -1,4 +1,33 @@
-import { ArticleType } from '../../components/Article/types';
+export type CommentType = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  body: string;
+  author: {
+    username: string;
+    bio: null | string;
+    image: string;
+    following: boolean;
+  };
+};
+
+export type ArticleType = {
+  author: {
+    bio: null | string;
+    following: boolean;
+    image: string;
+    username: string;
+  };
+  body: string;
+  createdAt: string;
+  description: string;
+  favorited: boolean;
+  favoritesCount: number;
+  slug: string;
+  tagList: string[];
+  title: string;
+  updatedAt: string;
+};
 
 export type MethodType = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export type RequestMode = 'cors' | 'navigate' | 'no-cors' | 'same-origin';

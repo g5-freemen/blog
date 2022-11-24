@@ -10,11 +10,15 @@ import { TOAST_TIMEOUT } from '../../utils/constants';
 import { favorite, fetchArticles } from '../../utils/httpServices/feedServices';
 import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 import Tag from '../Tag/Tag';
-import styles from './Article.module.css';
 import Author from '../Author/Author';
-import { ArticleProps } from './types';
+import { ArticleType } from '../../utils/httpServices/types';
+import styles from './Article.module.css';
 
-export default function Article(props: ArticleProps) {
+interface Props {
+  article: ArticleType;
+}
+
+export default function Article(props: Props) {
   const { article } = props;
   const { slug, favorited } = article;
   const cookies = new Cookies();

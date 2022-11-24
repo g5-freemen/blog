@@ -24,7 +24,7 @@ import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices'
 import { selectUser } from '../../redux/reducers/userReducer';
 import Pagination from '../../components/Pagination/Pagination';
 import { DEFAULT_ARTICLES_LIMIT as defaultLimit, limits, options } from '../../utils/constants';
-import { ArticleType } from '../../components/Article/types';
+import { ArticleType } from '../../utils/httpServices/types';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {

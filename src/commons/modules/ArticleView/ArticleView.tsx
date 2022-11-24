@@ -4,13 +4,20 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import uuid from 'react-uuid';
 import Author from '../../components/Author/Author';
+import Comment from '../../components/Comment/Comment';
 import FavoriteBtn from '../../components/FavoriteBtn/FavoriteBtn';
 import FollowBtn from '../../components/FollowBtn/FollowBtn';
 import { Spinner } from '../../components/Spinner/Spinner';
 import Tag from '../../components/Tag/Tag';
 import { options } from '../../utils/constants';
 import { toastNotLogged } from '../../utils/errorsToasts';
-import { favorite, fetchArticle, follow } from '../../utils/httpServices/feedServices';
+import {
+  favorite,
+  fetchArticle,
+  fetchComments,
+  follow,
+} from '../../utils/httpServices/feedServices';
+import { CommentType } from '../../utils/httpServices/types';
 import styles from './ArticleView.module.css';
 
 export default function ArticleView() {
@@ -21,6 +28,12 @@ export default function ArticleView() {
   const { data, isLoading, refetch } = useQuery(
     `getArticle-${slug}`,
     () => fetchArticle(slug, token),
+    options,
+  );
+
+  const { data: comments } = useQuery(
+    `getComments-${slug}`,
+    () => fetchComments(slug, token),
     options,
   );
 
@@ -78,7 +91,7 @@ export default function ArticleView() {
               ))}
             </div>
             <hr className={styles.hr} />
-            <div className={styles.flex} style={{ justifyContent: 'center' }}>
+            <div className={styles.flex} style={{ justifyContent: 'center', margin: '2rem 0' }}>
               <Author article={article} />
               <FollowBtn
                 followed={article?.author.following}
@@ -92,6 +105,9 @@ export default function ArticleView() {
                 onPress={pressFavorite}
               />
             </div>
+            {comments?.map((item: CommentType) => (
+              <Comment data={item} key={item.id} />
+            ))}
           </div>
         </>
       )}
