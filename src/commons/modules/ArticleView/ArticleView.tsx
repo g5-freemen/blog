@@ -1,14 +1,17 @@
 import React from 'react';
 import { Cookies } from 'react-cookie';
 import { useQuery } from 'react-query';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import uuid from 'react-uuid';
 import Author from '../../components/Author/Author';
 import Comment from '../../components/Comment/Comment';
+import CommentEditor from '../../components/CommentEditor/CommentEditor';
 import FavoriteBtn from '../../components/FavoriteBtn/FavoriteBtn';
 import FollowBtn from '../../components/FollowBtn/FollowBtn';
 import { Spinner } from '../../components/Spinner/Spinner';
 import Tag from '../../components/Tag/Tag';
+import { selectUser } from '../../redux/reducers/userReducer';
 import { options } from '../../utils/constants';
 import { toastNotLogged } from '../../utils/errorsToasts';
 import {
@@ -22,6 +25,7 @@ import styles from './ArticleView.module.css';
 
 export default function ArticleView() {
   const { slug } = useParams();
+  const user = useSelector(selectUser);
   const cookies = new Cookies();
   const token: string = cookies.get('token');
 
@@ -54,6 +58,10 @@ export default function ArticleView() {
     await favorite(article.slug, token, article.favorited).then(() => refetch());
     return true;
   };
+
+  function latest(dateOne: string, dateTwo: string) {
+    return new Date(dateOne) > new Date(dateTwo) ? -1 : 1;
+  }
 
   return (
     <div>
@@ -107,9 +115,12 @@ export default function ArticleView() {
                 onPress={pressFavorite}
               />
             </div>
-            {comments?.map((item: CommentType) => (
-              <Comment data={item} key={item.id} />
-            ))}
+            {user && <CommentEditor />}
+            {comments
+              ?.sort((a: CommentType, b: CommentType) => latest(a.createdAt, b.createdAt))
+              .map((item: CommentType) => (
+                <Comment data={item} key={item.id} />
+              ))}
           </div>
         </>
       )}

@@ -31,6 +31,35 @@ export async function fetchComments(slug: string | undefined, token: string): Pr
   }
 }
 
+export async function postComment(
+  slug: string | undefined,
+  token: string,
+  body: string,
+): Promise<any> {
+  try {
+    if (!slug) throw new Error('No slug');
+    const obj = JSON.stringify({ comment: { body } });
+    const url = `${apiUrl}/api/articles/${slug}/comments`;
+    const response = await fetch(url, options(token, 'POST', obj));
+    const data = await response.json();
+    return data?.comment;
+  } catch (e) {
+    return errorHandler(e);
+  }
+}
+
+export async function deleteComment(slug: string, id: number, token: string): Promise<any> {
+  try {
+    if (!slug || !id) throw new Error();
+    const url = `${apiUrl}/api/articles/${slug}/comments/${id}`;
+    const response = await fetch(url, options(token, 'DELETE'));
+    const data = await response.json();
+    return data;
+  } catch (e) {
+    return errorHandler(e);
+  }
+}
+
 export async function fetchArticles(
   limit: number,
   token: string,

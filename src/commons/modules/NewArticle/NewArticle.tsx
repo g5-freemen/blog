@@ -44,6 +44,7 @@ export default function NewArticle() {
 
     if (typeof fetchData !== 'string') {
       queryClient.invalidateQueries('getTags');
+      queryClient.invalidateQueries({ queryKey: ['getArticles'] });
       toast('Article has been created!', {
         type: 'success',
         autoClose: TOAST_TIMEOUT,
