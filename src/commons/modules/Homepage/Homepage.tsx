@@ -61,9 +61,13 @@ export default function Homepage() {
     }
   }, [articlesData]);
 
-  const { isLoading: loadingTags } = useQuery('getTags', () => fetchTags(token), {
-    onSuccess: (data) => dispatch(setTags(data)),
-  });
+  const { isLoading: loadingTags } = useQuery(
+    `getTags-${user?.username || ''}`,
+    () => fetchTags(token),
+    {
+      onSuccess: (data) => dispatch(setTags(data)),
+    },
+  );
 
   useEffect(() => {
     if (limit && limit !== defaultLimit) {
