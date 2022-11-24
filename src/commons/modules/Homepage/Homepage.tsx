@@ -8,7 +8,6 @@ import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
 import Navpills from '../../components/Navpills/Navpills';
 import Tags from '../../components/Tags/Tags';
 import Loader from '../../components/Loader/Loader';
-import { ArticleType } from '../../components/Article/Article';
 import {
   selectActivePill,
   selectArticles,
@@ -25,6 +24,7 @@ import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices'
 import { selectUser } from '../../redux/reducers/userReducer';
 import Pagination from '../../components/Pagination/Pagination';
 import { DEFAULT_ARTICLES_LIMIT as defaultLimit, limits, options } from '../../utils/constants';
+import { ArticleType } from '../../components/Article/types';
 import styles from './Homepage.module.css';
 
 export default function Homepage() {

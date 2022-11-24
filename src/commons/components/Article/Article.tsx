@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 import { selectPage, setArticles } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 import { TOAST_TIMEOUT } from '../../utils/constants';
@@ -12,41 +11,8 @@ import { favorite, fetchArticles } from '../../utils/httpServices/feedServices';
 import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 import Tag from '../Tag/Tag';
 import styles from './Article.module.css';
-
-export type ArticleType = {
-  author: {
-    bio: null | string;
-    following: boolean;
-    image: string;
-    username: string;
-  };
-  body: string;
-  createdAt: string;
-  description: string;
-  favorited: boolean;
-  favoritesCount: number;
-  slug: string;
-  tagList: string[];
-  title: string;
-  updatedAt: string;
-};
-
-interface ArticleProps {
-  article: ArticleType;
-}
-
-interface AvatarProps {
-  url: string;
-}
-
-const Avatar = styled.div<AvatarProps>`
-  margin-right: 4px;
-  width: 32px;
-  height: 32px;
-  background: url(${({ url }) => url}) no-repeat center;
-  background-size: contain;
-  border-radius: 50%;
-`;
+import Author from '../Author/Author';
+import { ArticleProps } from './types';
 
 export default function Article(props: ArticleProps) {
   const { article } = props;
@@ -81,19 +47,7 @@ export default function Article(props: ArticleProps) {
   return (
     <article className={styles.article}>
       <div className={styles.meta}>
-        <div className={styles.info}>
-          <Avatar url={article.author.image} />
-          <div>
-            <div className={styles.author}>{article.author.username}</div>
-            <div className={styles.date}>
-              {new Date(article.createdAt).toLocaleDateString('en', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </div>
-          </div>
-        </div>
+        <Author article={article} />
         <FavoriteBtn
           counter={article.favoritesCount}
           favorited={article.favorited}

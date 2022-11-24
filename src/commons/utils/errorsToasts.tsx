@@ -12,3 +12,10 @@ export function errorsToasts(data: any) {
     });
   });
 }
+
+export function toastNotLogged() {
+  toast("You're not logged in!", {
+    type: 'warning',
+    autoClose: TOAST_TIMEOUT,
+  });
+}

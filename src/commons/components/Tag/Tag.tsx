@@ -25,7 +25,7 @@ const TagContainer = styled.li<TagStyledProps>`
   ${({ outlined }) => outlined && outlinedStyle}
   font-size: 0.8rem;
   text-decoration: ${({ active }) => (active ? 'underline' : 'none')};
-  cursor: pointer;
+  cursor: ${({ onClick }) => (onClick ? 'pointer' : 'auto')};
 
   &:hover {
     ${({ outlined }) => !outlined && 'background-color: var(--сDGrey);'}

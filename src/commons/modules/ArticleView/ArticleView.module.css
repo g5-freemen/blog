@@ -24,3 +24,18 @@
   font-family: 'Source Serif Pro';
   font-size: 1.2rem;
 }
+
+.flex {
+  padding-top: 1.5rem;
+  display: flex;
+  gap: 1vmax;
+}
+
+.tags,
+.hr {
+  margin: 1rem 0;
+}
+
+.hr {
+  color: rgba(0, 0, 0, 0.1);
+}

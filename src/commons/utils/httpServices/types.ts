@@ -1,4 +1,4 @@
-import { ArticleType } from '../../components/Article/Article';
+import { ArticleType } from '../../components/Article/types';
 
 export type MethodType = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export type RequestMode = 'cors' | 'navigate' | 'no-cors' | 'same-origin';

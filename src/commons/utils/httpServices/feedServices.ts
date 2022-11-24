@@ -1,4 +1,4 @@
-import { ArticleType } from '../../components/Article/Article';
+import { ArticleType } from '../../components/Article/types';
 import { NewArticleType } from '../../modules/NewArticle/NewArticle';
 import { apiUrl } from '../constants';
 import { errorHandler } from './errorHandler';
@@ -81,6 +81,18 @@ export async function favorite(slug: string, token: string, favorited: boolean) 
   try {
     const method = favorited ? 'DELETE' : 'POST';
     const url = `${apiUrl}/api/articles/${slug}/favorite`;
+    const response = await fetch(url, options(token, method));
+    const data = await response.json();
+    return { response, data };
+  } catch (e) {
+    return errorHandler(e);
+  }
+}
+
+export async function follow(name: string, token: string, followed: boolean) {
+  try {
+    const method = followed ? 'DELETE' : 'POST';
+    const url = `${apiUrl}/api/profiles/${name}/follow`;
     const response = await fetch(url, options(token, method));
     const data = await response.json();
     return { response, data };
