@@ -3,12 +3,19 @@ import { Cookies } from 'react-cookie';
 import { TbBasketOff } from 'react-icons/tb';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import { errorsToasts } from '../../utils/errorsToasts';
 import { deleteArticle } from '../../utils/httpServices/feedServices';
 import { Button } from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './DeleteBtn.module.css';
 
-export default function DeleteBtn() {
+interface Props {
+  small?: boolean;
+  slug?: string;
+}
+
+export default function DeleteBtn(props: Props) {
+  const { slug: articleSlug, small } = props;
   const navigate = useNavigate();
   const { slug } = useParams();
   const cookies = new Cookies();
@@ -17,11 +24,16 @@ export default function DeleteBtn() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const onClick = async () => {
-    if (slug) {
+    const mySlug = slug || articleSlug;
+    if (mySlug) {
       setIsDeleting(true);
-      await deleteArticle(slug, token);
-      setTimeout(() => queryClient.invalidateQueries(), 100);
+      const { response, data } = await deleteArticle(mySlug, token);
       setIsDeleting(false);
+      if (response && !response.ok) {
+        errorsToasts(data);
+        return false;
+      }
+      setTimeout(() => queryClient.invalidateQueries(), 100);
       return navigate('/');
     }
     return false;
@@ -41,7 +53,7 @@ export default function DeleteBtn() {
       ) : (
         <>
           <TbBasketOff />
-          {' Delete Article'}
+          {!small && ' Delete Article'}
         </>
       )}
     </Button>

@@ -12,6 +12,8 @@ import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 import Tag from '../Tag/Tag';
 import Author from '../Author/Author';
 import { ArticleType } from '../../utils/httpServices/types';
+import DeleteBtn from '../DeleteBtn/DeleteBtn';
+import { selectUser } from '../../redux/reducers/userReducer';
 import styles from './Article.module.css';
 
 interface Props {
@@ -20,6 +22,7 @@ interface Props {
 
 export default function Article(props: Props) {
   const { article } = props;
+  const user = useSelector(selectUser);
   const { slug, favorited } = article;
   const cookies = new Cookies();
   const limit: number = useSelector(selectLimit);
@@ -46,17 +49,22 @@ export default function Article(props: Props) {
     return true;
   };
 
-  const navigateToArticle = () => navigate(`article/${slug}`);
+  const navigateToArticle = () => navigate(`/article/${slug}`);
 
   return (
     <article className={styles.article}>
       <div className={styles.meta}>
         <Author article={article} />
-        <FavoriteBtn
-          counter={article.favoritesCount}
-          favorited={article.favorited}
-          onPress={pressFavorite}
-        />
+        <div className={styles.btnsContainer}>
+          {user?.username && article.author.username === user?.username && (
+            <DeleteBtn slug={article.slug} small />
+          )}
+          <FavoriteBtn
+            counter={article.favoritesCount}
+            favorited={article.favorited}
+            onPress={pressFavorite}
+          />
+        </div>
       </div>
       <div role="link" tabIndex={0} onKeyDown={navigateToArticle} onClick={navigateToArticle}>
         <h2 className={styles.title}>{article.title}</h2>

@@ -67,7 +67,7 @@ export async function deleteArticle(slug: string, token: string): Promise<any> {
     const url = `${apiUrl}/api/articles/${slug}`;
     const response = await fetch(url, options(token, 'DELETE'));
     const data = await response.json();
-    return data;
+    return { response, data };
   } catch (e) {
     return errorHandler(e);
   }
