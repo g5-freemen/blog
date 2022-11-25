@@ -22,7 +22,7 @@
   "rules": {
     "object-curly-newline": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx", ".ts"] }],
-    "operator-linebreak": ["error", "after"],
+    "operator-linebreak": ["error", "after", { "overrides": { "?": "before", ":": "before" } }],
     "import/prefer-default-export": "off",
     "react/require-default-props": "off",
     "react/function-component-definition": [

@@ -97,23 +97,34 @@ export async function fetchTags(token: string): Promise<string[] | string> {
   }
 }
 
-export async function createArticle(
+export async function createOrUpdateArticle(
   formData: NewArticleType,
   token: string,
+  article?: ArticleType,
 ): Promise<ArticleType | string> {
   try {
     const { title, about, content, tags } = formData;
-    const body = JSON.stringify({
-      article: {
-        title,
-        description: about,
-        body: content,
-        tagList: tags.split(' '),
-      },
-    });
+    const bodyContent = {
+      title,
+      description: about,
+      body: content,
+      tagList: tags
+        .split(/\s/g)
+        .filter((el) => el)
+        .map((el) => el.trim()),
+    };
+    const body: any = article
+      ? { article: { ...article, ...bodyContent } }
+      : { article: { ...bodyContent } };
 
-    const request = `${apiUrl}/api/articles`;
-    const response = await fetch(request, options(token, 'POST', body));
+    if (article) {
+      body.article.updatedAt = new Date().toISOString();
+      body.article.slug = article.slug.replace(article.title, formData.title);
+    }
+
+    const url = `${apiUrl}/api/articles/${article?.slug || ''}`;
+    const method = article ? 'PUT' : 'POST';
+    const response = await fetch(url, options(token, method, JSON.stringify(body)));
     const data = await response.json();
     if (!response.ok) {
       const { errors } = data;

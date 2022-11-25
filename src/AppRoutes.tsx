@@ -16,6 +16,7 @@ export default function AppRouters() {
   return (
     <Routes>
       <Route path="/editor" element={<NewArticle />} />
+      <Route path="/editor/:slug" element={<NewArticle />} />
       <Route path="/article/:slug" element={<ArticleView />} />
       <Route path="/login" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />

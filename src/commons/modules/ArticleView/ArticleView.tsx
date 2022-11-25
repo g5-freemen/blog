@@ -71,6 +71,8 @@ export default function ArticleView() {
     return new Date(dateOne) > new Date(dateTwo) ? -1 : 1;
   }
 
+  const editArticle = () => navigate(`/editor/${slug}`);
+
   const showBtns = () => {
     if (user?.username && user?.username !== article?.author.username) {
       return (
@@ -93,7 +95,7 @@ export default function ArticleView() {
     if (token) {
       return (
         <>
-          <Button type="button" small>
+          <Button type="button" small onClick={editArticle} onKeyDown={editArticle}>
             <TiPencil />
             Edit Article
           </Button>
@@ -129,7 +131,7 @@ export default function ArticleView() {
             ))}
             <div className={styles.tags}>
               {article?.tagList.map((tag: string) => (
-                <Tag key={tag} name={tag} />
+                <Tag key={tag} name={tag} outlined />
               ))}
             </div>
             <hr className={styles.hr} />

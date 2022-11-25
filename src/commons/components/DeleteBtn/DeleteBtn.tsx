@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Cookies } from 'react-cookie';
 import { TbBasketOff } from 'react-icons/tb';
+import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteArticle } from '../../utils/httpServices/feedServices';
 import { Button } from '../Button/Button';
@@ -12,15 +13,18 @@ export default function DeleteBtn() {
   const { slug } = useParams();
   const cookies = new Cookies();
   const token: string = cookies.get('token');
+  const queryClient = useQueryClient();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const onClick = async () => {
     if (slug) {
       setIsDeleting(true);
       await deleteArticle(slug, token);
+      setTimeout(() => queryClient.invalidateQueries(), 100);
       setIsDeleting(false);
-      navigate('/');
+      return navigate('/');
     }
+    return false;
   };
 
   return (
