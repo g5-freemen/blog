@@ -25,6 +25,7 @@ export default function CommentEditor() {
     if (slug && token && comment) {
       await postComment(slug, token, comment);
       queryClient.invalidateQueries(`getComments-${slug}`);
+      setComment('');
     }
     setIsSubmitting(false);
   };
