@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { NewArticleType } from '../../modules/NewArticle/NewArticle';
 import { apiUrl } from '../constants';
 import { errorHandler } from './errorHandler';
@@ -113,14 +114,16 @@ export async function createOrUpdateArticle(
         .filter((el) => el)
         .map((el) => el.trim()),
     };
-    const body: any = article
-      ? { article: { ...article, ...bodyContent } }
+    const body = article
+      ? {
+          article: {
+            ...article,
+            ...bodyContent,
+            updatedAt: new Date().toISOString(),
+            slug: article.slug.replace(article.title, formData.title),
+          },
+        }
       : { article: { ...bodyContent } };
-
-    if (article) {
-      body.article.updatedAt = new Date().toISOString();
-      body.article.slug = article.slug.replace(article.title, formData.title);
-    }
 
     const url = `${apiUrl}/api/articles/${article?.slug || ''}`;
     const method = article ? 'PUT' : 'POST';
