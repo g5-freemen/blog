@@ -34,6 +34,7 @@ background-color: transparent;
 
 export const Button = styled.button<IButton>`
   padding: 0.75rem 1.5rem;
+  padding: ${({ small }) => (small ? '0.75rem' : '0.75rem 1.5rem')};
   display: flex;
   justify-content: center;
   align-items: center;

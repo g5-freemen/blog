@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Cookies } from 'react-cookie';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
@@ -73,7 +73,7 @@ export default function ArticleView() {
 
   const editArticle = () => navigate(`/editor/${slug}`);
 
-  const showBtns = () => {
+  const showBtns = useCallback(() => {
     if (user?.username && user?.username !== article?.author.username) {
       return (
         <>
@@ -105,7 +105,7 @@ export default function ArticleView() {
     }
 
     return null;
-  };
+  }, [token, article, user]);
 
   return (
     <div>
