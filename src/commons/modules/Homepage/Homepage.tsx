@@ -49,6 +49,14 @@ export default function Homepage() {
     options,
   );
 
+  const { isLoading: loadingTags } = useQuery(
+    `getTags-${user?.username || ''}`,
+    () => fetchTags(token),
+    {
+      onSuccess: (data) => dispatch(setTags(data)),
+    },
+  );
+
   useEffect(() => {
     if (articlesData) {
       if (typeof articlesData === 'string') {
@@ -60,14 +68,6 @@ export default function Homepage() {
       }
     }
   }, [articlesData]);
-
-  const { isLoading: loadingTags } = useQuery(
-    `getTags-${user?.username || ''}`,
-    () => fetchTags(token),
-    {
-      onSuccess: (data) => dispatch(setTags(data)),
-    },
-  );
 
   useEffect(() => {
     if (limit && limit !== defaultLimit) {
@@ -95,7 +95,11 @@ export default function Homepage() {
 
   const show = useCallback(
     (value: string) => {
-      if ((value === 'articles' && loadingArticles) || (value === 'tags' && loadingTags)) {
+      if (value === 'articles' && loadingArticles) {
+        return <Loader content={`Loading ${value}...`} />;
+      }
+
+      if (value === 'tags' && loadingTags) {
         return <Loader content={`Loading ${value}...`} />;
       }
 
@@ -115,10 +119,7 @@ export default function Homepage() {
       }
 
       if (value === 'tags' && tags) {
-        if (typeof tags !== 'string') {
-          return <Tags tagsList={tags} />;
-        }
-        return tags;
+        return typeof tags !== 'string' ? <Tags tagsList={tags} /> : tags;
       }
 
       return 'Error';
