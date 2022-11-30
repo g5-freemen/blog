@@ -49,13 +49,9 @@ export default function Homepage() {
     options,
   );
 
-  const { isLoading: loadingTags } = useQuery(
-    `getTags-${user?.username || ''}`,
-    () => fetchTags(token),
-    {
-      onSuccess: (data) => dispatch(setTags(data)),
-    },
-  );
+  const { isLoading: loadingTags } = useQuery('getTags', () => fetchTags(token), {
+    onSuccess: (data) => dispatch(setTags(data)),
+  });
 
   useEffect(() => {
     if (articlesData) {
@@ -95,11 +91,7 @@ export default function Homepage() {
 
   const show = useCallback(
     (value: string) => {
-      if (value === 'articles' && loadingArticles) {
-        return <Loader content={`Loading ${value}...`} />;
-      }
-
-      if (value === 'tags' && loadingTags) {
+      if ((value === 'articles' && loadingArticles) || (value === 'tags' && loadingTags)) {
         return <Loader content={`Loading ${value}...`} />;
       }
 
