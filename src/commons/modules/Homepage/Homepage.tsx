@@ -105,15 +105,14 @@ export default function Homepage() {
 
       if (value === 'articles' && articles) {
         if (typeof articles !== 'string') {
-          if (articles.length > 0) {
-            return (
-              <>
-                <Articles articlesList={articles} />
-                {articlesCount > limit && <Pagination />}
-              </>
-            );
-          }
-          return <p className={styles.p}>No articles are here... yet.</p>;
+          return articles.length > 0 ? (
+            <>
+              <Articles articlesList={articles} />
+              {articlesCount > limit && <Pagination />}
+            </>
+          ) : (
+            <p className={styles.p}>No articles are here... yet.</p>
+          );
         }
         return articles;
       }
