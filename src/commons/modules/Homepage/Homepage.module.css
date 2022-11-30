@@ -7,18 +7,21 @@
 @media (max-width: 1200px) {
   .rowContainer {
     max-width: 100%;
+    width: 100%;
   }
 }
 
 @media (min-width: 1200px) {
   .rowContainer {
     max-width: 75%;
+    width: 75%;
   }
 }
 
 .rowContainer {
   display: flex;
   flex: 12;
+  justify-content: space-between;
 }
 
 .row {
