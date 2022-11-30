@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import { Cookies } from 'react-cookie';
@@ -93,35 +93,38 @@ export default function Homepage() {
     }
   }, [limit, activePill, currentPage]);
 
-  const show = (value: string) => {
-    if ((value === 'articles' && loadingArticles) || (value === 'tags' && loadingTags)) {
-      return <Loader content={`Loading ${value}...`} />;
-    }
+  const show = useCallback(
+    (value: string) => {
+      if ((value === 'articles' && loadingArticles) || (value === 'tags' && loadingTags)) {
+        return <Loader content={`Loading ${value}...`} />;
+      }
 
-    if (value === 'articles' && articles) {
-      if (typeof articles !== 'string') {
-        if (articles.length > 0) {
-          return (
-            <>
-              <Articles articlesList={articles} />
-              {articlesCount > limit && <Pagination />}
-            </>
-          );
+      if (value === 'articles' && articles) {
+        if (typeof articles !== 'string') {
+          if (articles.length > 0) {
+            return (
+              <>
+                <Articles articlesList={articles} />
+                {articlesCount > limit && <Pagination />}
+              </>
+            );
+          }
+          return <p className={styles.p}>No articles are here... yet.</p>;
         }
-        return <p className={styles.p}>No articles are here... yet.</p>;
+        return articles;
       }
-      return articles;
-    }
 
-    if (value === 'tags' && tags) {
-      if (typeof tags !== 'string') {
-        return <Tags tagsList={tags} />;
+      if (value === 'tags' && tags) {
+        if (typeof tags !== 'string') {
+          return <Tags tagsList={tags} />;
+        }
+        return tags;
       }
-      return tags;
-    }
 
-    return 'Error';
-  };
+      return 'Error';
+    },
+    [tags, articles, articlesCount, limit, loadingTags, loadingArticles],
+  );
 
   return (
     <div className={styles.container}>
