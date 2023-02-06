@@ -1,18 +1,20 @@
-@font-face {
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&family=Source+Serif+Pro&family=Titillium+Web:wght@700&display=swap');
+
+/* @font-face {
   font-family: 'Titillium Web';
   src: url(../../../public/fonts/TitilliumWeb-Bold.woff2) format('woff2');
   font-weight: bold;
   font-display: swap;
-}
+} */
 
-@font-face {
+/* @font-face {
   font-family: 'Source Serif Pro';
   src: url(../../../public/fonts/SourceSerifPro.woff2) format('woff2');
   font-weight: 400;
   font-display: swap;
-}
+} */
 
-@font-face {
+/* @font-face {
   font-family: 'Source Sans Pro';
   src: url(../../../public/fonts/SourceSansPro-Light.woff2) format('woff2');
   font-weight: 300;
@@ -24,11 +26,11 @@
   src: url(../../../public/fonts/SourceSansPro-Regular.woff2) format('woff2');
   font-weight: 400;
   font-display: swap;
-}
+} */
 
-@font-face {
+/* @font-face {
   font-family: 'Source Sans Pro';
   src: url(../../../public/fonts/SourceSansPro-SemiBold.woff2) format('woff2');
   font-weight: 600;
   font-display: swap;
-}
+} */
