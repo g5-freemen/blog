@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import { selectLimit, setLimit } from '../../redux/reducers/globalReducer';
 
 const Select = styled.select`

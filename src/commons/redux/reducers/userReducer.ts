@@ -6,15 +6,14 @@ const initialState = {
   user: undefined,
 };
 
-export default function rootReducer(
-  state = initialState,
-  action: ActionType = {},
-) {
+export default function rootReducer(state = initialState, action: ActionType = {}) {
   switch (action.type) {
-    case SET_USER:
+    case SET_USER: {
       return { ...state, user: action.payload };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }
 

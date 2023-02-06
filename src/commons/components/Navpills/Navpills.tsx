@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+
 import {
   selectActivePill,
   selectArticlesCount,
@@ -46,16 +47,18 @@ export default function Navpills(props: { isLoading: boolean }) {
 
   useEffect(() => {
     dispatch(setActivePill(pathname === '/' ? 'Global' : 'My'));
-  }, [pathname]);
+  }, [dispatch, pathname]);
 
   const clickPill = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
-      const { innerText } = event.target as HTMLElement;
-      possibleValues.forEach((str) => {
-        if (innerText.includes(str)) {
-          dispatch(setActivePill(str === '#' ? innerText : str));
-        }
-      });
+      const { textContent } = event.target as HTMLElement;
+      if (textContent) {
+        possibleValues.forEach((str) => {
+          if (textContent.includes(str)) {
+            dispatch(setActivePill(str === '#' ? textContent : str));
+          }
+        });
+      }
     },
     [dispatch],
   );

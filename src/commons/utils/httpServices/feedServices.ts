@@ -15,8 +15,8 @@ export async function fetchArticle(
     const response = await fetch(url, options(token));
     const data = await response.json();
     return data.article;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -27,8 +27,8 @@ export async function fetchComments(slug: string | undefined, token: string): Pr
     const response = await fetch(url, options(token));
     const data = await response.json();
     return data?.comments;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -44,20 +44,20 @@ export async function postComment(
     const response = await fetch(url, options(token, 'POST', obj));
     const data = await response.json();
     return data?.comment;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
 export async function deleteComment(slug: string, id: number, token: string): Promise<any> {
   try {
-    if (!slug || !id) throw new Error();
+    if (!slug || !id) throw new Error('No Slug or ID');
     const url = `${apiUrl}/api/articles/${slug}/comments/${id}`;
     const response = await fetch(url, options(token, 'DELETE'));
     const data = await response.json();
     return data;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -68,8 +68,8 @@ export async function deleteArticle(slug: string, token: string): Promise<any> {
     const response = await fetch(url, options(token, 'DELETE'));
     const data = await response.json();
     return { response, data };
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -83,8 +83,8 @@ export async function fetchArticles(
     const response = await fetch(url, options(token));
     const data: IArticles = await response.json();
     return data;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -93,8 +93,8 @@ export async function fetchTags(token: string): Promise<string[] | string> {
     const response = await fetch(`${apiUrl}/api/tags`, options(token));
     const data = await response.json();
     return data ? data.tags : [];
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -111,7 +111,7 @@ export async function createOrUpdateArticle(
       body: content,
       tagList: tags
         .split(/\s/g)
-        .filter((el) => el)
+        .filter(Boolean)
         .map((el) => el.trim()),
     };
     const body = article
@@ -120,7 +120,7 @@ export async function createOrUpdateArticle(
             ...article,
             ...bodyContent,
             updatedAt: new Date().toISOString(),
-            slug: article.slug.replace(article.title, formData.title),
+            slug: article.slug.replace(article.title, title),
           },
         }
       : { article: { ...bodyContent } };
@@ -135,11 +135,11 @@ export async function createOrUpdateArticle(
       Object.keys(errors).forEach((key) => {
         result += `${key}: ${errors[key].join(',')}`;
       });
-      throw Error(result);
+      throw new Error(result);
     }
     return data;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -150,8 +150,8 @@ export async function favorite(slug: string, token: string, favorited: boolean) 
     const response = await fetch(url, options(token, method));
     const data = await response.json();
     return { response, data };
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -162,7 +162,7 @@ export async function follow(name: string, token: string, followed: boolean) {
     const response = await fetch(url, options(token, method));
     const data = await response.json();
     return { response, data };
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }

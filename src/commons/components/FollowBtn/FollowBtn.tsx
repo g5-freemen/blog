@@ -17,8 +17,8 @@ const FollowBtnContainer = styled.button<IFavoriteBtnContainer>`
   border-radius: 0.25rem;
   font-size: 1rem;
 
-  color: ${({ followed }) => (!followed ? '#ccc' : '#373a3c')};
-  background-color: ${({ followed }) => (!followed ? 'transparent' : '#e6e6e6')};
+  color: ${({ followed }) => (followed ? '#373a3c' : '#ccc')};
+  background-color: ${({ followed }) => (followed ? '#e6e6e6' : 'transparent')};
   transition: all 0.1s;
 
   &:hover {

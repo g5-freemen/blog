@@ -15,21 +15,23 @@ const initialState = {
   showPassword: false,
 };
 
-export default function globalReducer(
-  state = initialState,
-  action: ActionType = {},
-) {
+export default function globalReducer(state = initialState, action: ActionType = {}) {
   switch (action.type) {
-    case SET_LOADING_ARTICLES:
+    case SET_LOADING_ARTICLES: {
       return { ...state, loadingArticles: action.payload };
-    case SET_LOADING_TAGS:
+    }
+    case SET_LOADING_TAGS: {
       return { ...state, loadingTags: action.payload };
-    case SET_LIMIT:
+    }
+    case SET_LIMIT: {
       return { ...state, limit: action.payload };
-    case SET_SHOWPASSWORD:
+    }
+    case SET_SHOWPASSWORD: {
       return { ...state, showPassword: action.payload };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }
 

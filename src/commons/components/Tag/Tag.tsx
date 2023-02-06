@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import { selectActivePill } from '../../redux/reducers/feedReducer';
 
 interface TagStyledProps {

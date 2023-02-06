@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
-import uuid from 'react-uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import { selectArticlesCount, selectPage, setPage } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
 
@@ -66,6 +66,7 @@ export default function Pagination() {
   const pagesNum = Math.ceil(articlesCount / limit);
   const lastPagesNum = pagesNum > 99 ? 4 : 5;
   const currentPage = useSelector(selectPage);
+  // eslint-disable-next-line unicorn/new-for-builtins
   const pages = Array(pagesNum)
     .fill(0)
     .map((_, i) => i + 1);
@@ -73,7 +74,7 @@ export default function Pagination() {
   const button = useCallback(
     (el: number, isActive: boolean = false) => (
       <Button
-        key={uuid()}
+        key={Date.now() + el}
         type="button"
         onClick={() => (el ? dispatch(setPage(el)) : {})}
         onKeyDown={() => (el ? dispatch(setPage(el)) : {})}

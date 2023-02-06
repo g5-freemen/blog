@@ -1,4 +1,5 @@
 import { toast, ToastOptions } from 'react-toastify';
+
 import { TOAST_TIMEOUT } from './constants';
 
 const errorOpts: ToastOptions = {

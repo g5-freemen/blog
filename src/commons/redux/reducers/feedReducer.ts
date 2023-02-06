@@ -19,18 +19,24 @@ const initialState: State = {
 
 export default function feedReducer(state = initialState, action: ActionType = {}) {
   switch (action.type) {
-    case SET_TAGS:
+    case SET_TAGS: {
       return { ...state, tags: action.payload };
-    case SET_ARTICLES:
+    }
+    case SET_ARTICLES: {
       return { ...state, articles: action.payload };
-    case SET_ARTICLES_COUNT:
+    }
+    case SET_ARTICLES_COUNT: {
       return { ...state, articlesCount: action.payload };
-    case SET_ARTICLES_PAGE:
+    }
+    case SET_ARTICLES_PAGE: {
       return { ...state, page: action.payload };
-    case SET_ACTIVE_PILL:
+    }
+    case SET_ACTIVE_PILL: {
       return { ...state, activePill: action.payload };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }
 

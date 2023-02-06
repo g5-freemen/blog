@@ -25,8 +25,8 @@ export const headerContent = {
 };
 
 export const options = {
-  staleTime: 240000,
-  cacheTime: 480000,
+  staleTime: 240_000,
+  cacheTime: 480_000,
 };
 
 export const cookiesOptions: CookieSetOptions = {

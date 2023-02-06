@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { ArticleType } from '../../utils/httpServices/types';
 import styles from './Author.module.css';
 

@@ -1,5 +1,6 @@
 import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
+
 import feedReducer from './reducers/feedReducer';
 import globalReducer from './reducers/globalReducer';
 import userReducer from './reducers/userReducer';

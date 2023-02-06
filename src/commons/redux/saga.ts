@@ -1,4 +1,5 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
+
 import { SET_ARTICLES, SET_TAGS } from './reducers/actions/feedActions';
 import { SET_LOADING_ARTICLES, SET_LOADING_TAGS } from './reducers/actions/globalActions';
 

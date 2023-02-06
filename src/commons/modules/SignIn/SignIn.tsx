@@ -1,19 +1,20 @@
 import React, { useState, useTransition } from 'react';
 import { Cookies } from 'react-cookie';
+import { ImEye, ImEyeBlocked } from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ImEyeBlocked, ImEye } from 'react-icons/im';
+
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { selectShowPassword, setShowPassword } from '../../redux/reducers/globalReducer';
 import { setUser } from '../../redux/reducers/userReducer';
+import { cookiesOptions, TOAST_TIMEOUT } from '../../utils/constants';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { loginUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
-import { cookiesOptions, TOAST_TIMEOUT } from '../../utils/constants';
 import styles from './SignIn.module.css';
 
 export interface ISignIn {

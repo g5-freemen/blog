@@ -3,6 +3,7 @@ import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
@@ -48,12 +49,14 @@ export default function Settings() {
     obj.bio = formData.bio || ' ';
     obj.image = obj.image ? obj.image.replace(/\s/g, '') : '';
 
-    if (Object.values(errors).find((el) => el)) return;
+    if (Object.values(errors).some(Boolean)) return;
 
     const fetchData = await updateUser(obj, cookieToken);
     setIsSubmitting(false);
 
-    if (typeof fetchData !== 'string') {
+    if (typeof fetchData === 'string') {
+      toast(fetchData, { type: 'warning', autoClose: TOAST_TIMEOUT });
+    } else {
       const { response, data } = fetchData;
       if (response.ok) {
         const { token } = data.user;
@@ -65,8 +68,6 @@ export default function Settings() {
 
         dispatch(setUser(formData));
       }
-    } else {
-      toast(fetchData, { type: 'warning', autoClose: TOAST_TIMEOUT });
     }
   };
 
@@ -85,7 +86,7 @@ export default function Settings() {
     cookies.remove('token');
     dispatch(setUser(null));
     return navigate('/');
-  }, [user, dispatch]);
+  }, [user, cookies, dispatch, navigate]);
 
   return (
     <main className={styles.container}>

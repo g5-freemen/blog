@@ -3,6 +3,7 @@ import { Cookies } from 'react-cookie';
 import { TbBasketOff } from 'react-icons/tb';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { errorsToasts } from '../../utils/errorsToasts';
 import { deleteArticle } from '../../utils/httpServices/feedServices';
 import { Button } from '../Button/Button';

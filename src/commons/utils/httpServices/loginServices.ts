@@ -11,8 +11,8 @@ export async function registerUser(formData: ISignUp) {
     const response = await fetch(`${apiUrl}/api/users`, options(undefined, 'POST', body));
     const data = await response.json();
     return { response, data };
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -23,8 +23,8 @@ export async function loginUser(formData: ISignIn) {
     const response = await fetch(url, options(undefined, 'POST', body));
     const data = await response.json();
     return { response, data };
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -35,8 +35,8 @@ export async function updateUser(formData: UpdateUserType, token: string) {
     const response = await fetch(url, options(token, 'PUT', body));
     const data = await response.json();
     return { response, data };
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }
 
@@ -51,7 +51,7 @@ export async function fetchCurrentUser(cookieToken: string) {
     user.bio = profile.bio;
     user.image = profile.image;
     return user;
-  } catch (e) {
-    return errorHandler(e);
+  } catch (error) {
+    return errorHandler(error);
   }
 }

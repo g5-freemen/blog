@@ -1,19 +1,19 @@
 import React from 'react';
-import uuid from 'react-uuid';
-import { useNavigate } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import { selectPage, setArticles } from '../../redux/reducers/feedReducer';
 import { selectLimit } from '../../redux/reducers/globalReducer';
+import { selectUser } from '../../redux/reducers/userReducer';
 import { TOAST_TIMEOUT } from '../../utils/constants';
 import { favorite, fetchArticles } from '../../utils/httpServices/feedServices';
+import { ArticleType } from '../../utils/httpServices/types';
+import Author from '../Author/Author';
+import DeleteBtn from '../DeleteBtn/DeleteBtn';
 import FavoriteBtn from '../FavoriteBtn/FavoriteBtn';
 import Tag from '../Tag/Tag';
-import Author from '../Author/Author';
-import { ArticleType } from '../../utils/httpServices/types';
-import DeleteBtn from '../DeleteBtn/DeleteBtn';
-import { selectUser } from '../../redux/reducers/userReducer';
 import styles from './Article.module.css';
 
 interface Props {
@@ -23,7 +23,7 @@ interface Props {
 export default function Article(props: Props) {
   const { article } = props;
   const user = useSelector(selectUser);
-  const { slug, favorited } = article;
+  const { slug, favorited, favoritesCount, description, title, tagList, author } = article;
   const cookies = new Cookies();
   const limit: number = useSelector(selectLimit);
   const currentPage: number = useSelector(selectPage);
@@ -56,19 +56,13 @@ export default function Article(props: Props) {
       <div className={styles.meta}>
         <Author article={article} />
         <div className={styles.btnsContainer}>
-          {user?.username && article.author.username === user?.username && (
-            <DeleteBtn slug={article.slug} small />
-          )}
-          <FavoriteBtn
-            counter={article.favoritesCount}
-            favorited={article.favorited}
-            onPress={pressFavorite}
-          />
+          {user?.username && author?.username === user?.username && <DeleteBtn slug={slug} small />}
+          <FavoriteBtn counter={favoritesCount} favorited={favorited} onPress={pressFavorite} />
         </div>
       </div>
       <div role="link" tabIndex={0} onKeyDown={navigateToArticle} onClick={navigateToArticle}>
-        <h2 className={styles.title}>{article.title}</h2>
-        <p className={styles.description}>{article.description}</p>
+        <h2 className={styles.title}>{title}</h2>
+        <p className={styles.description}>{description}</p>
       </div>
       <div className={styles.row}>
         <span
@@ -81,8 +75,8 @@ export default function Article(props: Props) {
           Read more...
         </span>
         <ul>
-          {article.tagList.map((name) => (
-            <Tag key={uuid()} name={name} outlined />
+          {tagList?.map((name) => (
+            <Tag key={name} name={name} outlined />
           ))}
         </ul>
       </div>

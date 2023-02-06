@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import { Button } from '../../components/Button/Button';
 import { ErrorMsg } from '../../components/ErrorMsg/ErrorMsg';
 import { Input } from '../../components/Input/Input';
+import { TOAST_TIMEOUT } from '../../utils/constants';
 import { errorsToasts } from '../../utils/errorsToasts';
 import { registerUser } from '../../utils/httpServices/loginServices';
 import { isAllFilled, isAnyError, validate } from '../../utils/validations';
-import { TOAST_TIMEOUT } from '../../utils/constants';
 import styles from '../SignIn/SignIn.module.css';
 
 export interface ISignUp {

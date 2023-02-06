@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+
+import React, { useCallback, useEffect } from 'react';
+import { Cookies, CookiesProvider } from 'react-cookie';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { Cookies, CookiesProvider } from 'react-cookie';
 import { ToastContainer } from 'react-toastify';
-import Navbar from './commons/components/Navbar/Navbar';
+
 import AppRouters from './AppRoutes';
-import { fetchCurrentUser } from './commons/utils/httpServices/loginServices';
+import Navbar from './commons/components/Navbar/Navbar';
 import { selectUser, setUser } from './commons/redux/reducers/userReducer';
-import 'react-toastify/dist/ReactToastify.css';
+import { fetchCurrentUser } from './commons/utils/httpServices/loginServices';
 
 export default function App() {
   const queryClient = new QueryClient();
@@ -16,14 +18,13 @@ export default function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  async function getCurrentUser(token: string) {
-    const data = await fetchCurrentUser(token);
-    if (typeof data !== 'string') {
-      dispatch(setUser(data));
-    } else {
-      dispatch(setUser(null));
-    }
-  }
+  const getCurrentUser = useCallback(
+    async (token: string) => {
+      const data = await fetchCurrentUser(token);
+      dispatch(setUser(typeof data === 'string' ? null : data));
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     const token = cookies.get('token');

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
 import { setActivePill } from '../../redux/reducers/feedReducer';
 import Tag from '../Tag/Tag';
 import styles from './Tags.module.css';

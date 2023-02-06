@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
-import { IoSettingsSharp } from 'react-icons/io5';
 import { Cookies } from 'react-cookie';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/Button/Button';
-import { Img } from '../../components/Navbar/Navbar';
+
 import Articles from '../../components/Articles/Articles';
+import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
+import { Button } from '../../components/Button/Button';
+import Loader from '../../components/Loader/Loader';
+import { Img } from '../../components/Navbar/Navbar';
 import Navpills from '../../components/Navpills/Navpills';
+import Pagination from '../../components/Pagination/Pagination';
 import {
   selectActivePill,
   selectArticles,
@@ -17,13 +21,10 @@ import {
   setArticlesCount,
   setPage,
 } from '../../redux/reducers/feedReducer';
-import { selectUser } from '../../redux/reducers/userReducer';
 import { selectLimit, setLimit, setLoadingArticles } from '../../redux/reducers/globalReducer';
-import { fetchArticles } from '../../utils/httpServices/feedServices';
-import Loader from '../../components/Loader/Loader';
-import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
-import Pagination from '../../components/Pagination/Pagination';
+import { selectUser } from '../../redux/reducers/userReducer';
 import { DEFAULT_PERSONAL_ARTICLES_LIMIT, options } from '../../utils/constants';
+import { fetchArticles } from '../../utils/httpServices/feedServices';
 import styles from './Personal.module.css';
 
 const defaultLimit = DEFAULT_PERSONAL_ARTICLES_LIMIT;
@@ -68,7 +69,7 @@ export default function Personal() {
         dispatch(setArticles(articlesData.articles));
       }
     }
-  }, [articlesData]);
+  }, [articlesData, dispatch]);
 
   useEffect(() => {
     if (limit && limit !== defaultLimit) {

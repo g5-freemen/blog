@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { Cookies } from 'react-cookie';
+import { TiPencil } from 'react-icons/ti';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import uuid from 'react-uuid';
-import { TiPencil } from 'react-icons/ti';
+
 import Author from '../../components/Author/Author';
 import { Button } from '../../components/Button/Button';
 import Comment from '../../components/Comment/Comment';
@@ -49,29 +49,30 @@ export default function ArticleView() {
     options,
   );
 
-  const article = typeof data !== 'string' ? data : null;
+  const article = typeof data === 'string' ? null : data;
 
-  const pressFollow = async () => {
+  const pressFollow = useCallback(async () => {
     if (!token) toastNotLogged();
     if (!article || !token) return false;
 
     await follow(article.author.username, token, article.author.following).then(() => refetch());
     return true;
-  };
+  }, [article, refetch, token]);
 
-  const pressFavorite = async () => {
+  const pressFavorite = useCallback(async () => {
     if (!token) toastNotLogged();
     if (!article || !token) return false;
 
     await favorite(article.slug, token, article.favorited).then(() => refetch());
     return true;
-  };
+  }, [article, refetch, token]);
 
-  function latest(dateOne: string, dateTwo: string) {
-    return new Date(dateOne) > new Date(dateTwo) ? -1 : 1;
-  }
+  const latest = useCallback(
+    (dateOne: string, dateTwo: string) => (new Date(dateOne) > new Date(dateTwo) ? -1 : 1),
+    [],
+  );
 
-  const editArticle = () => navigate(`/editor/${slug}`);
+  const editArticle = useCallback(() => navigate(`/editor/${slug}`), [navigate, slug]);
 
   const showBtns = useCallback(() => {
     if (user?.username && user?.username !== article?.author.username) {
@@ -105,7 +106,7 @@ export default function ArticleView() {
     }
 
     return null;
-  }, [token, article, user]);
+  }, [editArticle, pressFavorite, pressFollow, token, article, user]);
 
   return (
     <div>
@@ -127,7 +128,7 @@ export default function ArticleView() {
           </div>
           <div className={styles.body}>
             {article?.body?.split('\\n').map((item: string) => (
-              <p key={uuid()}>{item}</p>
+              <p key={item}>{item}</p>
             ))}
             <div className={styles.tags}>
               {article?.tagList.map((tag: string) => (

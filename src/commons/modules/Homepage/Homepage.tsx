@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from 'react-query';
 import { Cookies } from 'react-cookie';
-import Banner from '../../components/Banner/Banner';
+import { useQuery } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Articles from '../../components/Articles/Articles';
 import ArticlesLimiter from '../../components/ArticlesLimiter/ArticlesLimiter';
-import Navpills from '../../components/Navpills/Navpills';
-import Tags from '../../components/Tags/Tags';
+import Banner from '../../components/Banner/Banner';
 import Loader from '../../components/Loader/Loader';
+import Navpills from '../../components/Navpills/Navpills';
+import Pagination from '../../components/Pagination/Pagination';
+import Tags from '../../components/Tags/Tags';
 import {
   selectActivePill,
   selectArticles,
@@ -20,10 +22,9 @@ import {
   setTags,
 } from '../../redux/reducers/feedReducer';
 import { selectLimit, setLimit } from '../../redux/reducers/globalReducer';
-import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices';
 import { selectUser } from '../../redux/reducers/userReducer';
-import Pagination from '../../components/Pagination/Pagination';
 import { DEFAULT_ARTICLES_LIMIT as defaultLimit, limits, options } from '../../utils/constants';
+import { fetchArticles, fetchTags } from '../../utils/httpServices/feedServices';
 import { ArticleType } from '../../utils/httpServices/types';
 import styles from './Homepage.module.css';
 
@@ -63,7 +64,7 @@ export default function Homepage() {
         dispatch(setArticles(articlesData.articles));
       }
     }
-  }, [articlesData]);
+  }, [articlesData, dispatch]);
 
   useEffect(() => {
     if (limit && limit !== defaultLimit) {
@@ -110,7 +111,7 @@ export default function Homepage() {
       }
 
       if (value === 'tags' && tags) {
-        return typeof tags !== 'string' ? <Tags tagsList={tags} /> : tags;
+        return typeof tags === 'string' ? tags : <Tags tagsList={tags} />;
       }
 
       return 'Error';

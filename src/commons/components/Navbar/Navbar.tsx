@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import uuid from 'react-uuid';
-import { useSelector } from 'react-redux';
 import { IconType } from 'react-icons';
-import { IoSettingsSharp, IoCreateOutline } from 'react-icons/io5';
+import { IoCreateOutline, IoSettingsSharp } from 'react-icons/io5';
+import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import NavItem from '../NavItem/NavItem';
+
 import { selectUser } from '../../redux/reducers/userReducer';
+import NavItem from '../NavItem/NavItem';
 
 const Nav = styled.nav`
   @media (max-width: 1200px) {
@@ -78,7 +78,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (imageError) setImageError(false);
-  }, [user?.image]);
+  }, [imageError, user?.image]);
 
   const items = useMemo(() => {
     if (user) {
@@ -119,14 +119,14 @@ export default function Navbar() {
       { url: '/login', text: 'Sign in' },
       { url: '/register', text: 'Sign up' },
     ];
-  }, [user, imageError]);
+  }, [user, imageError, onErrorImage]);
 
   return (
     <Nav>
       <Brand href="#/">conduit</Brand>
       <Ul>
         {items.map(({ url, text }) => (
-          <NavItem key={uuid()} active={isActive(url)} url={url} text={text} />
+          <NavItem key={url + text} active={isActive(url)} url={url} text={text} />
         ))}
       </Ul>
     </Nav>

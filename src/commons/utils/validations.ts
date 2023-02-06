@@ -1,10 +1,10 @@
 import { errorMessage, MIN_PASSWORD_LENGTH } from './constants';
 
-const emailRegEx = /^[a-z0-9_.+-]+@[a-z0-9-]+.[a-z0-9-.]+$/i;
-const imageRegEx = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))/i;
+const emailRegEx = /^[\w+.-]+@[\da-z-]+.[\d.a-z-]+$/i;
+const imageRegEx = /(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|svg))/i;
 
 export function required(val: string) {
-  const valid = !!val.length;
+  const valid = val.length > 0;
   return { valid, msg: valid ? '' : errorMessage.fieldRequired };
 }
 
@@ -26,10 +26,7 @@ export function isValidPassword(password: string) {
 export function validate(...args: [string, string, string[]?]) {
   const [name, value, requiredFields = []] = args;
   let msg: string = '';
-  if (
-    name === 'username' ||
-    (requiredFields.length && requiredFields.find((el: string) => el === name))
-  ) {
+  if (name === 'username' || (requiredFields.length > 0 && requiredFields.includes(name))) {
     msg = required(value).msg;
   } else if (name === 'email') {
     msg = isValidEmail(value).msg;
@@ -45,7 +42,7 @@ export function validate(...args: [string, string, string[]?]) {
 export const isAllFilled = (obj: Object) => {
   const arr = Object.values(obj);
   if (arr.length === 0) return false;
-  return arr.filter((el) => el).length === arr.length;
+  return arr.filter(Boolean).length === arr.length;
 };
 
-export const isAnyError = (arr: string[]) => !!arr.filter(Boolean).length;
+export const isAnyError = (arr: string[]) => arr.some(Boolean);
